@@ -6,14 +6,15 @@
 #include "HuntMeIfYouCanGameMode.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class HUNTMEIFYOUCAN_API AHuntMeIfYouCanGameMode : public AGameMode
 {
-	GENERATED_BODY()
-	
-	
-	
-	
+    GENERATED_BODY()
+public:
+
+    AHuntMeIfYouCanGameMode(const FObjectInitializer& objectInitializer);
+
+
 };

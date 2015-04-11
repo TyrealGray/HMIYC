@@ -3,6 +3,8 @@
 #include "HuntMeIfYouCan.h"
 #include "HuntMeIfYouCanGameMode.h"
 
+AHuntMeIfYouCanGameMode::AHuntMeIfYouCanGameMode(const FObjectInitializer& objectInitializer):
+    Super(objectInitializer)
+{
 
-
-
+}
