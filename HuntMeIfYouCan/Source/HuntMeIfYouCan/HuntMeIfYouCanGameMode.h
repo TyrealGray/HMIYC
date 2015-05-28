@@ -16,5 +16,4 @@ public:
 
     AHuntMeIfYouCanGameMode(const FObjectInitializer& objectInitializer);
 
-
 };
