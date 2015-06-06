@@ -7,7 +7,14 @@
 		{
 			"Name": "HuntMeIfYouCan",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
 		}
+	],
+	"TargetPlatforms": [
+		"MacNoEditor",
+		"WindowsNoEditor"
 	]
 }
