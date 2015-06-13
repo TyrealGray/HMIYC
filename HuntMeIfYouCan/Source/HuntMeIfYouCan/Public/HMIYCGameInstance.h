@@ -6,14 +6,25 @@
 #include "HMIYCGameInstance.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class HUNTMEIFYOUCAN_API UHMIYCGameInstance : public UGameInstance
 {
-	GENERATED_BODY()
-	
-	
-	
-	
+    GENERATED_BODY()
+public:
+
+    UHMIYCGameInstance(const FObjectInitializer &objectInitializer);
+
+    UFUNCTION(BlueprintCallable, category = "OpenUI")
+    void openMainMenu();
+
+    UFUNCTION(BlueprintCallable, category = "OpenUI")
+    void openServerList();
+
+private:
+    UUserWidget* m_pMainMenu;
+    UUserWidget* m_pServerList;
+
+    void createUIWidget(UUserWidget* &pWidget, const FString& strPath);
 };
