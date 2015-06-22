@@ -8,21 +8,30 @@
 UCLASS()
 class HUNTMEIFYOUCAN_API ANormalCharacter : public ACharacter
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	ANormalCharacter();
+    // Sets default values for this character's properties
+    ANormalCharacter();
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-	
-	// Called every frame
-	virtual void Tick( float DeltaSeconds ) override;
+    // Called when the game starts or when spawned
+    virtual void BeginPlay() override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+    // Called every frame
+    virtual void Tick( float DeltaSeconds ) override;
 
-	
-	
+    // Called to bind functionality to input
+    virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+
+public:
+
+    void MoveForward(float Value);
+
+    void MoveRight(float Value);
+
+private:
+
+    /** Follow camera */
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+    class UCameraComponent * Camera;
 };

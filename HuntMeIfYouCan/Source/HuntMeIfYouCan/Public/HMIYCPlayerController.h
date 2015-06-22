@@ -6,14 +6,24 @@
 #include "HMIYCPlayerController.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS()
 class HUNTMEIFYOUCAN_API AHMIYCPlayerController : public APlayerController
 {
-	GENERATED_BODY()
-	
-	
-	
-	
+    GENERATED_BODY()
+
+public:
+    AHMIYCPlayerController(const FObjectInitializer& objectInitializer);
+
+    virtual void SetupInputComponent() override;
+
+private:
+
+    void onMoveForward(float Value);
+    void onMoveRight(float Value);
+
+    void onTurn(float Value);
+    void onLookUp(float Value);
+
 };
