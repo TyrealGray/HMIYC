@@ -37,7 +37,7 @@ void ANormalCharacter::Tick( float DeltaTime )
 // Called to bind functionality to input
 void ANormalCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
-    //Super::SetupPlayerInputComponent(InputComponent);
+    Super::SetupPlayerInputComponent(InputComponent);
 }
 
 void ANormalCharacter::MoveForward(float Value)
