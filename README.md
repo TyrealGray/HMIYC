@@ -5,3 +5,5 @@
 
 ###To begin
 Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
+###LICENSE
+GPLv2
