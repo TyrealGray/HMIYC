@@ -7,19 +7,20 @@ const int32 UI_ZORDER = 10;
 UHMIYCGameInstance::UHMIYCGameInstance(const FObjectInitializer &objectInitializer):
     Super(objectInitializer),
     m_pMainMenu(NULL),
-    m_pServerList(NULL)
+    m_pServerList(NULL),
+    m_pPauseMenu(NULL)
 {
 
 }
 
 void UHMIYCGameInstance::openMainMenu()
 {
-    if (NULL == m_pMainMenu)
+    if (NULL == m_pMainMenu || !IsValid(m_pMainMenu))
     {
         createUIWidget(m_pMainMenu, "/Game/Blueprints/Widgets/MainMenu.MainMenu_C");
     }
 
-    if (NULL != m_pServerList && m_pServerList->IsVisible())
+    if (NULL != m_pServerList && IsValid(m_pServerList) && m_pServerList->IsVisible())
     {
         m_pServerList->SetVisibility(ESlateVisibility::Hidden);
     }
@@ -29,16 +30,26 @@ void UHMIYCGameInstance::openMainMenu()
 
 void UHMIYCGameInstance::openServerList()
 {
-    if (NULL == m_pServerList)
+    if (NULL == m_pServerList || !IsValid(m_pServerList))
     {
         createUIWidget(m_pServerList, "/Game/Blueprints/Widgets/ServerList.ServerList_C");
     }
 
-    if (NULL != m_pMainMenu && m_pMainMenu->IsVisible())
+    if (NULL != m_pMainMenu && IsValid(m_pMainMenu) && m_pMainMenu->IsVisible())
     {
         m_pMainMenu->SetVisibility(ESlateVisibility::Hidden);
     }
     m_pServerList->SetVisibility(ESlateVisibility::Visible);
+}
+
+void UHMIYCGameInstance::openPauseMenu()
+{
+    if (NULL == m_pPauseMenu || !IsValid(m_pPauseMenu))
+    {
+        createUIWidget(m_pPauseMenu, "/Game/Blueprints/Widgets/PauseMenu.PauseMenu_C");
+    }
+
+    m_pPauseMenu->SetVisibility(ESlateVisibility::Visible);
 }
 
 void UHMIYCGameInstance::createUIWidget(UUserWidget* &pWidget, const FString& strPath)

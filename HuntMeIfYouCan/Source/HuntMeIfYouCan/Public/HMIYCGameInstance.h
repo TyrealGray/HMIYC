@@ -22,9 +22,16 @@ public:
     UFUNCTION(BlueprintCallable, category = "OpenUI")
     void openServerList();
 
+    UFUNCTION(BlueprintCallable, category = "OpenUI")
+    void openPauseMenu();
+
 private:
+    UPROPERTY()
     UUserWidget* m_pMainMenu;
+    UPROPERTY()
     UUserWidget* m_pServerList;
+    UPROPERTY()
+    UUserWidget* m_pPauseMenu;
 
     void createUIWidget(UUserWidget* &pWidget, const FString& strPath);
 };
