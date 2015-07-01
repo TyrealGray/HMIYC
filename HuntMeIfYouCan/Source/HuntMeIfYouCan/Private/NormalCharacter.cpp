@@ -38,6 +38,9 @@ void ANormalCharacter::Tick( float DeltaTime )
 void ANormalCharacter::SetupPlayerInputComponent(class UInputComponent* InputComponent)
 {
     Super::SetupPlayerInputComponent(InputComponent);
+
+    InputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+    InputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 }
 
 void ANormalCharacter::MoveForward(float Value)
@@ -62,4 +65,5 @@ void ANormalCharacter::MoveRight(float Value)
     // add movement in that direction
     AddMovementInput(Direction, Value);
 }
+
 
