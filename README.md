@@ -5,5 +5,8 @@
 
 ###To begin
 Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
+
 ###LICENSE
 GPLv2
+
+`For some reasons.Content of character only packages in release version.`
