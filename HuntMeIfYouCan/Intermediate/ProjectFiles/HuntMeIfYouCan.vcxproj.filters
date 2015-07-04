@@ -1,88 +1,103 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<ItemGroup>
-		<None Include="..\..\HuntMeIfYouCan.uproject" />
-		<Filter Include="Source">
-			<UniqueIdentifier>{9F40600B-4D6E-48F8-B2F3-17EF3D484B58}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\HuntMeIfYouCan.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<None Include="..\..\Source\HuntMeIfYouCanEditor.Target.cs">
-			<Filter>Source</Filter>
-		</None >
-		<Filter Include="Config">
-			<UniqueIdentifier>{BE1D7EBD-7A85-437A-910B-5D2424A601CE}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Config\DefaultEngine.ini">
-			<Filter>Config</Filter>
-		</None >
-		<None Include="..\..\Config\DefaultGame.ini">
-			<Filter>Config</Filter>
-		</None >
-		<Filter Include="Source\HuntMeIfYouCan">
-			<UniqueIdentifier>{2C0505D4-7547-45FE-972D-7D67CCF28694}</UniqueIdentifier>
-		</Filter>
-		<None Include="..\..\Source\HuntMeIfYouCan\HuntMeIfYouCan.Build.cs">
-			<Filter>Source\HuntMeIfYouCan</Filter>
-		</None >
-		<ClCompile Include="..\..\Source\HuntMeIfYouCan\HuntMeIfYouCan.cpp">
-			<Filter>Source\HuntMeIfYouCan</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\HuntMeIfYouCan\HuntMeIfYouCan.h">
-			<Filter>Source\HuntMeIfYouCan</Filter>
-		</ClInclude >
-		<Filter Include="Source\HuntMeIfYouCan\Private">
-			<UniqueIdentifier>{4252766D-99D5-41B5-9302-0EB57E328D36}</UniqueIdentifier>
-		</Filter>
-		<ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCGameInstance.cpp">
-			<Filter>Source\HuntMeIfYouCan\Private</Filter>
-		</ClCompile >
-		<ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCGameState.cpp">
-			<Filter>Source\HuntMeIfYouCan\Private</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCGameState.h">
-			<Filter>Source\HuntMeIfYouCan\Private</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCPlayerController.cpp">
-			<Filter>Source\HuntMeIfYouCan\Private</Filter>
-		</ClCompile >
-		<ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCPlayerState.cpp">
-			<Filter>Source\HuntMeIfYouCan\Private</Filter>
-		</ClCompile >
-		<ClInclude Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCPlayerState.h">
-			<Filter>Source\HuntMeIfYouCan\Private</Filter>
-		</ClInclude >
-		<ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HuntMeIfYouCanGameMode.cpp">
-			<Filter>Source\HuntMeIfYouCan\Private</Filter>
-		</ClCompile >
-		<ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\NormalCharacter.cpp">
-			<Filter>Source\HuntMeIfYouCan\Private</Filter>
-		</ClCompile >
-		<Filter Include="Source\HuntMeIfYouCan\Public">
-			<UniqueIdentifier>{8E228331-7BCF-40EB-B42A-23E011670C50}</UniqueIdentifier>
-		</Filter>
-		<ClInclude Include="..\..\Source\HuntMeIfYouCan\Public\HMIYCGameInstance.h">
-			<Filter>Source\HuntMeIfYouCan\Public</Filter>
-		</ClInclude >
-		<ClInclude Include="..\..\Source\HuntMeIfYouCan\Public\HMIYCPlayerController.h">
-			<Filter>Source\HuntMeIfYouCan\Public</Filter>
-		</ClInclude >
-		<ClInclude Include="..\..\Source\HuntMeIfYouCan\Public\HuntMeIfYouCanGameMode.h">
-			<Filter>Source\HuntMeIfYouCan\Public</Filter>
-		</ClInclude >
-		<ClInclude Include="..\..\Source\HuntMeIfYouCan\Public\NormalCharacter.h">
-			<Filter>Source\HuntMeIfYouCan\Public</Filter>
-		</ClInclude >
-		<Filter Include="Source\HuntMeIfYouCan\Resources">
-			<UniqueIdentifier>{7FDEAF9F-D7FF-4626-A66A-B4F6C9FCEF50}</UniqueIdentifier>
-		</Filter>
-		<Filter Include="Source\HuntMeIfYouCan\Resources\Windows">
-			<UniqueIdentifier>{1F79C551-92BB-49BA-A778-57EB558AFC8D}</UniqueIdentifier>
-		</Filter>
-		<ResourceCompile Include="..\..\Source\HuntMeIfYouCan\Resources\Windows\HuntMeIfYouCan.rc">
-			<Filter>Source\HuntMeIfYouCan\Resources\Windows</Filter>
-		</ResourceCompile >
-	</ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\HuntMeIfYouCan.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{9F40600B-4D6E-48F8-B2F3-17EF3D484B58}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\HuntMeIfYouCan.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\HuntMeIfYouCanEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{BE1D7EBD-7A85-437A-910B-5D2424A601CE}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\HuntMeIfYouCan">
+      <UniqueIdentifier>{2C0505D4-7547-45FE-972D-7D67CCF28694}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\HuntMeIfYouCan\HuntMeIfYouCan.Build.cs">
+      <Filter>Source\HuntMeIfYouCan</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\HuntMeIfYouCan\HuntMeIfYouCan.cpp">
+      <Filter>Source\HuntMeIfYouCan</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\HuntMeIfYouCan\HuntMeIfYouCan.h">
+      <Filter>Source\HuntMeIfYouCan</Filter>
+    </ClInclude>
+    <Filter Include="Source\HuntMeIfYouCan\Private">
+      <UniqueIdentifier>{4252766D-99D5-41B5-9302-0EB57E328D36}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCGameInstance.cpp">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCGameState.cpp">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCGameState.h">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCPlayerController.cpp">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCPlayerState.cpp">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\HuntMeIfYouCan\Private\HMIYCPlayerState.h">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\HuntMeIfYouCanGameMode.cpp">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\NormalCharacter.cpp">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClCompile>
+    <Filter Include="Source\HuntMeIfYouCan\Public">
+      <UniqueIdentifier>{8E228331-7BCF-40EB-B42A-23E011670C50}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\HuntMeIfYouCan\Public\HMIYCGameInstance.h">
+      <Filter>Source\HuntMeIfYouCan\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HuntMeIfYouCan\Public\HMIYCPlayerController.h">
+      <Filter>Source\HuntMeIfYouCan\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HuntMeIfYouCan\Public\HuntMeIfYouCanGameMode.h">
+      <Filter>Source\HuntMeIfYouCan\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HuntMeIfYouCan\Public\NormalCharacter.h">
+      <Filter>Source\HuntMeIfYouCan\Public</Filter>
+    </ClInclude>
+    <Filter Include="Source\HuntMeIfYouCan\Resources">
+      <UniqueIdentifier>{7FDEAF9F-D7FF-4626-A66A-B4F6C9FCEF50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\HuntMeIfYouCan\Resources\Windows">
+      <UniqueIdentifier>{1F79C551-92BB-49BA-A778-57EB558AFC8D}</UniqueIdentifier>
+    </Filter>
+    <ResourceCompile Include="..\..\Source\HuntMeIfYouCan\Resources\Windows\HuntMeIfYouCan.rc">
+      <Filter>Source\HuntMeIfYouCan\Resources\Windows</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\HuntMeIfYouCan\Public\SpawnerManager.h">
+      <Filter>Source\HuntMeIfYouCan\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\HuntMeIfYouCan\Private\CivilianSpawner.h">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\SpawnerManager.cpp">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\HuntMeIfYouCan\Private\CivilianSpawner.cpp">
+      <Filter>Source\HuntMeIfYouCan\Private</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
