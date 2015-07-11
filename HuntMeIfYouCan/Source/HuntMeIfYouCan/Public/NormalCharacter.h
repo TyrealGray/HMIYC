@@ -29,9 +29,14 @@ public:
 
     void MoveRight(float Value);
 
+    void SetIsNPC(bool bIsNPC);
+
 private:
 
     /** Follow camera */
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
     class UCameraComponent * Camera;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI, meta = (AllowPrivateAccess = "true"))
+    bool bIsNPC;
 };

@@ -2,8 +2,9 @@
 
 #include "HuntMeIfYouCan.h"
 #include "CivilianSpawner.h"
+#include "NormalCharacter.h"
 
-
+const int32 NUMBER_OF_CIVILIAN_TYPE = 1;
 // Sets default values
 ACivilianSpawner::ACivilianSpawner()
 {
@@ -14,6 +15,8 @@ ACivilianSpawner::ACivilianSpawner()
 
     SetActorHiddenInGame(true);
 
+    RootComponent = Root;
+
     Root = CreateDefaultSubobject<USceneComponent>(TEXT("Root"));
 
     SpawnArea = CreateDefaultSubobject<UBoxComponent>(TEXT("SpawnArea"));
@@ -21,8 +24,6 @@ ACivilianSpawner::ACivilianSpawner()
     SpawnArea->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 
     SpawnArea->AttachTo(Root);
-
-    RootComponent = Root;
 }
 
 // Called when the game starts or when spawned
@@ -30,12 +31,40 @@ void ACivilianSpawner::BeginPlay()
 {
     Super::BeginPlay();
 
+    Init();
+
+}
+
+void ACivilianSpawner::Init()
+{
+    SpawnBox = FBox(-SpawnArea->GetScaledBoxExtent(), SpawnArea->GetScaledBoxExtent());
+    CivilianClass = StaticLoadClass(ANormalCharacter::StaticClass(), NULL, TEXT("/Game/Blueprints/BP_Civilian.BP_Civilian_C"));
 }
 
 // Called every frame
 void ACivilianSpawner::Tick( float DeltaTime )
 {
     Super::Tick( DeltaTime );
-
 }
 
+void ACivilianSpawner::SpawnCivilian()
+{
+    if (!HasAuthority())
+    {
+        return;
+    }
+
+    FVector RandomPoint = GetActorLocation() + FMath::RandPointInBox(FBox(-SpawnArea->GetScaledBoxExtent(), SpawnArea->GetScaledBoxExtent()));
+
+    ANormalCharacter* Civilian = Cast<ANormalCharacter>(GetWorld()->SpawnActor(CivilianClass, &RandomPoint));
+
+    if (nullptr == Civilian)
+    {
+        GEngine->AddOnScreenDebugMessage(-1, 3.0, FColor::Red, "SpawnCivilian is Null");
+        return;
+    }
+
+    Civilian->SpawnDefaultController();
+
+    GEngine->AddOnScreenDebugMessage(-1, 3.0, FColor::Red, TEXT("村民生成SpawnCivilian X: ") + FString::SanitizeFloat(RandomPoint.X) + " Y: " + FString::SanitizeFloat(RandomPoint.Y) + " Z: " + FString::SanitizeFloat(RandomPoint.Z));
+}

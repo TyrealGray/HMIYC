@@ -27,11 +27,11 @@ public:
 
 private:
     UPROPERTY()
-    UUserWidget* m_pMainMenu;
+    UUserWidget* MainMenu;
     UPROPERTY()
-    UUserWidget* m_pServerList;
+    UUserWidget* ServerList;
     UPROPERTY()
-    UUserWidget* m_pPauseMenu;
+    UUserWidget* PauseMenu;
 
-    void createUIWidget(UUserWidget* &pWidget, const FString& strPath);
+    class UUserWidget* CreateUIWidget(const FString& Path);
 };

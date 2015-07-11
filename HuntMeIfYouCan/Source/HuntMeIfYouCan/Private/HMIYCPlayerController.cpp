@@ -15,14 +15,14 @@ void AHMIYCPlayerController::SetupInputComponent()
 {
     Super::SetupInputComponent();
 
-    InputComponent->BindAxis("MoveForward", this, &AHMIYCPlayerController::onMoveForward);
-    InputComponent->BindAxis("MoveRight", this, &AHMIYCPlayerController::onMoveRight);
+    InputComponent->BindAxis("MoveForward", this, &AHMIYCPlayerController::OnMoveForward);
+    InputComponent->BindAxis("MoveRight", this, &AHMIYCPlayerController::OnMoveRight);
 
-    InputComponent->BindAxis("Turn", this, &AHMIYCPlayerController::onTurn);
-    InputComponent->BindAxis("LookUp", this, &AHMIYCPlayerController::onLookUp);
+    InputComponent->BindAxis("Turn", this, &AHMIYCPlayerController::OnTurn);
+    InputComponent->BindAxis("LookUp", this, &AHMIYCPlayerController::OnLookUp);
 }
 
-void AHMIYCPlayerController::onMoveForward(float Value)
+void AHMIYCPlayerController::OnMoveForward(float Value)
 {
     ANormalCharacter* pNormalCharacter = Cast<ANormalCharacter>(GetPawn());
 
@@ -34,7 +34,7 @@ void AHMIYCPlayerController::onMoveForward(float Value)
     pNormalCharacter->MoveForward(Value);
 }
 
-void AHMIYCPlayerController::onMoveRight(float Value)
+void AHMIYCPlayerController::OnMoveRight(float Value)
 {
     ANormalCharacter* pNormalCharacter = Cast<ANormalCharacter>(GetPawn());
 
@@ -46,7 +46,7 @@ void AHMIYCPlayerController::onMoveRight(float Value)
     pNormalCharacter->MoveRight(Value);
 }
 
-void AHMIYCPlayerController::onTurn(float Value)
+void AHMIYCPlayerController::OnTurn(float Value)
 {
     APawn* pPawm = nullptr;
 
@@ -58,7 +58,7 @@ void AHMIYCPlayerController::onTurn(float Value)
     pPawm->AddControllerYawInput(Value);
 }
 
-void AHMIYCPlayerController::onLookUp(float Value)
+void AHMIYCPlayerController::OnLookUp(float Value)
 {
     APawn* pPawm = nullptr;
 

@@ -20,10 +20,10 @@ public:
 
 private:
 
-    void onMoveForward(float Value);
-    void onMoveRight(float Value);
+    void OnMoveForward(float Value);
+    void OnMoveRight(float Value);
 
-    void onTurn(float Value);
-    void onLookUp(float Value);
+    void OnTurn(float Value);
+    void OnLookUp(float Value);
 
 };

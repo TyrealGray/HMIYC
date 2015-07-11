@@ -6,59 +6,61 @@
 const int32 UI_ZORDER = 10;
 UHMIYCGameInstance::UHMIYCGameInstance(const FObjectInitializer &objectInitializer):
     Super(objectInitializer),
-    m_pMainMenu(NULL),
-    m_pServerList(NULL),
-    m_pPauseMenu(NULL)
+    MainMenu(nullptr),
+    ServerList(nullptr),
+    PauseMenu(nullptr)
 {
 
 }
 
 void UHMIYCGameInstance::openMainMenu()
 {
-    if (NULL == m_pMainMenu || !IsValid(m_pMainMenu))
+    if (!IsValid(MainMenu))
     {
-        createUIWidget(m_pMainMenu, "/Game/Blueprints/Widgets/MainMenu.MainMenu_C");
+        MainMenu = CreateUIWidget("/Game/Blueprints/Widgets/MainMenu.MainMenu_C");
     }
 
-    if (NULL != m_pServerList && IsValid(m_pServerList) && m_pServerList->IsVisible())
+    if (IsValid(ServerList) && ServerList->IsVisible())
     {
-        m_pServerList->SetVisibility(ESlateVisibility::Hidden);
+        ServerList->SetVisibility(ESlateVisibility::Hidden);
     }
 
-    m_pMainMenu->SetVisibility(ESlateVisibility::Visible);
+    MainMenu->SetVisibility(ESlateVisibility::Visible);
 }
 
 void UHMIYCGameInstance::openServerList()
 {
-    if (NULL == m_pServerList || !IsValid(m_pServerList))
+    if (!IsValid(ServerList))
     {
-        createUIWidget(m_pServerList, "/Game/Blueprints/Widgets/ServerList.ServerList_C");
+        ServerList = CreateUIWidget( "/Game/Blueprints/Widgets/ServerList.ServerList_C");
     }
 
-    if (NULL != m_pMainMenu && IsValid(m_pMainMenu) && m_pMainMenu->IsVisible())
+    if (IsValid(MainMenu) && MainMenu->IsVisible())
     {
-        m_pMainMenu->SetVisibility(ESlateVisibility::Hidden);
+        MainMenu->SetVisibility(ESlateVisibility::Hidden);
     }
-    m_pServerList->SetVisibility(ESlateVisibility::Visible);
+    ServerList->SetVisibility(ESlateVisibility::Visible);
 }
 
 void UHMIYCGameInstance::openPauseMenu()
 {
-    if (NULL == m_pPauseMenu || !IsValid(m_pPauseMenu))
+    if (!IsValid(PauseMenu))
     {
-        createUIWidget(m_pPauseMenu, "/Game/Blueprints/Widgets/PauseMenu.PauseMenu_C");
+        PauseMenu = CreateUIWidget("/Game/Blueprints/Widgets/PauseMenu.PauseMenu_C");
     }
 
-    m_pPauseMenu->SetVisibility(ESlateVisibility::Visible);
+    PauseMenu->SetVisibility(ESlateVisibility::Visible);
 }
 
-void UHMIYCGameInstance::createUIWidget(UUserWidget* &pWidget, const FString& strPath)
+class UUserWidget* UHMIYCGameInstance::CreateUIWidget(const FString& Path)
 {
-    UClass* pWidgetClass = StaticLoadClass(UUserWidget::StaticClass(), NULL, *strPath);
+    UClass* WidgetClass = StaticLoadClass(UUserWidget::StaticClass(), NULL, *Path);
 
-    pWidget = CreateWidget<UUserWidget>(GetWorld(), pWidgetClass);
+    UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), WidgetClass);
 
-    pWidget->AddToViewport(UI_ZORDER);
+    Widget->AddToViewport(UI_ZORDER);
 
-    pWidget->SetVisibility(ESlateVisibility::Hidden);
+    Widget->SetVisibility(ESlateVisibility::Hidden);
+
+    return Widget;
 }

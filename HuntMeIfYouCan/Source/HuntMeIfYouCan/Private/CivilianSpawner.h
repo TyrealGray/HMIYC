@@ -20,9 +20,22 @@ public:
     // Called every frame
     virtual void Tick( float DeltaSeconds ) override;
 
+    UFUNCTION(BlueprintCallable, category = Spawn)
+    void SpawnCivilian();
+
 private:
+
+    FBox SpawnBox;
+
     class USceneComponent* Root;
 
-    class UBoxComponent* SpawnArea;
+    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Area, meta = (AllowPrivateAccess = "true"))
+    class UBoxComponent * SpawnArea;
+
+    TSubclassOf<class ANormalCharacter> CivilianClass;
+
+    void Init();
+
+
 
 };
