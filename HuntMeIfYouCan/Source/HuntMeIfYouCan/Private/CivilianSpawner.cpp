@@ -38,7 +38,7 @@ void ACivilianSpawner::BeginPlay()
 void ACivilianSpawner::Init()
 {
     SpawnBox = FBox(-SpawnArea->GetScaledBoxExtent(), SpawnArea->GetScaledBoxExtent());
-    CivilianClass = StaticLoadClass(ANormalCharacter::StaticClass(), NULL, TEXT("/Game/Blueprints/BP_Civilian.BP_Civilian_C"));
+    CivilianClass = StaticLoadClass(ANormalCharacter::StaticClass(), NULL, TEXT("/Game/Blueprints/Characters/Civilian/BP_Civilian.BP_Civilian_C"));
 }
 
 // Called every frame
@@ -56,7 +56,9 @@ void ACivilianSpawner::SpawnCivilian()
 
     FVector RandomPoint = GetActorLocation() + FMath::RandPointInBox(FBox(-SpawnArea->GetScaledBoxExtent(), SpawnArea->GetScaledBoxExtent()));
 
-    ANormalCharacter* Civilian = Cast<ANormalCharacter>(GetWorld()->SpawnActor(CivilianClass, &RandomPoint));
+    FRotator RandomRotation = FRotator(0.0f, FMath::FRandRange(0.0f, 364.0f), 0.0f);
+
+    ANormalCharacter* Civilian = Cast<ANormalCharacter>(GetWorld()->SpawnActor(CivilianClass, &RandomPoint, &RandomRotation));
 
     if (nullptr == Civilian)
     {
@@ -65,6 +67,8 @@ void ACivilianSpawner::SpawnCivilian()
     }
 
     Civilian->SpawnDefaultController();
+
+    Civilian->SetIsNPC(true);
 
     GEngine->AddOnScreenDebugMessage(-1, 3.0, FColor::Red, TEXT("村民生成SpawnCivilian X: ") + FString::SanitizeFloat(RandomPoint.X) + " Y: " + FString::SanitizeFloat(RandomPoint.Y) + " Z: " + FString::SanitizeFloat(RandomPoint.Z));
 }

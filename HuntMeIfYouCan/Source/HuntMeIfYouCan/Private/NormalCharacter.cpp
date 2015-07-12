@@ -19,6 +19,7 @@ ANormalCharacter::ANormalCharacter()
 
     GetCharacterMovement()->bOrientRotationToMovement = true;
 
+    bIsNPC = false;
 }
 
 // Called when the game starts or when spawned
@@ -66,4 +67,12 @@ void ANormalCharacter::MoveRight(float Value)
     AddMovementInput(Direction, Value);
 }
 
+void ANormalCharacter::SetIsNPC(bool IsNPC)
+{
+    bIsNPC = IsNPC;
+}
 
+bool ANormalCharacter::IsNpc()
+{
+    return bIsNPC;
+}

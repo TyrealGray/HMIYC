@@ -196,3 +196,5 @@ FakesAssemblies/
 *.opt
 /HuntMeIfYouCan/Binaries
 Civilians
+Saved
+Intermediate

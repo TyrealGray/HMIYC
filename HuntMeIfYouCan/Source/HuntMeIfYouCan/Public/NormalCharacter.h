@@ -29,7 +29,10 @@ public:
 
     void MoveRight(float Value);
 
-    void SetIsNPC(bool bIsNPC);
+    void SetIsNPC(bool IsNPC);
+
+    UFUNCTION(BlueprintCallable, category = AI)
+    bool IsNpc();
 
 private:
 
