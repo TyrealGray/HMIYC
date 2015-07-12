@@ -56,13 +56,13 @@ void ACivilianSpawner::SpawnCivilian()
 
     FVector RandomPoint = GetActorLocation() + FMath::RandPointInBox(FBox(-SpawnArea->GetScaledBoxExtent(), SpawnArea->GetScaledBoxExtent()));
 
-    FRotator RandomRotation = FRotator(0.0f, FMath::FRandRange(0.0f, 364.0f), 0.0f);
+    FRotator RandomRotation = FRotator(0.0f, FMath::FRandRange(0.0f, 360.0f), 0.0f);
 
     ANormalCharacter* Civilian = Cast<ANormalCharacter>(GetWorld()->SpawnActor(CivilianClass, &RandomPoint, &RandomRotation));
 
     if (nullptr == Civilian)
     {
-        GEngine->AddOnScreenDebugMessage(-1, 3.0, FColor::Red, "SpawnCivilian is Null");
+        GEngine->AddOnScreenDebugMessage(-1, 3.0, FColor::Red, TEXT("村民無法生成SpawnCivilian is Null"));
         return;
     }
 
