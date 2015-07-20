@@ -25,14 +25,12 @@ public:
     // Called to bind functionality to input
     virtual void SetupPlayerInputComponent( class UInputComponent* InputComponent ) override;
 
-    UFUNCTION( reliable, server, WithValidation )
-    void ServerSetSomeBool( bool bNewSomeBool );
-
     void GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const;
 
-    void SetSomeBool( bool bNewSomeBool );
-    virtual void ServerSetSomeBool_Implementation( bool bNewSomeBool );
-    virtual bool ServerSetSomeBool_Validate( bool bNewSomeBool );
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetStab( bool IsStab );
+    virtual void ServerSetStab_Implementation( bool IsStab );
+    virtual bool ServerSetStab_Validate( bool IsStab );
 
     UFUNCTION( BlueprintCallable, Category = Action )
     void SetStab( bool IsStab );
@@ -40,8 +38,6 @@ public:
 private:
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Action, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsStab;
-
-    bool bSomeBool;
 
     void UseSkill();
 };
