@@ -18,28 +18,28 @@ public:
     virtual void BeginPlay() override;
 
     // Called every frame
-    virtual void Tick( float DeltaSeconds ) override;
+    virtual void Tick( float DeltaTime ) override;
 
     // Called to bind functionality to input
-    virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+    virtual void SetupPlayerInputComponent( class UInputComponent* InputComponent ) override;
 
 public:
 
-    void MoveForward(float Value);
+    void MoveForward( float Value );
 
-    void MoveRight(float Value);
+    void MoveRight( float Value );
 
-    void SetIsNPC(bool IsNPC);
+    void SetIsNPC( bool IsNPC );
 
-    UFUNCTION(BlueprintCallable, category = AI)
+    UFUNCTION( BlueprintCallable, category = AI )
     bool IsNpc();
 
 private:
 
     /** Follow camera */
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+    UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = ( AllowPrivateAccess = "true" ) )
     class UCameraComponent * Camera;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = AI, meta = (AllowPrivateAccess = "true"))
+    UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = AI, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsNPC;
 };
