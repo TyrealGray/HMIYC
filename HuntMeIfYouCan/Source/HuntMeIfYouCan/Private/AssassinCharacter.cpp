@@ -49,7 +49,7 @@ void AAssassinCharacter::UseSkill()
     switch ( CurrentHuntSkill )
     {
     case EHuntSkillEnum::HSE_ConcealedItem:
-        SetStab( true );
+        UseConcealedItem();
         break;
     case EHuntSkillEnum::HSE_TargetItem:
         break;
@@ -58,6 +58,11 @@ void AAssassinCharacter::UseSkill()
     default:
         break;
     }
+}
+
+void AAssassinCharacter::UseConcealedItem()
+{
+
 }
 
 void AAssassinCharacter::SetStab( bool IsStab )
@@ -114,3 +119,4 @@ void AAssassinCharacter::SwitchTargetItem()
 {
     SetCurrentHuntSkill( EHuntSkillEnum::HSE_TargetItem );
 }
+

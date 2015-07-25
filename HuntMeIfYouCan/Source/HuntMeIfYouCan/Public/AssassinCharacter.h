@@ -45,6 +45,8 @@ public:
     // Called to bind functionality to input
     virtual void SetupPlayerInputComponent( class UInputComponent* InputComponent ) override;
 
+    virtual void UseConcealedItem();
+
     void GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const;
 
     UFUNCTION( BlueprintCallable, Category = Action )
