@@ -32,6 +32,7 @@ void AAssassinCharacter::SetupPlayerInputComponent( class UInputComponent* Input
 
     InputComponent->BindAction( "ConcealedItem", IE_Pressed, this, &AAssassinCharacter::SwitchConcealedItem );
     InputComponent->BindAction( "TargetItem", IE_Pressed, this, &AAssassinCharacter::SwitchTargetItem );
+    InputComponent->BindAction( "Unique", IE_Pressed, this, &AAssassinCharacter::SwitchUnique );
 }
 
 void AAssassinCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const
@@ -52,8 +53,10 @@ void AAssassinCharacter::UseSkill()
         UseConcealedItem();
         break;
     case EHuntSkillEnum::HSE_TargetItem:
+        UseTargetItem();
         break;
-    case EHuntSkillEnum::HSE_Specific:
+    case EHuntSkillEnum::HSE_Unique:
+        UseUnique();
         break;
     default:
         break;
@@ -62,7 +65,17 @@ void AAssassinCharacter::UseSkill()
 
 void AAssassinCharacter::UseConcealedItem()
 {
+    //TODO UI Stuff
+}
 
+void AAssassinCharacter::UseTargetItem()
+{
+    //TODO UI Stuff
+}
+
+void AAssassinCharacter::UseUnique()
+{
+    //TODO UI Stuff
 }
 
 void AAssassinCharacter::SetStab( bool IsStab )
@@ -90,6 +103,26 @@ bool AAssassinCharacter::ServerSetStab_Validate( bool IsStab )
     return true;
 }
 
+void AAssassinCharacter::SetCurrentStatus( EStatusEnum Status )
+{
+    CurrentStatus = Status;
+
+    if ( Role < ROLE_Authority )
+    {
+        ServerSetCurrentStatus( Status );
+    }
+}
+
+void AAssassinCharacter::ServerSetCurrentStatus_Implementation( EStatusEnum Status )
+{
+    SetCurrentStatus( Status );
+}
+
+bool AAssassinCharacter::ServerSetCurrentStatus_Validate( EStatusEnum Status )
+{
+    return true;
+}
+
 void AAssassinCharacter::SetCurrentHuntSkill( EHuntSkillEnum Skill )
 {
     CurrentHuntSkill = Skill;
@@ -110,6 +143,26 @@ bool AAssassinCharacter::ServerSetCurrentHuntSkill_Validate( EHuntSkillEnum Skil
     return true;
 }
 
+void AAssassinCharacter::SetCurrentRunningSkill( ERunningSkillEnum Skill )
+{
+    CurrentRunningSkill = Skill;
+
+    if ( Role < ROLE_Authority )
+    {
+        ServerSetCurrentRunningSkill( Skill );
+    }
+}
+
+void AAssassinCharacter::ServerSetCurrentRunningSkill_Implementation( ERunningSkillEnum Skill )
+{
+    SetCurrentRunningSkill( Skill );
+}
+
+bool AAssassinCharacter::ServerSetCurrentRunningSkill_Validate( ERunningSkillEnum Skill )
+{
+    return true;
+}
+
 void AAssassinCharacter::SwitchConcealedItem()
 {
     SetCurrentHuntSkill( EHuntSkillEnum::HSE_ConcealedItem );
@@ -120,3 +173,7 @@ void AAssassinCharacter::SwitchTargetItem()
     SetCurrentHuntSkill( EHuntSkillEnum::HSE_TargetItem );
 }
 
+void AAssassinCharacter::SwitchUnique()
+{
+    SetCurrentHuntSkill( EHuntSkillEnum::HSE_Unique );
+}

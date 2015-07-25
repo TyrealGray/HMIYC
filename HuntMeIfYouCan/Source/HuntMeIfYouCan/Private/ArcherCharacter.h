@@ -18,6 +18,4 @@ public:
 
     virtual void UseConcealedItem();
 
-
-
 };

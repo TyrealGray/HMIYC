@@ -77,5 +77,5 @@ void ACivilianSpawner::SpawnCivilian()
 
     Civilian->SetIsNPC( true );
 
-    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Red, TEXT( "村民生成SpawnCivilian X: " ) + FString::SanitizeFloat( RandomPoint.X ) + " Y: " + FString::SanitizeFloat( RandomPoint.Y ) + " Z: " + FString::SanitizeFloat( RandomPoint.Z ) );
+    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::White, TEXT( "村民生成SpawnCivilian X: " ) + FString::SanitizeFloat( RandomPoint.X ) + " Y: " + FString::SanitizeFloat( RandomPoint.Y ) + " Z: " + FString::SanitizeFloat( RandomPoint.Z ) );
 }
