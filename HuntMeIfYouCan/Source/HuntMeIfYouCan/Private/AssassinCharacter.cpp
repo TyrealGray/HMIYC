@@ -12,6 +12,8 @@ AAssassinCharacter::AAssassinCharacter()
 void AAssassinCharacter::BeginPlay()
 {
     Super::BeginPlay();
+
+    SetCurrentHuntSkill( EHuntSkillEnum::HSE_ConcealedItem );
 }
 
 void AAssassinCharacter::Tick( float DeltaTime )
@@ -27,6 +29,9 @@ void AAssassinCharacter::SetupPlayerInputComponent( class UInputComponent* Input
     InputComponent->BindAction( "Jump", IE_Released, this, &ACharacter::StopJumping );
 
     InputComponent->BindAction( "UseSkill", IE_Pressed, this, &AAssassinCharacter::UseSkill );
+
+    InputComponent->BindAction( "ConcealedItem", IE_Pressed, this, &AAssassinCharacter::SwitchConcealedItem );
+    InputComponent->BindAction( "TargetItem", IE_Pressed, this, &AAssassinCharacter::SwitchTargetItem );
 }
 
 void AAssassinCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const
@@ -34,11 +39,25 @@ void AAssassinCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty >
     Super::GetLifetimeReplicatedProps( OutLifetimeProps );
 
     DOREPLIFETIME( AAssassinCharacter, bIsStab );
+    DOREPLIFETIME( AAssassinCharacter, CurrentStatus );
+    DOREPLIFETIME( AAssassinCharacter, CurrentHuntSkill );
+    DOREPLIFETIME( AAssassinCharacter, CurrentRunningSkill );
 }
 
 void AAssassinCharacter::UseSkill()
 {
-    SetStab( true );
+    switch ( CurrentHuntSkill )
+    {
+    case EHuntSkillEnum::HSE_ConcealedItem:
+        SetStab( true );
+        break;
+    case EHuntSkillEnum::HSE_TargetItem:
+        break;
+    case EHuntSkillEnum::HSE_Specific:
+        break;
+    default:
+        break;
+    }
 }
 
 void AAssassinCharacter::SetStab( bool IsStab )
@@ -53,15 +72,45 @@ void AAssassinCharacter::SetStab( bool IsStab )
     }
 }
 
-bool AAssassinCharacter::ServerSetStab_Validate( bool IsStab )
-{
-    return true;
-}
-
 void AAssassinCharacter::ServerSetStab_Implementation( bool IsStab )
 {
     // This function is only called on the server (where Role == ROLE_Authority), called over the network by clients.
     // We need to call SetSomeBool() to actually change the value of the bool now!
     // Inside that function, Role == ROLE_Authority, so it won't try to call ServerSetSomeBool() again.
     SetStab( IsStab );
+}
+
+bool AAssassinCharacter::ServerSetStab_Validate( bool IsStab )
+{
+    return true;
+}
+
+void AAssassinCharacter::SetCurrentHuntSkill( EHuntSkillEnum Skill )
+{
+    CurrentHuntSkill = Skill;
+
+    if ( Role < ROLE_Authority )
+    {
+        ServerSetCurrentHuntSkill( Skill );
+    }
+}
+
+void AAssassinCharacter::ServerSetCurrentHuntSkill_Implementation( EHuntSkillEnum Skill )
+{
+    SetCurrentHuntSkill( CurrentHuntSkill );
+}
+
+bool AAssassinCharacter::ServerSetCurrentHuntSkill_Validate( EHuntSkillEnum Skill )
+{
+    return true;
+}
+
+void AAssassinCharacter::SwitchConcealedItem()
+{
+    SetCurrentHuntSkill( EHuntSkillEnum::HSE_ConcealedItem );
+}
+
+void AAssassinCharacter::SwitchTargetItem()
+{
+    SetCurrentHuntSkill( EHuntSkillEnum::HSE_TargetItem );
 }

@@ -55,9 +55,30 @@ public:
     virtual void ServerSetStab_Implementation( bool IsStab );
     virtual bool ServerSetStab_Validate( bool IsStab );
 
+    UFUNCTION( BlueprintCallable, category = SkillSwitch )
+    void SetCurrentHuntSkill( EHuntSkillEnum Skill );
+
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetCurrentHuntSkill( EHuntSkillEnum Skill );
+    virtual void ServerSetCurrentHuntSkill_Implementation( EHuntSkillEnum Skill );
+    virtual bool ServerSetCurrentHuntSkill_Validate( EHuntSkillEnum Skill );
+
 private:
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Action, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsStab;
 
+    UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Status, meta = ( AllowPrivateAccess = "true" ) )
+    EStatusEnum CurrentStatus;
+
+    UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = HuntSkill, meta = ( AllowPrivateAccess = "true" ) )
+    EHuntSkillEnum CurrentHuntSkill;
+
+    UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = RunningSkill, meta = ( AllowPrivateAccess = "true" ) )
+    ERunningSkillEnum CurrentRunningSkill;
+
     void UseSkill();
+
+    void SwitchConcealedItem();
+
+    void SwitchTargetItem();
 };
