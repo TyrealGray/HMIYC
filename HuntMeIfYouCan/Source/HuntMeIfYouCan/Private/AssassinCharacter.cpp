@@ -65,22 +65,21 @@ void AAssassinCharacter::UseSkill()
 
 void AAssassinCharacter::UseConcealedItem()
 {
-    //TODO UI Stuff
+
 }
 
 void AAssassinCharacter::UseTargetItem()
 {
-    //TODO UI Stuff
 }
 
 void AAssassinCharacter::UseUnique()
 {
-    //TODO UI Stuff
 }
 
 void AAssassinCharacter::SetStab( bool IsStab )
 {
     bIsStab = IsStab;
+    SetActorRotation( FRotator( 0.0f, GetViewRotation().Yaw, 0.0f ) );
 
     // If this next check succeeds, we are *not* the authority, meaning we are a network client.
     // In this case we also want to call the server function to tell it to change the bSomeBool property as well.

@@ -25,7 +25,8 @@ enum class EStatusEnum : uint8
 {
     SE_Masquerade 	UMETA( DisplayName = "Masquerade" ),
     SE_Expose UMETA( DisplayName = "Expose" ),
-    SE_Crawling UMETA( DisplayName = "Crawling" )
+    SE_Crawling UMETA( DisplayName = "Crawling" ),
+    SE_Dead UMETA( DisplayName = "Dead" )
 };
 
 UCLASS()
