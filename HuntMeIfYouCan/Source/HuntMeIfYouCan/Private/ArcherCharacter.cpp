@@ -12,16 +12,19 @@ void AArcherCharacter::UseConcealedItem()
 {
     SetStab( true );
 
+    FCollisionQueryParams TraceParams = FCollisionQueryParams( FName( TEXT( "Trace" ) ), false, this );
+
     FHitResult Result;
 
-    UGameplayStatics::GetPlayerController( GetWorld(), 0 )->GetHitResultUnderCursorByChannel( UEngineTypes::ConvertToTraceType( ECC_Pawn ), false, Result );
+    GetWorld()->LineTraceSingleByChannel( Result, GetActorLocation(),
+                                          GetActorLocation() + GetViewRotation().RotateVector( FVector( 100.0f, 0.0f, 0.0f ) ), ECC_Pawn, TraceParams );
 
     AActor* Actor = Result.GetActor();
 
-    if ( !Result.bBlockingHit || nullptr == Cast<ANormalCharacter>( Actor ) || 2000 < FVector::Dist( Actor->GetActorLocation(), GetActorLocation() ) )
+    if ( !Result.bBlockingHit ||  !Actor->IsA( ANormalCharacter::StaticClass() ) || 2000 < FVector::Dist( Actor->GetActorLocation(), GetActorLocation() ) )
     {
         return;
     }
 
-    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Red, TEXT( "“ôÖÐ!" + Result.GetActor()->GetName() ) );
+    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Red, TEXT( "“ôÖÐ!Stab on: " + Actor->GetName() ) );
 }
