@@ -42,4 +42,7 @@ private:
 
     UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = AI, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsNPC;
+
+    UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = Status, meta = ( AllowPrivateAccess = "true" ) )
+    bool bIsDead;
 };
