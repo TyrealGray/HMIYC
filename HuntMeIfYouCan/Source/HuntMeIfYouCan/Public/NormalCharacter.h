@@ -23,6 +23,8 @@ public:
     // Called to bind functionality to input
     virtual void SetupPlayerInputComponent( class UInputComponent* InputComponent ) override;
 
+    virtual void GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const;
+
 public:
 
     void MoveForward( float Value );
@@ -34,6 +36,14 @@ public:
     UFUNCTION( BlueprintCallable, category = AI )
     bool IsNpc();
 
+    UFUNCTION( BlueprintCallable, Category = Action )
+    void SetDead( bool IsDead );
+
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetDead( bool IsDead );
+    virtual void ServerSetDead_Implementation( bool IsDead );
+    virtual bool ServerSetDead_Validate( bool IsDead );
+
 private:
 
     /** Follow camera */
@@ -43,6 +53,6 @@ private:
     UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = AI, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsNPC;
 
-    UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = Status, meta = ( AllowPrivateAccess = "true" ) )
+    UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Status, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsDead;
 };

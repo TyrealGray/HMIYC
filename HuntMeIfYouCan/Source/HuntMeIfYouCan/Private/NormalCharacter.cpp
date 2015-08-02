@@ -2,7 +2,7 @@
 
 #include "HuntMeIfYouCan.h"
 #include "NormalCharacter.h"
-
+#include "UnrealNetwork.h"
 
 // Sets default values
 ANormalCharacter::ANormalCharacter()
@@ -44,6 +44,13 @@ void ANormalCharacter::SetupPlayerInputComponent( class UInputComponent* InputCo
     Super::SetupPlayerInputComponent( InputComponent );
 }
 
+void ANormalCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const
+{
+    Super::GetLifetimeReplicatedProps( OutLifetimeProps );
+
+    DOREPLIFETIME( ANormalCharacter, bIsDead );
+}
+
 void ANormalCharacter::MoveForward( float Value )
 {
     // find out which way is forward
@@ -75,4 +82,26 @@ void ANormalCharacter::SetIsNPC( bool IsNPC )
 bool ANormalCharacter::IsNpc()
 {
     return bIsNPC;
+}
+
+void ANormalCharacter::SetDead( bool IsDead )
+{
+    bIsDead = IsDead;
+
+    // If this next check succeeds, we are *not* the authority, meaning we are a network client.
+    // In this case we also want to call the server function to tell it to change the bSomeBool property as well.
+    if ( Role < ROLE_Authority )
+    {
+        ServerSetDead( IsDead );
+    }
+}
+
+void ANormalCharacter::ServerSetDead_Implementation( bool IsDead )
+{
+    SetDead( IsDead );
+}
+
+bool ANormalCharacter::ServerSetDead_Validate( bool IsDead )
+{
+    return true;
 }
