@@ -10,7 +10,7 @@ AArcherCharacter::AArcherCharacter()
 
 void AArcherCharacter::UseConcealedItem()
 {
-    SetStab( true );
+    SetStabBegin();
 
     FCollisionQueryParams TraceParams = FCollisionQueryParams( FName( TEXT( "Trace" ) ), false, this );
 

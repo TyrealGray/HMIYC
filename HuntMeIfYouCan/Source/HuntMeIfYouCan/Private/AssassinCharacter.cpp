@@ -14,6 +14,9 @@ void AAssassinCharacter::BeginPlay()
     Super::BeginPlay();
 
     SetCurrentHuntSkill( EHuntSkillEnum::HSE_ConcealedItem );
+
+    InitDagger();
+
 }
 
 void AAssassinCharacter::Tick( float DeltaTime )
@@ -76,6 +79,39 @@ void AAssassinCharacter::UseUnique()
 {
 }
 
+void AAssassinCharacter::InitDagger()
+{
+    TSubclassOf<AActor> DaggerActor = StaticLoadClass( AActor::StaticClass(),
+                                      NULL, TEXT( "/Game/Blueprints/Equipments/Dagger/BP_NormalDaggerActor.BP_NormalDaggerActor_C" ) );
+
+    FActorSpawnParameters SpawnParameter;
+
+    SpawnParameter.Owner = this;
+
+    ConcealedItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == DaggerActor ) ? AActor::StaticClass() : DaggerActor, SpawnParameter );
+
+    ConcealedItemActor->SetActorHiddenInGame( true );
+
+    ConcealedItemActor->AttachRootComponentTo( GetMesh(), FName( "ConcealedItem" ), EAttachLocation::SnapToTarget, false );
+}
+
+void AAssassinCharacter::SetStabBegin()
+{
+    SetStab( true );
+
+    GetWorldTimerManager().ClearTimer( StabTimer );
+    GetWorldTimerManager().SetTimer( StabTimer, this, &AAssassinCharacter::SetStabOver, 0.3f, true );
+
+    ConcealedItemActor->SetActorHiddenInGame( false );
+}
+
+void AAssassinCharacter::SetStabOver()
+{
+    SetStab( false );
+
+    ConcealedItemActor->SetActorHiddenInGame( true );
+}
+
 void AAssassinCharacter::SetStab( bool IsStab )
 {
     bIsStab = IsStab;
@@ -95,6 +131,7 @@ void AAssassinCharacter::ServerSetStab_Implementation( bool IsStab )
     // We need to call SetSomeBool() to actually change the value of the bool now!
     // Inside that function, Role == ROLE_Authority, so it won't try to call ServerSetSomeBool() again.
     SetStab( IsStab );
+    ConcealedItemActor->SetActorHiddenInGame( !IsStab );
 }
 
 bool AAssassinCharacter::ServerSetStab_Validate( bool IsStab )

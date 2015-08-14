@@ -16,6 +16,8 @@ public:
 
     AArcherCharacter();
 
+private:
+
     virtual void UseConcealedItem();
 
 };

@@ -48,43 +48,9 @@ public:
 
     virtual void GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const;
 
-    virtual void UseConcealedItem();
+    void SetStabBegin();
 
-    virtual void UseTargetItem();
-
-    virtual void UseUnique();
-
-    UFUNCTION( BlueprintCallable, Category = Action )
-    void SetStab( bool IsStab );
-
-    UFUNCTION( reliable, server, WithValidation )
-    void ServerSetStab( bool IsStab );
-    virtual void ServerSetStab_Implementation( bool IsStab );
-    virtual bool ServerSetStab_Validate( bool IsStab );
-
-    UFUNCTION( BlueprintCallable, Category = StatusSwitch )
-    void SetCurrentStatus( EStatusEnum Status );
-
-    UFUNCTION( reliable, server, WithValidation )
-    void ServerSetCurrentStatus( EStatusEnum Status );
-    virtual void ServerSetCurrentStatus_Implementation( EStatusEnum Status );
-    virtual bool ServerSetCurrentStatus_Validate( EStatusEnum Status );
-
-    UFUNCTION( BlueprintCallable, category = SkillSwitch )
-    void SetCurrentHuntSkill( EHuntSkillEnum Skill );
-
-    UFUNCTION( reliable, server, WithValidation )
-    void ServerSetCurrentHuntSkill( EHuntSkillEnum Skill );
-    virtual void ServerSetCurrentHuntSkill_Implementation( EHuntSkillEnum Skill );
-    virtual bool ServerSetCurrentHuntSkill_Validate( EHuntSkillEnum Skill );
-
-    UFUNCTION( BlueprintCallable, category = SkillSwitch )
-    void SetCurrentRunningSkill( ERunningSkillEnum Skill );
-
-    UFUNCTION( reliable, server, WithValidation )
-    void ServerSetCurrentRunningSkill( ERunningSkillEnum Skill );
-    virtual void ServerSetCurrentRunningSkill_Implementation( ERunningSkillEnum Skill );
-    virtual bool ServerSetCurrentRunningSkill_Validate( ERunningSkillEnum Skill );
+    void SetStabOver();
 
 private:
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Action, meta = ( AllowPrivateAccess = "true" ) )
@@ -99,11 +65,51 @@ private:
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = RunningSkill, meta = ( AllowPrivateAccess = "true" ) )
     ERunningSkillEnum CurrentRunningSkill;
 
+    class AActor* ConcealedItemActor;
+
+    FTimerHandle StabTimer;
+
     void UseSkill();
+
+    virtual void UseConcealedItem();
+
+    virtual void UseTargetItem();
+
+    virtual void UseUnique();
+
+    virtual void InitDagger();
 
     void SwitchConcealedItem();
 
     void SwitchTargetItem();
 
     void SwitchUnique();
+
+    void SetStab( bool IsStab );
+
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetStab( bool IsStab );
+    virtual void ServerSetStab_Implementation( bool IsStab );
+    virtual bool ServerSetStab_Validate( bool IsStab );
+
+    void SetCurrentStatus( EStatusEnum Status );
+
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetCurrentStatus( EStatusEnum Status );
+    virtual void ServerSetCurrentStatus_Implementation( EStatusEnum Status );
+    virtual bool ServerSetCurrentStatus_Validate( EStatusEnum Status );
+
+    void SetCurrentHuntSkill( EHuntSkillEnum Skill );
+
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetCurrentHuntSkill( EHuntSkillEnum Skill );
+    virtual void ServerSetCurrentHuntSkill_Implementation( EHuntSkillEnum Skill );
+    virtual bool ServerSetCurrentHuntSkill_Validate( EHuntSkillEnum Skill );
+
+    void SetCurrentRunningSkill( ERunningSkillEnum Skill );
+
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetCurrentRunningSkill( ERunningSkillEnum Skill );
+    virtual void ServerSetCurrentRunningSkill_Implementation( ERunningSkillEnum Skill );
+    virtual bool ServerSetCurrentRunningSkill_Validate( ERunningSkillEnum Skill );
 };
