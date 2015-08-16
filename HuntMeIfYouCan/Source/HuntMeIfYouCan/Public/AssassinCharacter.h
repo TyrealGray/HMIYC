@@ -48,6 +48,12 @@ public:
 
     virtual void GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const;
 
+    virtual void UseConcealedItem();
+
+    virtual void UseTargetItem();
+
+    virtual void UseUnique();
+
     void SetStabBegin();
 
     void SetStabOver();
@@ -71,11 +77,10 @@ private:
 
     void UseSkill();
 
-    virtual void UseConcealedItem();
-
-    virtual void UseTargetItem();
-
-    virtual void UseUnique();
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerUseConcealedItem();
+    virtual void ServerUseConcealedItem_Implementation();
+    virtual bool ServerUseConcealedItem_Validate();
 
     virtual void InitDagger();
 

@@ -5,7 +5,9 @@
 #include "UnrealNetwork.h"
 
 // Sets default values
-ANormalCharacter::ANormalCharacter()
+ANormalCharacter::ANormalCharacter():
+    bIsNPC( false ),
+    bIsDead( false )
 {
     // Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
     PrimaryActorTick.bCanEverTick = true;
@@ -22,8 +24,6 @@ ANormalCharacter::ANormalCharacter()
     Camera->RelativeLocation = FVector( 20.0f, 0.0f, 10.0f );
 
     GetCharacterMovement()->bOrientRotationToMovement = true;
-
-    bIsNPC = false;
 }
 
 // Called when the game starts or when spawned
@@ -49,6 +49,7 @@ void ANormalCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty > &
     Super::GetLifetimeReplicatedProps( OutLifetimeProps );
 
     DOREPLIFETIME( ANormalCharacter, bIsDead );
+    DOREPLIFETIME( ANormalCharacter, bIsNPC );
 }
 
 void ANormalCharacter::MoveForward( float Value )
@@ -77,11 +78,12 @@ void ANormalCharacter::MoveRight( float Value )
 void ANormalCharacter::SetIsNPC( bool IsNPC )
 {
     bIsNPC = IsNPC;
-}
-
-bool ANormalCharacter::IsNpc()
-{
-    return bIsNPC;
+    // If this next check succeeds, we are *not* the authority, meaning we are a network client.
+    // In this case we also want to call the server function to tell it to change the bSomeBool property as well.
+    if ( Role < ROLE_Authority )
+    {
+        ServerSetIsNPC( IsNPC );
+    }
 }
 
 void ANormalCharacter::SetDead( bool IsDead )
@@ -102,6 +104,16 @@ void ANormalCharacter::ServerSetDead_Implementation( bool IsDead )
 }
 
 bool ANormalCharacter::ServerSetDead_Validate( bool IsDead )
+{
+    return true;
+}
+
+void ANormalCharacter::ServerSetIsNPC_Implementation( bool IsNPC )
+{
+    SetIsNPC( IsNPC );
+}
+
+bool ANormalCharacter::ServerSetIsNPC_Validate( bool IsNPC )
 {
     return true;
 }

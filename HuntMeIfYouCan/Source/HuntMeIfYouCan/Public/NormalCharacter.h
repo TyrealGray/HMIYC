@@ -31,11 +31,6 @@ public:
 
     void MoveRight( float Value );
 
-    void SetIsNPC( bool IsNPC );
-
-    UFUNCTION( BlueprintCallable, category = AI )
-    bool IsNpc();
-
     UFUNCTION( BlueprintCallable, Category = Action )
     void SetDead( bool IsDead );
 
@@ -44,13 +39,20 @@ public:
     virtual void ServerSetDead_Implementation( bool IsDead );
     virtual bool ServerSetDead_Validate( bool IsDead );
 
+    void SetIsNPC( bool IsNPC );
+
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetIsNPC( bool IsNPC );
+    virtual void ServerSetIsNPC_Implementation( bool IsNPC );
+    virtual bool ServerSetIsNPC_Validate( bool IsNPC );
+
 private:
 
     /** Follow camera */
     UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = ( AllowPrivateAccess = "true" ) )
     class UCameraComponent * Camera;
 
-    UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = AI, meta = ( AllowPrivateAccess = "true" ) )
+    UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = AI, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsNPC;
 
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Status, meta = ( AllowPrivateAccess = "true" ) )

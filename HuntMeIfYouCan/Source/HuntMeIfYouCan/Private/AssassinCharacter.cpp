@@ -4,9 +4,9 @@
 #include "AssassinCharacter.h"
 #include "UnrealNetwork.h"
 
-AAssassinCharacter::AAssassinCharacter()
+AAssassinCharacter::AAssassinCharacter():
+    bIsStab( false )
 {
-    bIsStab = false;
 }
 
 void AAssassinCharacter::BeginPlay()
@@ -68,7 +68,42 @@ void AAssassinCharacter::UseSkill()
 
 void AAssassinCharacter::UseConcealedItem()
 {
+    if ( Role < ROLE_Authority )
+    {
+        ServerUseConcealedItem();
+    }
 
+    SetStabBegin();
+
+    SetActorRotation( FRotator( 0.0f, Controller->GetControlRotation().Yaw, 0.0f ) );
+
+    FCollisionQueryParams TraceParams = FCollisionQueryParams( FName( TEXT( "Trace" ) ), false, this );
+
+    FHitResult Result;
+
+    GetWorld()->LineTraceSingleByChannel( Result, GetActorLocation(),
+                                          GetActorLocation() + GetViewRotation().RotateVector( FVector( 100.0f, 0.0f, 0.0f ) ), ECC_Pawn, TraceParams );
+
+    AActor* Actor = Result.GetActor();
+
+    if ( !Result.bBlockingHit || !Actor->IsA( ANormalCharacter::StaticClass() ) )
+    {
+        return;
+    }
+
+    ANormalCharacter* StabbedActor = Cast<ANormalCharacter>( Actor );
+
+    StabbedActor->SetDead( true );
+}
+
+void AAssassinCharacter::ServerUseConcealedItem_Implementation()
+{
+    UseConcealedItem();
+}
+
+bool AAssassinCharacter::ServerUseConcealedItem_Validate()
+{
+    return true;
 }
 
 void AAssassinCharacter::UseTargetItem()
@@ -115,7 +150,6 @@ void AAssassinCharacter::SetStabOver()
 void AAssassinCharacter::SetStab( bool IsStab )
 {
     bIsStab = IsStab;
-    SetActorRotation( FRotator( 0.0f, GetViewRotation().Yaw, 0.0f ) );
 
     // If this next check succeeds, we are *not* the authority, meaning we are a network client.
     // In this case we also want to call the server function to tell it to change the bSomeBool property as well.
