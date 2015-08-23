@@ -117,7 +117,7 @@ void AAssassinCharacter::UseUnique()
 void AAssassinCharacter::InitDagger()
 {
     TSubclassOf<AActor> DaggerActor = StaticLoadClass( AActor::StaticClass(),
-                                      NULL, TEXT( "/Game/Blueprints/Equipments/Dagger/BP_NormalDaggerActor.BP_NormalDaggerActor_C" ) );
+                                      nullptr, TEXT( "/Game/Blueprints/Equipments/Dagger/BP_NormalDaggerActor.BP_NormalDaggerActor_C" ) );
 
     FActorSpawnParameters SpawnParameter;
 

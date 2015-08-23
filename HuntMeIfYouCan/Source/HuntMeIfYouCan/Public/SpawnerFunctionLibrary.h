@@ -19,4 +19,10 @@ public:
 
     UFUNCTION( BlueprintCallable, category = SpawnerLibrary )
     static void CivilianRespawn();
+
+    UFUNCTION( BlueprintCallable, category = SpawnLibrary )
+    static TSubclassOf<class AActor>  GetRandomAssassinCharacterClass();
+
+private:
+    static FString GetRandomAssassinBlueprintPath();
 };

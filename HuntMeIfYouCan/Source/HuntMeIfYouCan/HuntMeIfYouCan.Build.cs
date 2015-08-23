@@ -12,6 +12,10 @@ public class HuntMeIfYouCan : ModuleRules
 
         PrivateDependencyModuleNames.Add("OnlineSubsystemNull");
 
+        PublicIncludePaths.AddRange(new string[] { "HuntMeIfYouCan/Public/Character" });
+
+        PrivateIncludePaths.AddRange(new string[] { "HuntMeIfYouCan/Private/Character" });
+
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
 		

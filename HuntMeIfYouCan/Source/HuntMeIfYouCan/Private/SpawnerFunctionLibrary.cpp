@@ -4,6 +4,8 @@
 #include "SpawnerFunctionLibrary.h"
 #include "CivilianSpawnerManager.h"
 #include "CivilianSpawner.h"
+#include "AssassinCharacter.h"
+#include "AssassinsNameList.h"
 
 void USpawnerFunctionLibrary::InitSpawnerManager( TArray<class ACivilianSpawner*> SpawnerArray )
 {
@@ -22,4 +24,22 @@ void USpawnerFunctionLibrary::InitSpawnerManager( TArray<class ACivilianSpawner*
 void USpawnerFunctionLibrary::CivilianRespawn()
 {
     CivilianSpawnerManager::GetInstance()->CivilianRespawn();
+}
+
+TSubclassOf<class AActor>  USpawnerFunctionLibrary::GetRandomAssassinCharacterClass()
+{
+    FString AssassinBlueprintPath = GetRandomAssassinBlueprintPath();
+
+    return StaticLoadClass( AAssassinCharacter::StaticClass(), nullptr, *AssassinBlueprintPath );
+}
+
+FString USpawnerFunctionLibrary::GetRandomAssassinBlueprintPath()
+{
+    AssassinsNameList* NameListInstance = AssassinsNameList::GetInstance();
+
+    int32 SelectedNumber = FMath::RandRange( 0, NameListInstance->GetNumberOfAssassinsType() - 1 );
+
+    FString AssassinName = NameListInstance->GetNameByID( SelectedNumber );
+
+    return "/Game/Blueprints/Characters/Assassin/" + AssassinName + "." + AssassinName + "_C";
 }

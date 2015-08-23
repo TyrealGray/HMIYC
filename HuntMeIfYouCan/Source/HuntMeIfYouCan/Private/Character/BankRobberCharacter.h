@@ -3,21 +3,18 @@
 #pragma once
 
 #include "AssassinCharacter.h"
-#include "ArcherCharacter.generated.h"
+#include "BankRobberCharacter.generated.h"
 
 /**
  *
  */
 UCLASS()
-class AArcherCharacter : public AAssassinCharacter
+class ABankRobberCharacter : public AAssassinCharacter
 {
     GENERATED_BODY()
 public:
+    ABankRobberCharacter();
 
-    AArcherCharacter();
 
-private:
-
-    virtual void UseConcealedItem();
 
 };
