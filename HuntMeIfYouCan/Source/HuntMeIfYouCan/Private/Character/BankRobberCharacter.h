@@ -15,6 +15,5 @@ class ABankRobberCharacter : public AAssassinCharacter
 public:
     ABankRobberCharacter();
 
-
-
+    virtual void  Exposed();
 };

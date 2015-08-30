@@ -16,7 +16,22 @@ void AAssassinCharacter::BeginPlay()
     SetCurrentHuntSkill( EHuntSkillEnum::HSE_ConcealedItem );
 
     InitDagger();
+}
 
+void AAssassinCharacter::InitDagger()
+{
+    TSubclassOf<AActor> DaggerActor = StaticLoadClass( AActor::StaticClass(),
+                                      nullptr, TEXT( "/Game/Blueprints/Equipments/Dagger/BP_NormalDaggerActor.BP_NormalDaggerActor_C" ) );
+
+    FActorSpawnParameters SpawnParameter;
+
+    SpawnParameter.Owner = this;
+
+    ConcealedItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == DaggerActor ) ? AActor::StaticClass() : DaggerActor, SpawnParameter );
+
+    ConcealedItemActor->SetActorHiddenInGame( true );
+
+    ConcealedItemActor->AttachRootComponentTo( GetMesh(), FName( "ConcealedItem" ), EAttachLocation::SnapToTarget, false );
 }
 
 void AAssassinCharacter::Tick( float DeltaTime )
@@ -91,9 +106,10 @@ void AAssassinCharacter::UseConcealedItem()
         return;
     }
 
-    ANormalCharacter* StabbedActor = Cast<ANormalCharacter>( Actor );
-
-    StabbedActor->SetDead( true );
+    if ( !Cast<ANormalCharacter>( Actor )->OnPlayerHit() )
+    {
+        GoIntoStatus( EStatusEnum::SE_Expose );
+    }
 }
 
 void AAssassinCharacter::ServerUseConcealedItem_Implementation()
@@ -114,20 +130,18 @@ void AAssassinCharacter::UseUnique()
 {
 }
 
-void AAssassinCharacter::InitDagger()
+void AAssassinCharacter::GoIntoStatus( EStatusEnum NewStatus )
 {
-    TSubclassOf<AActor> DaggerActor = StaticLoadClass( AActor::StaticClass(),
-                                      nullptr, TEXT( "/Game/Blueprints/Equipments/Dagger/BP_NormalDaggerActor.BP_NormalDaggerActor_C" ) );
+    switch ( NewStatus )
+    {
+    case  EStatusEnum::SE_Expose:
+        BeExpose();
+        break;
+    default:
+        break;
+    }
 
-    FActorSpawnParameters SpawnParameter;
-
-    SpawnParameter.Owner = this;
-
-    ConcealedItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == DaggerActor ) ? AActor::StaticClass() : DaggerActor, SpawnParameter );
-
-    ConcealedItemActor->SetActorHiddenInGame( true );
-
-    ConcealedItemActor->AttachRootComponentTo( GetMesh(), FName( "ConcealedItem" ), EAttachLocation::SnapToTarget, false );
+    SetCurrentStatus( NewStatus );
 }
 
 void AAssassinCharacter::SetStabBegin()
@@ -246,4 +260,19 @@ void AAssassinCharacter::SwitchTargetItem()
 void AAssassinCharacter::SwitchUnique()
 {
     SetCurrentHuntSkill( EHuntSkillEnum::HSE_Unique );
+}
+
+void AAssassinCharacter::Exposed()
+{
+}
+
+void AAssassinCharacter::BeExpose_Implementation()
+{
+    Exposed();
+}
+
+bool AAssassinCharacter::OnPlayerHit()
+{
+    ANormalCharacter::OnPlayerHit();
+    return true;
 }

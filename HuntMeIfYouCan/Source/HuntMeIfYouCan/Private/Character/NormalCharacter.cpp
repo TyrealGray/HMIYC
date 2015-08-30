@@ -26,10 +26,32 @@ ANormalCharacter::ANormalCharacter():
     GetCharacterMovement()->bOrientRotationToMovement = true;
 }
 
+void ANormalCharacter::InitMaterial()
+{
+    auto HeadMat = LoadObject<UMaterial>( nullptr, TEXT( "/Game/Materials/Characters/M_Head.M_Head" ) );
+    GetMesh()->SetMaterial( EMaterialInstanceIDEnum::MII_Head, HeadMat );
+
+    auto HandMat = LoadObject<UMaterial>( nullptr, TEXT( "/Game/Materials/Characters/M_Hand.M_Hand" ) );
+    GetMesh()->SetMaterial( EMaterialInstanceIDEnum::MII_Hand, HandMat );
+
+    auto FootMat = LoadObject<UMaterial>( nullptr, TEXT( "/Game/Materials/Characters/M_Foot.M_Foot" ) );
+    GetMesh()->SetMaterial( EMaterialInstanceIDEnum::MII_Foot, FootMat );
+
+    auto BodyMat = LoadObject<UMaterial>( nullptr, TEXT( "/Game/Materials/Characters/M_Body.M_Body" ) );
+    GetMesh()->SetMaterial( EMaterialInstanceIDEnum::MII_Body, BodyMat );
+
+    MeshMaterialInstances.Add( GetMesh()->CreateAndSetMaterialInstanceDynamic( EMaterialInstanceIDEnum::MII_Head ) );
+    MeshMaterialInstances.Add( GetMesh()->CreateAndSetMaterialInstanceDynamic( EMaterialInstanceIDEnum::MII_Hand ) );
+    MeshMaterialInstances.Add( GetMesh()->CreateAndSetMaterialInstanceDynamic( EMaterialInstanceIDEnum::MII_Foot ) );
+    MeshMaterialInstances.Add( GetMesh()->CreateAndSetMaterialInstanceDynamic( EMaterialInstanceIDEnum::MII_Body ) );
+}
+
 // Called when the game starts or when spawned
 void ANormalCharacter::BeginPlay()
 {
     Super::BeginPlay();
+
+    InitMaterial();
 }
 
 // Called every frame
@@ -116,4 +138,16 @@ void ANormalCharacter::ServerSetIsNPC_Implementation( bool IsNPC )
 bool ANormalCharacter::ServerSetIsNPC_Validate( bool IsNPC )
 {
     return true;
+}
+
+TArray<UMaterialInstanceDynamic*> ANormalCharacter::GetMeshMaterialInstances()
+{
+    return MeshMaterialInstances;
+}
+
+bool ANormalCharacter::OnPlayerHit()
+{
+    SetDead( true );
+
+    return false;
 }

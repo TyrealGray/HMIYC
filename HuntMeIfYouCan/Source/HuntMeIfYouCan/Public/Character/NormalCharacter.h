@@ -5,6 +5,14 @@
 #include "GameFramework/Character.h"
 #include "NormalCharacter.generated.h"
 
+enum EMaterialInstanceIDEnum
+{
+    MII_Head = 0,
+    MII_Hand,
+    MII_Foot,
+    MII_Body
+};
+
 UCLASS()
 class HUNTMEIFYOUCAN_API ANormalCharacter : public ACharacter
 {
@@ -31,6 +39,8 @@ public:
 
     void MoveRight( float Value );
 
+    virtual bool OnPlayerHit();
+
     UFUNCTION( BlueprintCallable, Category = Action )
     void SetDead( bool IsDead );
 
@@ -46,6 +56,8 @@ public:
     virtual void ServerSetIsNPC_Implementation( bool IsNPC );
     virtual bool ServerSetIsNPC_Validate( bool IsNPC );
 
+    TArray<UMaterialInstanceDynamic*> GetMeshMaterialInstances();
+
 private:
 
     /** Follow camera */
@@ -57,4 +69,8 @@ private:
 
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Status, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsDead;
+
+    TArray<UMaterialInstanceDynamic*> MeshMaterialInstances;
+
+    void InitMaterial();
 };

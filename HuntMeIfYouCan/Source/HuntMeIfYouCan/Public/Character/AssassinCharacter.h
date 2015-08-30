@@ -54,6 +54,13 @@ public:
 
     virtual void UseUnique();
 
+    UFUNCTION( NetMulticast, Unreliable )
+    void BeExpose();
+
+    virtual void Exposed();
+
+    virtual void GoIntoStatus( EStatusEnum NewStatus );
+
     void SetStabBegin();
 
     void SetStabOver();
@@ -74,6 +81,8 @@ private:
     class AActor* ConcealedItemActor;
 
     FTimerHandle StabTimer;
+
+    virtual bool OnPlayerHit() override;
 
     void UseSkill();
 

@@ -7,8 +7,3 @@ AArcherCharacter::AArcherCharacter()
 {
 
 }
-
-void AArcherCharacter::UseConcealedItem()
-{
-    AAssassinCharacter::UseConcealedItem();
-}
