@@ -40,9 +40,19 @@ void CivilianSpawnerManager::CivilianRespawn()
 
     int32 SpawnerNo = FMath::RandRange( 0, CivilianSpawners.Num() - 1 );
 
-    CivilianSpawners[SpawnerNo]->Init();
+    ACivilianSpawner* Spawner = CivilianSpawners[SpawnerNo];
 
-    CivilianSpawners[SpawnerNo]->SpawnCivilian();
+    if ( Spawner->IsPendingKill() )
+    {
+        return;
+    }
+
+    if ( !Spawner->IsInit() )
+    {
+        Spawner->Init();
+    }
+
+    Spawner->SpawnCivilian();
 }
 
 void CivilianSpawnerManager::SetCivilianSpawners( TArray<class ACivilianSpawner*> SpawnerArray )

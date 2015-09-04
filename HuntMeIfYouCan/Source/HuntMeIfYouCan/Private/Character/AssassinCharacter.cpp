@@ -65,6 +65,11 @@ void AAssassinCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty >
 
 void AAssassinCharacter::UseSkill()
 {
+    if ( IsDead() )
+    {
+        return;
+    }
+
     switch ( CurrentHuntSkill )
     {
     case EHuntSkillEnum::HSE_ConcealedItem:

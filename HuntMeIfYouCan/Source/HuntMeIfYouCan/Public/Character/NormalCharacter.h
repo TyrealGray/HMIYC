@@ -41,6 +41,8 @@ public:
 
     virtual bool OnPlayerHit();
 
+    bool IsDead();
+
     UFUNCTION( BlueprintCallable, Category = Action )
     void SetDead( bool IsDead );
 

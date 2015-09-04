@@ -24,8 +24,6 @@ ACivilianSpawner::ACivilianSpawner()
     SpawnArea->SetCollisionEnabled( ECollisionEnabled::QueryOnly );
 
     SpawnArea->AttachTo( Root );
-
-    bIsInit = false;
 }
 
 // Called when the game starts or when spawned
@@ -38,13 +36,16 @@ void ACivilianSpawner::BeginPlay()
 
 void ACivilianSpawner::Init()
 {
-    if ( bIsInit )
+    if ( IsInit() )
     {
         return;
     }
 
     SpawnBox = FBox( -SpawnArea->GetScaledBoxExtent(), SpawnArea->GetScaledBoxExtent() );
-    CivilianClass = StaticLoadClass( ANormalCharacter::StaticClass(), nullptr, TEXT( "/Game/Blueprints/Characters/Civilian/BP_Civilian.BP_Civilian_C" ) );
+
+    CivilianClass = StaticLoadClass( ANormalCharacter::StaticClass(),
+                                     nullptr, TEXT( "/Game/Blueprints/Characters/Civilian/BP_Civilian.BP_Civilian_C" ) );
+
     bIsInit = true;
 }
 
@@ -56,12 +57,7 @@ void ACivilianSpawner::Tick( float DeltaTime )
 
 void ACivilianSpawner::SpawnCivilian()
 {
-    if ( !HasAuthority() )
-    {
-        return;
-    }
-
-    FVector RandomPoint = GetActorLocation() + FMath::RandPointInBox( FBox( -SpawnArea->GetScaledBoxExtent(), SpawnArea->GetScaledBoxExtent() ) );
+    FVector RandomPoint = GetActorLocation() + FMath::RandPointInBox( SpawnBox );
 
     FRotator RandomRotation = FRotator( 0.0f, FMath::FRandRange( 0.0f, 360.0f ), 0.0f );
 
@@ -78,4 +74,9 @@ void ACivilianSpawner::SpawnCivilian()
     Civilian->SetIsNPC( true );
 
     GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::White, TEXT( "村民生成SpawnCivilian X: " ) + FString::SanitizeFloat( RandomPoint.X ) + " Y: " + FString::SanitizeFloat( RandomPoint.Y ) + " Z: " + FString::SanitizeFloat( RandomPoint.Z ) );
+}
+
+bool ACivilianSpawner::IsInit()
+{
+    return bIsInit;
 }

@@ -25,6 +25,8 @@ public:
 
     void Init();
 
+    bool IsInit();
+
 private:
 
     bool bIsInit;

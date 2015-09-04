@@ -151,3 +151,8 @@ bool ANormalCharacter::OnPlayerHit()
 
     return false;
 }
+
+bool ANormalCharacter::IsDead()
+{
+    return bIsDead;
+}
