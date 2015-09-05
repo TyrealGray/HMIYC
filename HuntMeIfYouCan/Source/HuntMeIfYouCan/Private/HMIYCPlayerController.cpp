@@ -26,7 +26,7 @@ void AHMIYCPlayerController::OnMoveForward( float Value )
 {
     ANormalCharacter* pNormalCharacter = Cast<ANormalCharacter>( GetPawn() );
 
-    if ( nullptr == pNormalCharacter || 0.0f == Value )
+    if ( nullptr == pNormalCharacter || 0.0f == Value || pNormalCharacter->IsDead() )
     {
         return;
     }
@@ -38,7 +38,7 @@ void AHMIYCPlayerController::OnMoveRight( float Value )
 {
     ANormalCharacter* pNormalCharacter = Cast<ANormalCharacter>( GetPawn() );
 
-    if ( nullptr == pNormalCharacter || 0.0f == Value )
+    if ( nullptr == pNormalCharacter || 0.0f == Value || pNormalCharacter->IsDead() )
     {
         return;
     }

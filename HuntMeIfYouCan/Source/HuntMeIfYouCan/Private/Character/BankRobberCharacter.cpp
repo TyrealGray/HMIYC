@@ -10,6 +10,8 @@ ABankRobberCharacter::ABankRobberCharacter()
 
 void ABankRobberCharacter::Exposed()
 {
+    AAssassinCharacter::Exposed();
+
     auto MeshMaterialInstances = GetMeshMaterialInstances();
 
     MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Head]->SetTextureParameterValue( FName( "ManHeadTextureParameter" ),
@@ -23,5 +25,4 @@ void ABankRobberCharacter::Exposed()
 
     MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Body]->SetTextureParameterValue( FName( "ManBodyTextureParameter" ),
             LoadObject<UTexture2D>( nullptr, TEXT( "/Game/Materials/Characters/Assassin/BankRobber/T_Body.T_Body" ) ) );
-
 }

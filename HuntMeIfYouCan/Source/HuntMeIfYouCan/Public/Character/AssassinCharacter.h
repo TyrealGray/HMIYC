@@ -65,6 +65,8 @@ public:
 
     void SetStabOver();
 
+    void GoCrawling();
+
 private:
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Action, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsStab;
@@ -82,9 +84,15 @@ private:
 
     FTimerHandle StabTimer;
 
+    FTimerHandle ExposeTimer;
+
     virtual bool OnPlayerHit() override;
 
     void UseSkill();
+
+    virtual void JumpPrepared();
+
+    virtual void JumpDeliver();
 
     UFUNCTION( Server, Reliable, WithValidation )
     void ServerUseConcealedItem();

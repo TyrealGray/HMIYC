@@ -43,8 +43,8 @@ void AAssassinCharacter::SetupPlayerInputComponent( class UInputComponent* Input
 {
     Super::SetupPlayerInputComponent( InputComponent );
 
-    InputComponent->BindAction( "Jump", IE_Pressed, this, &ACharacter::Jump );
-    InputComponent->BindAction( "Jump", IE_Released, this, &ACharacter::StopJumping );
+    InputComponent->BindAction( "Jump", IE_Pressed, this, &AAssassinCharacter::JumpPrepared );
+    InputComponent->BindAction( "Jump", IE_Released, this, &AAssassinCharacter::JumpDeliver );
 
     InputComponent->BindAction( "UseSkill", IE_Pressed, this, &AAssassinCharacter::UseSkill );
 
@@ -65,7 +65,7 @@ void AAssassinCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty >
 
 void AAssassinCharacter::UseSkill()
 {
-    if ( IsDead() )
+    if ( EStatusEnum::SE_Dead == CurrentStatus || EStatusEnum::SE_Expose == CurrentStatus )
     {
         return;
     }
@@ -154,7 +154,7 @@ void AAssassinCharacter::SetStabBegin()
     SetStab( true );
 
     GetWorldTimerManager().ClearTimer( StabTimer );
-    GetWorldTimerManager().SetTimer( StabTimer, this, &AAssassinCharacter::SetStabOver, 0.3f, true );
+    GetWorldTimerManager().SetTimer( StabTimer, this, &AAssassinCharacter::SetStabOver, 0.3f, false );
 
     ConcealedItemActor->SetActorHiddenInGame( false );
 }
@@ -162,7 +162,6 @@ void AAssassinCharacter::SetStabBegin()
 void AAssassinCharacter::SetStabOver()
 {
     SetStab( false );
-
     ConcealedItemActor->SetActorHiddenInGame( true );
 }
 
@@ -269,6 +268,8 @@ void AAssassinCharacter::SwitchUnique()
 
 void AAssassinCharacter::Exposed()
 {
+    GetWorldTimerManager().ClearTimer( ExposeTimer );
+    GetWorldTimerManager().SetTimer( ExposeTimer, this, &AAssassinCharacter::GoCrawling, 30.0f, false );
 }
 
 void AAssassinCharacter::BeExpose_Implementation()
@@ -279,5 +280,32 @@ void AAssassinCharacter::BeExpose_Implementation()
 bool AAssassinCharacter::OnPlayerHit()
 {
     ANormalCharacter::OnPlayerHit();
+    GoIntoStatus( EStatusEnum::SE_Crawling );
     return true;
+}
+
+void AAssassinCharacter::JumpPrepared()
+{
+    if ( EStatusEnum::SE_Dead == CurrentStatus )
+    {
+        return;
+    }
+    Jump();
+}
+
+void AAssassinCharacter::JumpDeliver()
+{
+    StopJumping();
+}
+
+void AAssassinCharacter::GoCrawling()
+{
+    if ( EStatusEnum::SE_Dead == CurrentStatus )
+    {
+        return;
+    }
+
+    GoIntoStatus( EStatusEnum::SE_Crawling );
+
+    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Yellow, TEXT( "GoCrawling" ) );
 }
