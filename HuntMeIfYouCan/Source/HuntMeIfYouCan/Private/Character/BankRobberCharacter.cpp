@@ -14,15 +14,21 @@ void ABankRobberCharacter::Exposed()
 
     auto MeshMaterialInstances = GetMeshMaterialInstances();
 
-    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Head]->SetTextureParameterValue( FName( "ManHeadTextureParameter" ),
-            LoadObject<UTexture2D>( nullptr, TEXT( "/Game/Materials/Characters/Assassin/BankRobber/T_Head.T_Head" ) ) );
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Head]->SetTextureParameterValue(
+        FName( "ManHeadTextureParameter" ), GetMeshTexture( EMaterialInstanceIDEnum::MII_Head ) );
 
-    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Hand]->SetTextureParameterValue( FName( "ManHandTextureParameter" ),
-            LoadObject<UTexture2D>( nullptr, TEXT( "/Game/Materials/Characters/Assassin/BankRobber/T_Hand.T_Hand" ) ) );
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Hand]->SetTextureParameterValue(
+        FName( "ManHandTextureParameter" ), GetMeshTexture( EMaterialInstanceIDEnum::MII_Hand ) );
 
-    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Foot]->SetTextureParameterValue( FName( "ManFootTextureParameter" ),
-            LoadObject<UTexture2D>( nullptr, TEXT( "/Game/Materials/Characters/Assassin/BankRobber/T_Foot.T_Foot" ) ) );
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Foot]->SetTextureParameterValue(
+        FName( "ManFootTextureParameter" ), GetMeshTexture( EMaterialInstanceIDEnum::MII_Foot ) );
 
-    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Body]->SetTextureParameterValue( FName( "ManBodyTextureParameter" ),
-            LoadObject<UTexture2D>( nullptr, TEXT( "/Game/Materials/Characters/Assassin/BankRobber/T_Body.T_Body" ) ) );
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Body]->SetTextureParameterValue(
+        FName( "ManBodyTextureParameter" ), GetMeshTexture( EMaterialInstanceIDEnum::MII_Body ) );
+}
+
+void ABankRobberCharacter::BeginPlay()
+{
+    AAssassinCharacter::BeginPlay();
+    GEngine->AddOnScreenDebugMessage( -1, 4.5f, FColor::Green, "BankRobber spawn" );
 }

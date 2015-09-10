@@ -15,5 +15,7 @@ class ABankRobberCharacter : public AAssassinCharacter
 public:
     ABankRobberCharacter();
 
+    virtual void BeginPlay();
+
     virtual void  Exposed();
 };

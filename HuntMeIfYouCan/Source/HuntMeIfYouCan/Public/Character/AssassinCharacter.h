@@ -67,6 +67,8 @@ public:
 
     void GoCrawling();
 
+    UTexture2D *GetMeshTexture( int32 ID );
+
 private:
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Action, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsStab;
@@ -80,7 +82,19 @@ private:
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = RunningSkill, meta = ( AllowPrivateAccess = "true" ) )
     ERunningSkillEnum CurrentRunningSkill;
 
-    class AActor* ConcealedItemActor;
+    UPROPERTY( Replicated, EditAnywhere, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
+    UTexture2D * HeadMeshTexture;
+
+    UPROPERTY( Replicated, EditAnywhere, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
+    UTexture2D * HandMeshTexture;
+
+    UPROPERTY( Replicated, EditAnywhere, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
+    UTexture2D * FootMeshTexture;
+
+    UPROPERTY( Replicated, EditAnywhere, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
+    UTexture2D * BodyMeshTexture;
+
+    AActor* ConcealedItemActor;
 
     FTimerHandle StabTimer;
 

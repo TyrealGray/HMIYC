@@ -307,5 +307,30 @@ void AAssassinCharacter::GoCrawling()
 
     GoIntoStatus( EStatusEnum::SE_Crawling );
 
+    SetActorHiddenInGame( true );
+
     GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Yellow, TEXT( "GoCrawling" ) );
+}
+
+UTexture2D * AAssassinCharacter::GetMeshTexture( int32 ID )
+{
+    UTexture2D* Texture = nullptr;
+    switch ( ID )
+    {
+    case EMaterialInstanceIDEnum::MII_Head:
+        Texture = HeadMeshTexture;
+        break;
+    case	EMaterialInstanceIDEnum::MII_Hand:
+        Texture = HandMeshTexture;
+        break;
+    case	EMaterialInstanceIDEnum::MII_Foot:
+        Texture = FootMeshTexture;
+        break;
+    case	EMaterialInstanceIDEnum::MII_Body:
+        Texture = BodyMeshTexture;
+        break;
+    default:
+        break;
+    }
+    return Texture;
 }
