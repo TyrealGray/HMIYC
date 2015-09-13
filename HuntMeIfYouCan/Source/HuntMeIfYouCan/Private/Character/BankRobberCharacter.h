@@ -16,6 +16,4 @@ public:
     ABankRobberCharacter();
 
     virtual void BeginPlay();
-
-    virtual void  Exposed();
 };

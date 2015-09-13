@@ -7,3 +7,9 @@ AArcherCharacter::AArcherCharacter()
 {
 
 }
+
+void AArcherCharacter::BeginPlay()
+{
+    AAssassinCharacter::BeginPlay();
+    GEngine->AddOnScreenDebugMessage( -1, 4.5f, FColor::Green, "Archer spawn" );
+}

@@ -16,4 +16,5 @@ public:
 
     AArcherCharacter();
 
+    virtual void BeginPlay();
 };
