@@ -58,9 +58,9 @@ public:
     virtual void ServerSetIsNPC_Implementation( bool IsNPC );
     virtual bool ServerSetIsNPC_Validate( bool IsNPC );
 
-    TArray<UMaterialInstanceDynamic*> GetMeshMaterialInstances();
-
     void RandomMeshTexture();
+
+    TArray<UMaterialInstanceDynamic*> GetMeshMaterialInstances();
 
 private:
 
@@ -76,5 +76,9 @@ private:
 
     TArray<UMaterialInstanceDynamic*> MeshMaterialInstances;
 
+    TArray<TArray<UTexture2D*>> MeshTextureGroup;
+
     void InitMaterial();
+
+    void UseUnknowTexture();
 };

@@ -2,6 +2,7 @@
 
 #include "HuntMeIfYouCan.h"
 #include "NormalCharacter.h"
+#include "../CivilianPropertyManager.h"
 #include "UnrealNetwork.h"
 
 // Sets default values
@@ -52,6 +53,8 @@ void ANormalCharacter::BeginPlay()
     Super::BeginPlay();
 
     InitMaterial();
+
+    //InitRandomMeshTextures();
 
     RandomMeshTexture();
 }
@@ -165,6 +168,29 @@ void ANormalCharacter::RandomMeshTexture()
 {
     auto MeshMaterialInstances = GetMeshMaterialInstances();
 
+    auto TexturesGroup = CivilianPropertyManager::GetInstance()->GetRandomTextures();
+
+    if ( 0 == TexturesGroup.Num() )
+    {
+        UseUnknowTexture();
+        return;
+    }
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Head]->SetTextureParameterValue(
+        FName( "ManHeadTextureParameter" ), TexturesGroup[EMaterialInstanceIDEnum::MII_Head] );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Hand]->SetTextureParameterValue(
+        FName( "ManHandTextureParameter" ), TexturesGroup[EMaterialInstanceIDEnum::MII_Hand] );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Foot]->SetTextureParameterValue(
+        FName( "ManFootTextureParameter" ), TexturesGroup[EMaterialInstanceIDEnum::MII_Foot] );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Body]->SetTextureParameterValue(
+        FName( "ManBodyTextureParameter" ), TexturesGroup[EMaterialInstanceIDEnum::MII_Body] );
+}
+
+void ANormalCharacter::UseUnknowTexture()
+{
     auto MeshTexture = LoadObject<UTexture2D>( nullptr, TEXT( "/Game/Textures/UnknowTexture.UnknowTexture" ) );
 
     MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Head]->SetTextureParameterValue(

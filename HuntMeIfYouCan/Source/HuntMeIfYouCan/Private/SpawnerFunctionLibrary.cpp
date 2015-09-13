@@ -37,7 +37,7 @@ FString USpawnerFunctionLibrary::GetRandomAssassinBlueprintPath()
 {
     AssassinsNameList* NameListInstance = AssassinsNameList::GetInstance();
 
-    int32 SelectedNumber = FMath::RandRange( 0, NameListInstance->GetNumberOfAssassinsType() - 1 );
+    int32 SelectedNumber = FMath::FRandRange( 0, NameListInstance->GetNumberOfAssassinsType() );
 
     FString AssassinName = NameListInstance->GetNameByID( SelectedNumber );
 
