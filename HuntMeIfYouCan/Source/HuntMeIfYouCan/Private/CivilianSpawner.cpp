@@ -43,9 +43,6 @@ void ACivilianSpawner::Init()
 
     SpawnBox = FBox( -SpawnArea->GetScaledBoxExtent(), SpawnArea->GetScaledBoxExtent() );
 
-    CivilianClass = StaticLoadClass( ANormalCharacter::StaticClass(),
-                                     nullptr, TEXT( "/Game/Blueprints/Characters/Civilian/BP_Civilian.BP_Civilian_C" ) );
-
     bIsInit = true;
 }
 

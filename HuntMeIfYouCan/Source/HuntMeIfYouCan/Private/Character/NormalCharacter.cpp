@@ -52,6 +52,8 @@ void ANormalCharacter::BeginPlay()
     Super::BeginPlay();
 
     InitMaterial();
+
+    RandomMeshTexture();
 }
 
 // Called every frame
@@ -149,10 +151,31 @@ bool ANormalCharacter::OnPlayerHit()
 {
     SetDead( true );
 
+    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Green, GetName() + " OnPlayerHit!" );
+
     return false;
 }
 
 bool ANormalCharacter::IsDead()
 {
     return bIsDead;
+}
+
+void ANormalCharacter::RandomMeshTexture()
+{
+    auto MeshMaterialInstances = GetMeshMaterialInstances();
+
+    auto MeshTexture = LoadObject<UTexture2D>( nullptr, TEXT( "/Game/Textures/UnknowTexture.UnknowTexture" ) );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Head]->SetTextureParameterValue(
+        FName( "ManHeadTextureParameter" ), MeshTexture );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Hand]->SetTextureParameterValue(
+        FName( "ManHandTextureParameter" ), MeshTexture );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Foot]->SetTextureParameterValue(
+        FName( "ManFootTextureParameter" ), MeshTexture );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Body]->SetTextureParameterValue(
+        FName( "ManBodyTextureParameter" ), MeshTexture );
 }

@@ -20,9 +20,6 @@ void AAssassinCharacter::BeginPlay()
 
 void AAssassinCharacter::InitDagger()
 {
-    TSubclassOf<AActor> DaggerActor = StaticLoadClass( AActor::StaticClass(),
-                                      nullptr, TEXT( "/Game/Blueprints/Equipments/Dagger/BP_NormalDaggerActor.BP_NormalDaggerActor_C" ) );
-
     FActorSpawnParameters SpawnParameter;
 
     SpawnParameter.Owner = this;
@@ -142,6 +139,8 @@ void AAssassinCharacter::GoIntoStatus( EStatusEnum NewStatus )
     case  EStatusEnum::SE_Expose:
         BeExpose();
         break;
+    case EStatusEnum::SE_Crawling:
+        BeCrawling();
     default:
         break;
     }
@@ -277,6 +276,27 @@ void AAssassinCharacter::BeExpose_Implementation()
     Exposed();
 }
 
+void AAssassinCharacter::BeCrawling()
+{
+    GetWorldTimerManager().ClearTimer( CrawlingTimer );
+    GetWorldTimerManager().SetTimer( CrawlingTimer, this, &AAssassinCharacter::GoMasquerade, 5.0f, false );
+
+    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Yellow, TEXT( "BeCrawling" ) );
+}
+
+void AAssassinCharacter::GoCrawling()
+{
+    if ( EStatusEnum::SE_Dead == CurrentStatus )
+    {
+        return;
+    }
+
+    GoIntoStatus( EStatusEnum::SE_Crawling );
+
+    SetActorHiddenInGame( true );
+    SetActorEnableCollision( false );
+}
+
 bool AAssassinCharacter::OnPlayerHit()
 {
     ANormalCharacter::OnPlayerHit();
@@ -296,20 +316,6 @@ void AAssassinCharacter::JumpPrepared()
 void AAssassinCharacter::JumpDeliver()
 {
     StopJumping();
-}
-
-void AAssassinCharacter::GoCrawling()
-{
-    if ( EStatusEnum::SE_Dead == CurrentStatus )
-    {
-        return;
-    }
-
-    GoIntoStatus( EStatusEnum::SE_Crawling );
-
-    SetActorHiddenInGame( true );
-
-    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Yellow, TEXT( "GoCrawling" ) );
 }
 
 UTexture2D * AAssassinCharacter::GetMeshTexture( int32 ID )
@@ -333,4 +339,12 @@ UTexture2D * AAssassinCharacter::GetMeshTexture( int32 ID )
         break;
     }
     return Texture;
+}
+
+void AAssassinCharacter::GoMasquerade()
+{
+    RandomMeshTexture();
+
+    SetActorEnableCollision( true );
+    SetActorHiddenInGame( false );
 }

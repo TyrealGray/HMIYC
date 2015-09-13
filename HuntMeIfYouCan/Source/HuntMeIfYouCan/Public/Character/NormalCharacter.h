@@ -60,6 +60,8 @@ public:
 
     TArray<UMaterialInstanceDynamic*> GetMeshMaterialInstances();
 
+    void RandomMeshTexture();
+
 private:
 
     /** Follow camera */

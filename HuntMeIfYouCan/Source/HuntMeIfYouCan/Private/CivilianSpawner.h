@@ -38,5 +38,6 @@ private:
     UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = Area, meta = ( AllowPrivateAccess = "true" ) )
     class UBoxComponent * SpawnArea;
 
+    UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = SpawnActor, meta = ( AllowPrivateAccess = "true" ) )
     TSubclassOf<class ANormalCharacter> CivilianClass;
 };

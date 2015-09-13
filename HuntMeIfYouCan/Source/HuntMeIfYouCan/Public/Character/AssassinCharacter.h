@@ -59,6 +59,8 @@ public:
 
     virtual void Exposed();
 
+    void BeCrawling();
+
     virtual void GoIntoStatus( EStatusEnum NewStatus );
 
     void SetStabBegin();
@@ -66,6 +68,8 @@ public:
     void SetStabOver();
 
     void GoCrawling();
+
+    void GoMasquerade();
 
     UTexture2D *GetMeshTexture( int32 ID );
 
@@ -82,23 +86,28 @@ private:
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = RunningSkill, meta = ( AllowPrivateAccess = "true" ) )
     ERunningSkillEnum CurrentRunningSkill;
 
-    UPROPERTY( Replicated, EditAnywhere, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
+    UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
     UTexture2D * HeadMeshTexture;
 
-    UPROPERTY( Replicated, EditAnywhere, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
+    UPROPERTY(  EditDefaultsOnly, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
     UTexture2D * HandMeshTexture;
 
-    UPROPERTY( Replicated, EditAnywhere, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
+    UPROPERTY(  EditDefaultsOnly, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
     UTexture2D * FootMeshTexture;
 
-    UPROPERTY( Replicated, EditAnywhere, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
+    UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = BodyMaterial, meta = ( AllowPrivateAccess = "true" ) )
     UTexture2D * BodyMeshTexture;
 
-    AActor* ConcealedItemActor;
+    UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = ItemActor, meta = ( AllowPrivateAccess = "true" ) )
+    TSubclassOf<AActor> DaggerActor;
+
+    AActor *ConcealedItemActor;
 
     FTimerHandle StabTimer;
 
     FTimerHandle ExposeTimer;
+
+    FTimerHandle CrawlingTimer;
 
     virtual bool OnPlayerHit() override;
 
