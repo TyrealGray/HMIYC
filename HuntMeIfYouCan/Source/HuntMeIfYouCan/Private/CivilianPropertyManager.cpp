@@ -49,13 +49,23 @@ void CivilianPropertyManager::InitRandomMeshTextures()
 
         MeshTextures.Empty();
     }
+
+    UnknowTexture = LoadObject<UTexture2D>( nullptr, TEXT( "/Game/Textures/UnknowTexture.UnknowTexture" ) );
 }
 
-TArray<UTexture2D*> CivilianPropertyManager::GetRandomTextures()
+TArray<UTexture2D*> CivilianPropertyManager::GetRandomTexturesByID( int32 GroupID )
 {
     TArray<UTexture2D*> NoneArray;
 
-    int32 GroupID = FMath::FRandRange( 0, MeshTextureGroup.Num() );
-
     return ( 0 == MeshTextureGroup.Num() ) ? NoneArray : MeshTextureGroup[GroupID];
+}
+
+int32 CivilianPropertyManager::GetRandomTextureGroupID()
+{
+    return FMath::FRandRange( 0, NUMBER_OF_CIVILIANS_TYPE );
+}
+
+UTexture2D* CivilianPropertyManager::GetUnknowTexture()
+{
+    return UnknowTexture;
 }

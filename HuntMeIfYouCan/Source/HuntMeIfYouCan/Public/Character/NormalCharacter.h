@@ -58,7 +58,16 @@ public:
     virtual void ServerSetIsNPC_Implementation( bool IsNPC );
     virtual bool ServerSetIsNPC_Validate( bool IsNPC );
 
+    void SetTexturesGroupID( int32 ID );
+
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetTexturesGroupID( int32 ID );
+    virtual void ServerSetTexturesGroupID_Implementation( int32 ID );
+    virtual bool ServerSetTexturesGroupID_Validate( int32 ID );
+
     void RandomMeshTexture();
+
+    void SetRandomMeshTexture( const TArray<UTexture2D*> &Textures );
 
     TArray<UMaterialInstanceDynamic*> GetMeshMaterialInstances();
 
@@ -73,6 +82,9 @@ private:
 
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Status, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsDead;
+
+    UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = MeshTexture, meta = ( AllowPrivateAccess = "true" ) )
+    int32 TexturesGroupID;
 
     TArray<UMaterialInstanceDynamic*> MeshMaterialInstances;
 

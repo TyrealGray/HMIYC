@@ -12,7 +12,11 @@ public:
 
     static CivilianPropertyManager* GetInstance();
 
-    TArray<UTexture2D*> GetRandomTextures();
+    TArray<UTexture2D*> GetRandomTexturesByID( int32 GroupID );
+
+    UTexture2D* GetUnknowTexture();
+
+    int32 GetRandomTextureGroupID();
 
 private:
     static CivilianPropertyManager* Instance;
@@ -21,6 +25,8 @@ private:
     ~CivilianPropertyManager();
 
     TArray<TArray<UTexture2D*>> MeshTextureGroup;
+
+    UTexture2D* UnknowTexture;
 
     void InitRandomMeshTextures();
 };

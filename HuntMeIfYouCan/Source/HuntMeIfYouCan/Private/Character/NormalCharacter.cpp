@@ -77,6 +77,7 @@ void ANormalCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty > &
 
     DOREPLIFETIME( ANormalCharacter, bIsDead );
     DOREPLIFETIME( ANormalCharacter, bIsNPC );
+    DOREPLIFETIME( ANormalCharacter, TexturesGroupID );
 }
 
 void ANormalCharacter::MoveForward( float Value )
@@ -104,45 +105,47 @@ void ANormalCharacter::MoveRight( float Value )
 
 void ANormalCharacter::SetIsNPC( bool IsNPC )
 {
-    bIsNPC = IsNPC;
-    // If this next check succeeds, we are *not* the authority, meaning we are a network client.
-    // In this case we also want to call the server function to tell it to change the bSomeBool property as well.
-    if ( Role < ROLE_Authority )
-    {
-        ServerSetIsNPC( IsNPC );
-    }
-}
-
-void ANormalCharacter::SetDead( bool IsDead )
-{
-    bIsDead = IsDead;
-
-    // If this next check succeeds, we are *not* the authority, meaning we are a network client.
-    // In this case we also want to call the server function to tell it to change the bSomeBool property as well.
-    if ( Role < ROLE_Authority )
-    {
-        ServerSetDead( IsDead );
-    }
-}
-
-void ANormalCharacter::ServerSetDead_Implementation( bool IsDead )
-{
-    SetDead( IsDead );
-}
-
-bool ANormalCharacter::ServerSetDead_Validate( bool IsDead )
-{
-    return true;
+    ServerSetIsNPC( IsNPC );
 }
 
 void ANormalCharacter::ServerSetIsNPC_Implementation( bool IsNPC )
 {
-    SetIsNPC( IsNPC );
+    bIsNPC = IsNPC;
 }
 
 bool ANormalCharacter::ServerSetIsNPC_Validate( bool IsNPC )
 {
-    return true;
+    return ( Role >= ROLE_Authority );
+}
+
+void ANormalCharacter::SetDead( bool IsDead )
+{
+    ServerSetDead( IsDead );
+}
+
+void ANormalCharacter::ServerSetDead_Implementation( bool IsDead )
+{
+    bIsDead = IsDead;
+}
+
+bool ANormalCharacter::ServerSetDead_Validate( bool IsDead )
+{
+    return ( Role >= ROLE_Authority );
+}
+
+void ANormalCharacter::SetTexturesGroupID( int32 ID )
+{
+    ServerSetTexturesGroupID( ID );
+}
+
+void ANormalCharacter::ServerSetTexturesGroupID_Implementation( int32 ID )
+{
+    TexturesGroupID = ID;
+}
+
+bool ANormalCharacter::ServerSetTexturesGroupID_Validate( int32 ID )
+{
+    return ( Role >= ROLE_Authority );
 }
 
 TArray<UMaterialInstanceDynamic*> ANormalCharacter::GetMeshMaterialInstances()
@@ -168,7 +171,11 @@ void ANormalCharacter::RandomMeshTexture()
 {
     auto MeshMaterialInstances = GetMeshMaterialInstances();
 
-    auto TexturesGroup = CivilianPropertyManager::GetInstance()->GetRandomTextures();
+    int32 ID = CivilianPropertyManager::GetInstance()->GetRandomTextureGroupID();
+
+    SetTexturesGroupID( ID );
+
+    auto TexturesGroup = CivilianPropertyManager::GetInstance()->GetRandomTexturesByID( TexturesGroupID );
 
     if ( 0 == TexturesGroup.Num() )
     {
@@ -176,22 +183,12 @@ void ANormalCharacter::RandomMeshTexture()
         return;
     }
 
-    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Head]->SetTextureParameterValue(
-        FName( "ManHeadTextureParameter" ), TexturesGroup[EMaterialInstanceIDEnum::MII_Head] );
-
-    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Hand]->SetTextureParameterValue(
-        FName( "ManHandTextureParameter" ), TexturesGroup[EMaterialInstanceIDEnum::MII_Hand] );
-
-    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Foot]->SetTextureParameterValue(
-        FName( "ManFootTextureParameter" ), TexturesGroup[EMaterialInstanceIDEnum::MII_Foot] );
-
-    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Body]->SetTextureParameterValue(
-        FName( "ManBodyTextureParameter" ), TexturesGroup[EMaterialInstanceIDEnum::MII_Body] );
+    SetRandomMeshTexture( TexturesGroup );
 }
 
 void ANormalCharacter::UseUnknowTexture()
 {
-    auto MeshTexture = LoadObject<UTexture2D>( nullptr, TEXT( "/Game/Textures/UnknowTexture.UnknowTexture" ) );
+    auto MeshTexture = CivilianPropertyManager::GetInstance()->GetUnknowTexture();
 
     MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Head]->SetTextureParameterValue(
         FName( "ManHeadTextureParameter" ), MeshTexture );
@@ -204,4 +201,19 @@ void ANormalCharacter::UseUnknowTexture()
 
     MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Body]->SetTextureParameterValue(
         FName( "ManBodyTextureParameter" ), MeshTexture );
+}
+
+void ANormalCharacter::SetRandomMeshTexture( const TArray<UTexture2D*> &Textures )
+{
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Head]->SetTextureParameterValue(
+        FName( "ManHeadTextureParameter" ), Textures[EMaterialInstanceIDEnum::MII_Head] );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Hand]->SetTextureParameterValue(
+        FName( "ManHandTextureParameter" ), Textures[EMaterialInstanceIDEnum::MII_Hand] );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Foot]->SetTextureParameterValue(
+        FName( "ManFootTextureParameter" ), Textures[EMaterialInstanceIDEnum::MII_Foot] );
+
+    MeshMaterialInstances[EMaterialInstanceIDEnum::MII_Body]->SetTextureParameterValue(
+        FName( "ManBodyTextureParameter" ), Textures[EMaterialInstanceIDEnum::MII_Body] );
 }

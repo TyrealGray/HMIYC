@@ -64,6 +64,7 @@ void AAssassinCharacter::UseSkill()
 {
     if ( EStatusEnum::SE_Dead == CurrentStatus || EStatusEnum::SE_Expose == CurrentStatus )
     {
+        GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Red, "Your status can't do it right now" );
         return;
     }
 
@@ -141,6 +142,7 @@ void AAssassinCharacter::GoIntoStatus( EStatusEnum NewStatus )
         break;
     case EStatusEnum::SE_Crawling:
         BeCrawling();
+        break;
     default:
         break;
     }
@@ -192,62 +194,47 @@ bool AAssassinCharacter::ServerSetStab_Validate( bool IsStab )
 
 void AAssassinCharacter::SetCurrentStatus( EStatusEnum Status )
 {
-    CurrentStatus = Status;
-
-    if ( Role < ROLE_Authority )
-    {
-        ServerSetCurrentStatus( Status );
-    }
+    ServerSetCurrentStatus( Status );
 }
 
 void AAssassinCharacter::ServerSetCurrentStatus_Implementation( EStatusEnum Status )
 {
-    SetCurrentStatus( Status );
+    CurrentStatus = Status;
 }
 
 bool AAssassinCharacter::ServerSetCurrentStatus_Validate( EStatusEnum Status )
 {
-    return true;
+    return ( Role >= ROLE_Authority );
 }
 
 void AAssassinCharacter::SetCurrentHuntSkill( EHuntSkillEnum Skill )
 {
-    CurrentHuntSkill = Skill;
-
-    if ( Role < ROLE_Authority )
-    {
-        ServerSetCurrentHuntSkill( Skill );
-    }
+    ServerSetCurrentHuntSkill( Skill );
 }
 
 void AAssassinCharacter::ServerSetCurrentHuntSkill_Implementation( EHuntSkillEnum Skill )
 {
-    SetCurrentHuntSkill( CurrentHuntSkill );
+    CurrentHuntSkill = Skill;
 }
 
 bool AAssassinCharacter::ServerSetCurrentHuntSkill_Validate( EHuntSkillEnum Skill )
 {
-    return true;
+    return ( Role >= ROLE_Authority );
 }
 
 void AAssassinCharacter::SetCurrentRunningSkill( ERunningSkillEnum Skill )
 {
-    CurrentRunningSkill = Skill;
-
-    if ( Role < ROLE_Authority )
-    {
-        ServerSetCurrentRunningSkill( Skill );
-    }
+    ServerSetCurrentRunningSkill( Skill );
 }
 
 void AAssassinCharacter::ServerSetCurrentRunningSkill_Implementation( ERunningSkillEnum Skill )
 {
-    SetCurrentRunningSkill( Skill );
+    CurrentRunningSkill = Skill;
 }
 
 bool AAssassinCharacter::ServerSetCurrentRunningSkill_Validate( ERunningSkillEnum Skill )
 {
-    return true;
+    return ( Role >= ROLE_Authority );
 }
 
 void AAssassinCharacter::SwitchConcealedItem()
@@ -314,7 +301,7 @@ void AAssassinCharacter::GoCrawling()
 bool AAssassinCharacter::OnPlayerHit()
 {
     ANormalCharacter::OnPlayerHit();
-    GoIntoStatus( EStatusEnum::SE_Crawling );
+    GoIntoStatus( EStatusEnum::SE_Dead );
     return true;
 }
 
