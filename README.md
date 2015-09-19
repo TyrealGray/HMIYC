@@ -1,6 +1,6 @@
 ##HMIYC
 
->* **Hunt Me If You Can is an UnrealEngine4 Battle Game**
+>* **Hunt Me If You Can is an UnrealEngine4 Battle Lan Game**
 >* **It's a total 3d engraved version of[[AssassinWar](https://github.com/TyrealGray/AssassinWar)]**
 
 ###To begin
