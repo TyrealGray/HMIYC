@@ -3,6 +3,7 @@
 #include "HuntMeIfYouCan.h"
 #include "HMIYCPlayerController.h"
 #include "NormalCharacter.h"
+#include "UnrealNetwork.h"
 
 
 AHMIYCPlayerController::AHMIYCPlayerController( const FObjectInitializer& objectInitializer ):
@@ -68,4 +69,9 @@ void AHMIYCPlayerController::OnLookUp( float Value )
     }
 
     pPawm->AddControllerPitchInput( Value );
+}
+
+void AHMIYCPlayerController::StartGameNow()
+{
+    GetWorld()->ServerTravel( FString( "/Game/Maps/WestTown?game=/Game/Blueprints/BP_HMIYCGameMode.BP_HMIYCGameMode_C?listen" ) );
 }

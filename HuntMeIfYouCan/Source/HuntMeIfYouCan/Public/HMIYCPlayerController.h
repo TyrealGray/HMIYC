@@ -14,16 +14,19 @@ class HUNTMEIFYOUCAN_API AHMIYCPlayerController : public APlayerController
     GENERATED_BODY()
 
 public:
-    AHMIYCPlayerController(const FObjectInitializer& objectInitializer);
+    AHMIYCPlayerController( const FObjectInitializer& objectInitializer );
 
     virtual void SetupInputComponent() override;
 
+    UFUNCTION( BlueprintCallable, category = "StartGame" )
+    void StartGameNow();
+
 private:
 
-    void OnMoveForward(float Value);
-    void OnMoveRight(float Value);
+    void OnMoveForward( float Value );
+    void OnMoveRight( float Value );
 
-    void OnTurn(float Value);
-    void OnLookUp(float Value);
+    void OnTurn( float Value );
+    void OnLookUp( float Value );
 
 };
