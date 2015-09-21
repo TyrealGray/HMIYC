@@ -5,7 +5,9 @@
 #include "UnrealNetwork.h"
 
 AAssassinCharacter::AAssassinCharacter():
-    bIsStab( false )
+    bIsStab( false ),
+    bIsHoldBow( false ),
+    CurrentStatus( EStatusEnum::SE_Masquerade )
 {
 }
 
