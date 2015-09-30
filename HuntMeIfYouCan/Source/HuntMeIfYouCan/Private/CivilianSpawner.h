@@ -23,6 +23,9 @@ public:
     UFUNCTION( BlueprintCallable, category = Spawn )
     void SpawnCivilian();
 
+    UFUNCTION( BlueprintCallable, category = Spawn )
+    FVector GetRandomLocation();
+
     void Init();
 
     bool IsInit();

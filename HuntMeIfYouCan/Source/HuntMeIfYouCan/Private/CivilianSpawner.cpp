@@ -54,7 +54,7 @@ void ACivilianSpawner::Tick( float DeltaTime )
 
 void ACivilianSpawner::SpawnCivilian()
 {
-    FVector RandomPoint = GetActorLocation() + FMath::RandPointInBox( SpawnBox );
+    FVector RandomPoint = GetRandomLocation();
 
     FRotator RandomRotation = FRotator( 0.0f, FMath::FRandRange( 0.0f, 360.0f ), 0.0f );
 
@@ -76,4 +76,9 @@ void ACivilianSpawner::SpawnCivilian()
 bool ACivilianSpawner::IsInit()
 {
     return bIsInit;
+}
+
+FVector ACivilianSpawner::GetRandomLocation()
+{
+    return GetActorLocation() + FMath::RandPointInBox( SpawnBox );
 }
