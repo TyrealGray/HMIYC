@@ -116,6 +116,8 @@ private:
 
     void UseSkill();
 
+    void UseSkillConfirmed();
+
     virtual void JumpPrepared();
 
     virtual void JumpDeliver();

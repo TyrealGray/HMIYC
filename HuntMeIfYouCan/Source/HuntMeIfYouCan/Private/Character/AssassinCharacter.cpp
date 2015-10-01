@@ -46,6 +46,7 @@ void AAssassinCharacter::SetupPlayerInputComponent( class UInputComponent* Input
     InputComponent->BindAction( "Jump", IE_Released, this, &AAssassinCharacter::JumpDeliver );
 
     InputComponent->BindAction( "UseSkill", IE_Pressed, this, &AAssassinCharacter::UseSkill );
+    InputComponent->BindAction( "UseSkill", IE_Released, this, &AAssassinCharacter::UseSkillConfirmed );
 
     InputComponent->BindAction( "ConcealedItem", IE_Pressed, this, &AAssassinCharacter::SwitchConcealedItem );
     InputComponent->BindAction( "TargetItem", IE_Pressed, this, &AAssassinCharacter::SwitchTargetItem );
@@ -80,6 +81,27 @@ void AAssassinCharacter::UseSkill()
         break;
     case EHuntSkillEnum::HSE_Unique:
         UseUnique();
+        break;
+    default:
+        break;
+    }
+}
+
+void AAssassinCharacter::UseSkillConfirmed()
+{
+    if ( EStatusEnum::SE_Dead == CurrentStatus || EStatusEnum::SE_Expose == CurrentStatus )
+    {
+        GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Red, "Your status can't do it right now" );
+        return;
+    }
+
+    switch ( CurrentHuntSkill )
+    {
+    case EHuntSkillEnum::HSE_ConcealedItem:
+        break;
+    case EHuntSkillEnum::HSE_TargetItem:
+        break;
+    case EHuntSkillEnum::HSE_Unique:
         break;
     default:
         break;
