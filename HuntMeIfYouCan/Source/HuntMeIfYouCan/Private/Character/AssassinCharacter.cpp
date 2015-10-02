@@ -18,6 +18,8 @@ void AAssassinCharacter::BeginPlay()
     SetCurrentHuntSkill( EHuntSkillEnum::HSE_ConcealedItem );
 
     InitDagger();
+
+    InitBow();
 }
 
 void AAssassinCharacter::InitDagger()
@@ -31,6 +33,20 @@ void AAssassinCharacter::InitDagger()
     ConcealedItemActor->SetActorHiddenInGame( true );
 
     ConcealedItemActor->AttachRootComponentTo( GetMesh(), FName( "ConcealedItem" ), EAttachLocation::SnapToTarget, false );
+}
+
+
+void AAssassinCharacter::InitBow()
+{
+    FActorSpawnParameters SpawnParameter;
+
+    SpawnParameter.Owner = this;
+
+    TargetItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == BowActor ) ? AActor::StaticClass() : BowActor, SpawnParameter );
+
+    TargetItemActor->SetActorHiddenInGame( true );
+
+    TargetItemActor->AttachRootComponentTo( GetMesh(), FName( "TargetItem" ), EAttachLocation::KeepRelativeOffset, false );
 }
 
 void AAssassinCharacter::Tick( float DeltaTime )
@@ -100,12 +116,16 @@ void AAssassinCharacter::UseSkillConfirmed()
     case EHuntSkillEnum::HSE_ConcealedItem:
         break;
     case EHuntSkillEnum::HSE_TargetItem:
+        UseTargetItemConfirmed();
         break;
     case EHuntSkillEnum::HSE_Unique:
         break;
     default:
         break;
     }
+
+    SetIsHoldBow( false );
+    TargetItemActor->SetActorHiddenInGame( true );
 }
 
 void AAssassinCharacter::UseConcealedItem()
@@ -146,11 +166,19 @@ void AAssassinCharacter::ServerUseConcealedItem_Implementation()
 
 bool AAssassinCharacter::ServerUseConcealedItem_Validate()
 {
-    return true;
+    return ( Role >= ROLE_Authority );
 }
 
 void AAssassinCharacter::UseTargetItem()
 {
+    if ( Role < ROLE_Authority )
+    {
+        ServerUseTargetItem();
+    }
+
+    SetIsHoldBow( true );
+
+    TargetItemActor->SetActorHiddenInGame( false );
 }
 
 void AAssassinCharacter::UseUnique()
@@ -372,4 +400,44 @@ void AAssassinCharacter::GoMasquerade()
 
     SetActorEnableCollision( true );
     SetActorHiddenInGame( false );
+}
+
+void AAssassinCharacter::SetIsHoldBow( bool IsHoldBow )
+{
+    ServerSetIsHoldBow( IsHoldBow );
+}
+
+void AAssassinCharacter::ServerSetIsHoldBow_Implementation( bool IsHoldBow )
+{
+    bIsHoldBow = IsHoldBow;
+}
+
+bool AAssassinCharacter::ServerSetIsHoldBow_Validate( bool IsHoldBow )
+{
+    return ( Role >= ROLE_Authority );
+}
+
+void AAssassinCharacter::ServerUseTargetItem_Implementation()
+{
+    UseTargetItem();
+}
+
+bool AAssassinCharacter::ServerUseTargetItem_Validate()
+{
+    return ( Role >= ROLE_Authority );
+}
+
+void AAssassinCharacter::UseTargetItemConfirmed()
+{
+
+}
+
+void AAssassinCharacter::ServerUseTargetItemConfirmed_Implementation()
+{
+
+}
+
+void AAssassinCharacter::ServerUseTargetItemConfirmed_Validate()
+{
+
 }

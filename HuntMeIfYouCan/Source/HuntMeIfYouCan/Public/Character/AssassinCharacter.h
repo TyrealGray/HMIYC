@@ -54,6 +54,8 @@ public:
 
     virtual void UseUnique();
 
+    virtual void UseTargetItemConfirmed();
+
     UFUNCTION( NetMulticast, Unreliable )
     void BeExpose();
 
@@ -104,7 +106,12 @@ private:
     UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = ItemActor, meta = ( AllowPrivateAccess = "true" ) )
     TSubclassOf<AActor> DaggerActor;
 
+    UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = ItemActor, meta = ( AllowPrivateAccess = "true" ) )
+    TSubclassOf<AActor> BowActor;
+
     AActor *ConcealedItemActor;
+
+    AActor* TargetItemActor;
 
     FTimerHandle StabTimer;
 
@@ -127,7 +134,19 @@ private:
     virtual void ServerUseConcealedItem_Implementation();
     virtual bool ServerUseConcealedItem_Validate();
 
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerUseTargetItem();
+    virtual void ServerUseTargetItem_Implementation();
+    virtual bool ServerUseTargetItem_Validate();
+
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerUseTargetItemConfirmed();
+    virtual void ServerUseTargetItemConfirmed_Implementation();
+    virtual void ServerUseTargetItemConfirmed_Validate();
+
     virtual void InitDagger();
+
+    virtual void InitBow();
 
     void SwitchConcealedItem();
 
@@ -141,6 +160,13 @@ private:
     void ServerSetStab( bool IsStab );
     virtual void ServerSetStab_Implementation( bool IsStab );
     virtual bool ServerSetStab_Validate( bool IsStab );
+
+    void SetIsHoldBow( bool IsHoldBow );
+
+    UFUNCTION( reliable, server, WithValidation )
+    void ServerSetIsHoldBow( bool IsHoldBow );
+    virtual void ServerSetIsHoldBow_Implementation( bool IsHoldBow );
+    virtual bool ServerSetIsHoldBow_Validate( bool IsHoldBow );
 
     void SetCurrentStatus( EStatusEnum Status );
 
