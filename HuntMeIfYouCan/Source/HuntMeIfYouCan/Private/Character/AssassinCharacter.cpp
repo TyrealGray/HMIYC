@@ -74,6 +74,7 @@ void AAssassinCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty >
     Super::GetLifetimeReplicatedProps( OutLifetimeProps );
 
     DOREPLIFETIME( AAssassinCharacter, bIsStab );
+    DOREPLIFETIME( AAssassinCharacter, bIsHoldBow );
     DOREPLIFETIME( AAssassinCharacter, CurrentStatus );
     DOREPLIFETIME( AAssassinCharacter, CurrentHuntSkill );
     DOREPLIFETIME( AAssassinCharacter, CurrentRunningSkill );
@@ -124,8 +125,6 @@ void AAssassinCharacter::UseSkillConfirmed()
         break;
     }
 
-    SetIsHoldBow( false );
-    TargetItemActor->SetActorHiddenInGame( true );
 }
 
 void AAssassinCharacter::UseConcealedItem()
@@ -429,15 +428,21 @@ bool AAssassinCharacter::ServerUseTargetItem_Validate()
 
 void AAssassinCharacter::UseTargetItemConfirmed()
 {
+    if ( Role < ROLE_Authority )
+    {
+        ServerUseTargetItemConfirmed();
+    }
 
+    SetIsHoldBow( false );
+    TargetItemActor->SetActorHiddenInGame( true );
 }
 
 void AAssassinCharacter::ServerUseTargetItemConfirmed_Implementation()
 {
-
+    UseTargetItemConfirmed();
 }
 
-void AAssassinCharacter::ServerUseTargetItemConfirmed_Validate()
+bool AAssassinCharacter::ServerUseTargetItemConfirmed_Validate()
 {
-
+    return ( Role >= ROLE_Authority );
 }

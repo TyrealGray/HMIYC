@@ -142,7 +142,7 @@ private:
     UFUNCTION( Server, Reliable, WithValidation )
     void ServerUseTargetItemConfirmed();
     virtual void ServerUseTargetItemConfirmed_Implementation();
-    virtual void ServerUseTargetItemConfirmed_Validate();
+    virtual bool ServerUseTargetItemConfirmed_Validate();
 
     virtual void InitDagger();
 
