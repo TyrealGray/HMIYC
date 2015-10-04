@@ -194,6 +194,8 @@ void AAssassinCharacter::GoIntoStatus( EStatusEnum NewStatus )
     case EStatusEnum::SE_Crawling:
         BeCrawling();
         break;
+    case EStatusEnum::SE_Dead:
+        BeDying();
     default:
         break;
     }
@@ -328,6 +330,11 @@ void AAssassinCharacter::BeExpose_Implementation()
     Exposed();
 }
 
+void AAssassinCharacter::BeDying_Implementation()
+{
+    Dying();
+}
+
 void AAssassinCharacter::BeCrawling()
 {
     GetWorldTimerManager().ClearTimer( CrawlingTimer );
@@ -445,4 +452,9 @@ void AAssassinCharacter::ServerUseTargetItemConfirmed_Implementation()
 bool AAssassinCharacter::ServerUseTargetItemConfirmed_Validate()
 {
     return ( Role >= ROLE_Authority );
+}
+
+void AAssassinCharacter::Dying()
+{
+    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Blue, TEXT( "!!!!!!Now you are dead!!!!!!" ) );
 }

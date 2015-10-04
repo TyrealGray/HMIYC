@@ -63,6 +63,11 @@ public:
 
     void BeCrawling();
 
+    UFUNCTION( NetMulticast, Unreliable )
+    void BeDying();
+
+    virtual void Dying();
+
     virtual void GoIntoStatus( EStatusEnum NewStatus );
 
     void SetStabBegin();
