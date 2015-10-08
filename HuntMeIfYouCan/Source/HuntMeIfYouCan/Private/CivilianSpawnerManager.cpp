@@ -33,16 +33,9 @@ int32 CivilianSpawnerManager::GetNumberOfCivilianNeed()
 
 void CivilianSpawnerManager::CivilianRespawn()
 {
-    if ( 0 == CivilianSpawners.Num() )
-    {
-        return;
-    }
+    ACivilianSpawner* Spawner = GetRandomSpawner();
 
-    int32 SpawnerNo = FMath::RandRange( 0, CivilianSpawners.Num() - 1 );
-
-    ACivilianSpawner* Spawner = CivilianSpawners[SpawnerNo];
-
-    if ( Spawner->IsPendingKill() )
+    if ( nullptr == Spawner || Spawner->IsPendingKill() )
     {
         return;
     }
@@ -58,5 +51,17 @@ void CivilianSpawnerManager::CivilianRespawn()
 void CivilianSpawnerManager::SetCivilianSpawners( TArray<class ACivilianSpawner*> SpawnerArray )
 {
     CivilianSpawners = SpawnerArray;
+}
+
+ACivilianSpawner* CivilianSpawnerManager::GetRandomSpawner()
+{
+    if ( 0 == CivilianSpawners.Num() )
+    {
+        return nullptr;
+    }
+
+    int32 SpawnerNo = FMath::RandRange( 0, CivilianSpawners.Num() - 1 );
+
+    return CivilianSpawners[SpawnerNo];
 }
 

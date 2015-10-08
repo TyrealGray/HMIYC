@@ -330,9 +330,9 @@ void AAssassinCharacter::BeExpose_Implementation()
     Exposed();
 }
 
-void AAssassinCharacter::BeDying_Implementation()
+void AAssassinCharacter::BeDying()
 {
-    Dying();
+    ServerBeDying( UGameplayStatics::GetPlayerController( GetWorld(), 0 ) );
 }
 
 void AAssassinCharacter::BeCrawling()
@@ -454,7 +454,12 @@ bool AAssassinCharacter::ServerUseTargetItemConfirmed_Validate()
     return ( Role >= ROLE_Authority );
 }
 
-void AAssassinCharacter::Dying()
+void AAssassinCharacter::ServerBeDying_Implementation( APlayerController* PlayerController )
 {
-    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Blue, TEXT( "!!!!!!Now you are dead!!!!!!" ) );
+    GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Blue, "Now SomeOne Were dead!" );
+}
+
+bool AAssassinCharacter::ServerBeDying_Validate( APlayerController* PlayerController )
+{
+    return ( Role >= ROLE_Authority );
 }

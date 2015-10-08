@@ -15,6 +15,8 @@ public:
 
     int32 GetNumberOfCivilianNeed();
 
+    class ACivilianSpawner* GetRandomSpawner();
+
     void CivilianRespawn();
 
     void SetCivilianSpawners( TArray<class ACivilianSpawner*> SpawnerArray );

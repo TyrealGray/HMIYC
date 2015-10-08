@@ -63,10 +63,7 @@ public:
 
     void BeCrawling();
 
-    UFUNCTION( NetMulticast, Unreliable )
     void BeDying();
-
-    virtual void Dying();
 
     virtual void GoIntoStatus( EStatusEnum NewStatus );
 
@@ -193,4 +190,9 @@ private:
     void ServerSetCurrentRunningSkill( ERunningSkillEnum Skill );
     virtual void ServerSetCurrentRunningSkill_Implementation( ERunningSkillEnum Skill );
     virtual bool ServerSetCurrentRunningSkill_Validate( ERunningSkillEnum Skill );
+
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerBeDying( APlayerController* PlayerController );
+    virtual void ServerBeDying_Implementation( APlayerController* PlayerController );
+    virtual bool ServerBeDying_Validate( APlayerController* PlayerController );
 };
