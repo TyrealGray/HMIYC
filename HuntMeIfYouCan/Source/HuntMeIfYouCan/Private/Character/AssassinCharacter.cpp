@@ -3,6 +3,7 @@
 #include "HuntMeIfYouCan.h"
 #include "AssassinCharacter.h"
 #include "UnrealNetwork.h"
+#include "SpawnerFunctionLibrary.h"
 
 AAssassinCharacter::AAssassinCharacter():
     bIsStab( false ),
@@ -332,7 +333,7 @@ void AAssassinCharacter::BeExpose_Implementation()
 
 void AAssassinCharacter::BeDying()
 {
-    ServerBeDying( UGameplayStatics::GetPlayerController( GetWorld(), 0 ) );
+    ServerBeDying( Controller ); //UGameplayStatics::GetPlayerController( GetWorld(), 0 ) );
 }
 
 void AAssassinCharacter::BeCrawling()
@@ -454,12 +455,26 @@ bool AAssassinCharacter::ServerUseTargetItemConfirmed_Validate()
     return ( Role >= ROLE_Authority );
 }
 
-void AAssassinCharacter::ServerBeDying_Implementation( APlayerController* PlayerController )
+void AAssassinCharacter::ServerBeDying_Implementation( AController* PlayerController )
 {
     GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Blue, "Now SomeOne Were dead!" );
+
+    FActorSpawnParameters SpawnParameter;
+
+    SpawnParameter.bNoCollisionFail = true;
+
+    APawn* OldPawn = PlayerController->GetPawn();
+
+    PlayerController->UnPossess();
+
+    OldPawn->Destroy();
+
+    AActor* NewCharacter = GetWorld()->SpawnActor( USpawnerFunctionLibrary::GetRandomAssassinCharacterClass(), NULL, NULL, SpawnParameter );
+
+    PlayerController->Possess( Cast<APawn>( NewCharacter ) );
 }
 
-bool AAssassinCharacter::ServerBeDying_Validate( APlayerController* PlayerController )
+bool AAssassinCharacter::ServerBeDying_Validate( AController* PlayerController )
 {
     return ( Role >= ROLE_Authority );
 }

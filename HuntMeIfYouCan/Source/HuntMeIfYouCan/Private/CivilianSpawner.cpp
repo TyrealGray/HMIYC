@@ -58,7 +58,11 @@ void ACivilianSpawner::SpawnCivilian()
 
     FRotator RandomRotation = FRotator( 0.0f, FMath::FRandRange( 0.0f, 360.0f ), 0.0f );
 
-    ANormalCharacter* Civilian = Cast<ANormalCharacter>( GetWorld()->SpawnActor( CivilianClass, &RandomPoint, &RandomRotation ) );
+    FActorSpawnParameters SpawnParameter;
+
+    SpawnParameter.bNoCollisionFail = true;
+
+    ANormalCharacter* Civilian = Cast<ANormalCharacter>( GetWorld()->SpawnActor( CivilianClass, &RandomPoint, &RandomRotation, SpawnParameter ) );
 
     if ( nullptr == Civilian )
     {

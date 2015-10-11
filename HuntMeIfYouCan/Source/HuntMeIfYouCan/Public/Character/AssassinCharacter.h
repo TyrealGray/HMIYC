@@ -192,7 +192,7 @@ private:
     virtual bool ServerSetCurrentRunningSkill_Validate( ERunningSkillEnum Skill );
 
     UFUNCTION( Server, Reliable, WithValidation )
-    void ServerBeDying( APlayerController* PlayerController );
-    virtual void ServerBeDying_Implementation( APlayerController* PlayerController );
-    virtual bool ServerBeDying_Validate( APlayerController* PlayerController );
+    void ServerBeDying( AController* PlayerController );
+    virtual void ServerBeDying_Implementation( AController* PlayerController );
+    virtual bool ServerBeDying_Validate( AController* PlayerController );
 };
