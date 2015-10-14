@@ -121,6 +121,8 @@ private:
 
     FTimerHandle CrawlingTimer;
 
+    FTimerHandle DyingTimer;
+
     virtual bool OnPlayerHit() override;
 
     void UseSkill();
@@ -155,6 +157,8 @@ private:
     void SwitchTargetItem();
 
     void SwitchUnique();
+
+    void GoDead();
 
     void SetStab( bool IsStab );
 

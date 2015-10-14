@@ -333,7 +333,9 @@ void AAssassinCharacter::BeExpose_Implementation()
 
 void AAssassinCharacter::BeDying()
 {
-    ServerBeDying( Controller ); //UGameplayStatics::GetPlayerController( GetWorld(), 0 ) );
+    GetWorldTimerManager().ClearTimer( DyingTimer );
+    GetWorldTimerManager().SetTimer( DyingTimer, this, &AAssassinCharacter::GoDead, 3.0f, false );
+
 }
 
 void AAssassinCharacter::BeCrawling()
@@ -477,4 +479,9 @@ void AAssassinCharacter::ServerBeDying_Implementation( AController* PlayerContro
 bool AAssassinCharacter::ServerBeDying_Validate( AController* PlayerController )
 {
     return ( Role >= ROLE_Authority );
+}
+
+void AAssassinCharacter::GoDead()
+{
+    ServerBeDying( Controller );
 }
