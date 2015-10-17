@@ -23,6 +23,9 @@ public:
     UFUNCTION( BlueprintCallable, category = SpawnLibrary )
     static TSubclassOf<class AActor>  GetRandomAssassinCharacterClass();
 
+    UFUNCTION( BlueprintCallable, category = SpawnLibrary )
+    static FVector GetRandomLoactionAtSpawnZone();
+
 private:
     static FString GetRandomAssassinBlueprintPath();
 };

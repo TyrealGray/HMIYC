@@ -33,6 +33,12 @@ TSubclassOf<class AActor>  USpawnerFunctionLibrary::GetRandomAssassinCharacterCl
     return StaticLoadClass( AAssassinCharacter::StaticClass(), nullptr, *AssassinBlueprintPath );
 }
 
+FVector USpawnerFunctionLibrary::GetRandomLoactionAtSpawnZone()
+{
+    CivilianSpawnerManager* ManagerInstance = CivilianSpawnerManager::GetInstance();
+    return ManagerInstance->GetRandomSpawner()->GetRandomLocation();
+}
+
 FString USpawnerFunctionLibrary::GetRandomAssassinBlueprintPath()
 {
     AssassinsNameList* NameListInstance = AssassinsNameList::GetInstance();

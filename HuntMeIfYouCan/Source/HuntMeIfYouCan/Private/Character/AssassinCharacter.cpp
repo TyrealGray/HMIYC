@@ -335,7 +335,6 @@ void AAssassinCharacter::BeDying()
 {
     GetWorldTimerManager().ClearTimer( DyingTimer );
     GetWorldTimerManager().SetTimer( DyingTimer, this, &AAssassinCharacter::GoDead, 3.0f, false );
-
 }
 
 void AAssassinCharacter::BeCrawling()
@@ -461,9 +460,13 @@ void AAssassinCharacter::ServerBeDying_Implementation( AController* PlayerContro
 {
     GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Blue, "Now SomeOne Were dead!" );
 
+    FVector RandomLoaction = USpawnerFunctionLibrary::GetRandomLoactionAtSpawnZone();
+
+    FRotator RandomRotation = FRotator( 0.0f, FMath::FRandRange( 0.0f, 360.0f ), 0.0f );
+
     FActorSpawnParameters SpawnParameter;
 
-    SpawnParameter.bNoCollisionFail = true;
+    SpawnParameter.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
     APawn* OldPawn = PlayerController->GetPawn();
 
@@ -471,7 +474,7 @@ void AAssassinCharacter::ServerBeDying_Implementation( AController* PlayerContro
 
     OldPawn->Destroy();
 
-    AActor* NewCharacter = GetWorld()->SpawnActor( USpawnerFunctionLibrary::GetRandomAssassinCharacterClass(), NULL, NULL, SpawnParameter );
+    AActor* NewCharacter = GetWorld()->SpawnActor( USpawnerFunctionLibrary::GetRandomAssassinCharacterClass(), &RandomLoaction, &RandomRotation, SpawnParameter );
 
     PlayerController->Possess( Cast<APawn>( NewCharacter ) );
 }
