@@ -355,11 +355,15 @@ void AAssassinCharacter::GoCrawling()
     GoIntoStatus( EStatusEnum::SE_Crawling );
 
     SetActorHiddenInGame( true );
-    SetActorEnableCollision( false );
 }
 
 bool AAssassinCharacter::OnPlayerHit()
 {
+    if ( EStatusEnum::SE_Crawling == CurrentStatus )
+    {
+        return true;
+    }
+
     ANormalCharacter::OnPlayerHit();
     GoIntoStatus( EStatusEnum::SE_Dead );
     return true;
@@ -406,7 +410,6 @@ void AAssassinCharacter::GoMasquerade()
 {
     RandomMeshTexture();
 
-    SetActorEnableCollision( true );
     SetActorHiddenInGame( false );
 }
 
