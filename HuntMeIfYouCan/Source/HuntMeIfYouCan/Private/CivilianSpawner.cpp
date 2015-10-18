@@ -19,7 +19,7 @@ ACivilianSpawner::ACivilianSpawner()
 
     Root = CreateDefaultSubobject<USceneComponent> ( TEXT ( "Root" ) );
 
-    SpawnArea = CreateDefaultSubobject<UBoxComponent> ( TEXT ( "SpawnArea" ) );
+    SpawnArea = CreateDefaultSubobject<UBoxComponent>( TEXT( "SpawnArea" ) );
 
     SpawnArea->SetCollisionEnabled ( ECollisionEnabled::QueryOnly );
 
@@ -84,7 +84,7 @@ bool ACivilianSpawner::IsInit()
 
 FVector ACivilianSpawner::GetRandomLocation()
 {
-    FVector RandomLocation = GetActorLocation() + FMath::RandPointInBox( SpawnBox );
+    FVector RandomLocation = GetActorLocation() + FMath::RandPointInBox ( SpawnBox );
 
     RandomLocation.Z += 60.0f;
 
