@@ -75,9 +75,12 @@ public:
 
     void GoMasquerade();
 
+    void ScoredAPoint();
+
     UTexture2D *GetMeshTexture( int32 ID );
 
 private:
+
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Action, meta = ( AllowPrivateAccess = "true" ) )
     bool bIsStab;
 
@@ -123,7 +126,7 @@ private:
 
     FTimerHandle DyingTimer;
 
-    virtual bool OnPlayerHit() override;
+    virtual bool OnPlayerHit( class AAssassinCharacter *Assassin = nullptr ) override;
 
     void UseSkill();
 
@@ -162,35 +165,35 @@ private:
 
     void SetStab( bool IsStab );
 
-    UFUNCTION( reliable, server, WithValidation )
+    UFUNCTION( Server, Reliable, WithValidation )
     void ServerSetStab( bool IsStab );
     virtual void ServerSetStab_Implementation( bool IsStab );
     virtual bool ServerSetStab_Validate( bool IsStab );
 
     void SetIsHoldBow( bool IsHoldBow );
 
-    UFUNCTION( reliable, server, WithValidation )
+    UFUNCTION( Server, Reliable, WithValidation )
     void ServerSetIsHoldBow( bool IsHoldBow );
     virtual void ServerSetIsHoldBow_Implementation( bool IsHoldBow );
     virtual bool ServerSetIsHoldBow_Validate( bool IsHoldBow );
 
     void SetCurrentStatus( EStatusEnum Status );
 
-    UFUNCTION( reliable, server, WithValidation )
+    UFUNCTION( Server, Reliable, WithValidation )
     void ServerSetCurrentStatus( EStatusEnum Status );
     virtual void ServerSetCurrentStatus_Implementation( EStatusEnum Status );
     virtual bool ServerSetCurrentStatus_Validate( EStatusEnum Status );
 
     void SetCurrentHuntSkill( EHuntSkillEnum Skill );
 
-    UFUNCTION( reliable, server, WithValidation )
+    UFUNCTION( Server, Reliable, WithValidation )
     void ServerSetCurrentHuntSkill( EHuntSkillEnum Skill );
     virtual void ServerSetCurrentHuntSkill_Implementation( EHuntSkillEnum Skill );
     virtual bool ServerSetCurrentHuntSkill_Validate( EHuntSkillEnum Skill );
 
     void SetCurrentRunningSkill( ERunningSkillEnum Skill );
 
-    UFUNCTION( reliable, server, WithValidation )
+    UFUNCTION( Server, Reliable, WithValidation )
     void ServerSetCurrentRunningSkill( ERunningSkillEnum Skill );
     virtual void ServerSetCurrentRunningSkill_Implementation( ERunningSkillEnum Skill );
     virtual bool ServerSetCurrentRunningSkill_Validate( ERunningSkillEnum Skill );

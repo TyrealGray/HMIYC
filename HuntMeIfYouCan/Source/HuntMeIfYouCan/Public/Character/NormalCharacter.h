@@ -39,7 +39,7 @@ public:
 
     void MoveRight( float Value );
 
-    virtual bool OnPlayerHit();
+    virtual bool OnPlayerHit( class AAssassinCharacter *Assassin = nullptr );
 
     bool IsDead();
 

@@ -4,6 +4,7 @@
 #include "AssassinCharacter.h"
 #include "UnrealNetwork.h"
 #include "SpawnerFunctionLibrary.h"
+#include "../HMIYCPlayerState.h"
 
 AAssassinCharacter::AAssassinCharacter():
     bIsStab( false ),
@@ -125,7 +126,6 @@ void AAssassinCharacter::UseSkillConfirmed()
     default:
         break;
     }
-
 }
 
 void AAssassinCharacter::UseConcealedItem()
@@ -153,10 +153,12 @@ void AAssassinCharacter::UseConcealedItem()
         return;
     }
 
-    if ( !Cast<ANormalCharacter>( Actor )->OnPlayerHit() )
+    if ( !Cast<ANormalCharacter>( Actor )->OnPlayerHit( this ) )
     {
         GoIntoStatus( EStatusEnum::SE_Expose );
     }
+
+    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Yellow, TEXT( "Score is " + FString::FromInt( Controller->PlayerState->Score ) ) );
 }
 
 void AAssassinCharacter::ServerUseConcealedItem_Implementation()
@@ -357,11 +359,16 @@ void AAssassinCharacter::GoCrawling()
     SetActorHiddenInGame( true );
 }
 
-bool AAssassinCharacter::OnPlayerHit()
+bool AAssassinCharacter::OnPlayerHit( class AAssassinCharacter *Assassin /*= nullptr*/ )
 {
     if ( EStatusEnum::SE_Crawling == CurrentStatus )
     {
         return true;
+    }
+
+    if ( nullptr != Assassin )
+    {
+        Assassin->ScoredAPoint();
     }
 
     ANormalCharacter::OnPlayerHit();
@@ -411,6 +418,22 @@ void AAssassinCharacter::GoMasquerade()
     RandomMeshTexture();
 
     SetActorHiddenInGame( false );
+
+    SetCurrentStatus( EStatusEnum::SE_Masquerade );
+}
+
+void AAssassinCharacter::ScoredAPoint()
+{
+
+    AHMIYCPlayerState *PlayerState = Cast<AHMIYCPlayerState>( Controller->PlayerState );
+    if ( nullptr == PlayerState )
+    {
+        GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Yellow, TEXT( "PlayerState is not AHMIYCPlayerState" ) );
+        return;
+    }
+
+    PlayerState->Score = PlayerState->Score + 1;
+
 }
 
 void AAssassinCharacter::SetIsHoldBow( bool IsHoldBow )

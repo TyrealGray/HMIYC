@@ -153,7 +153,7 @@ TArray<UMaterialInstanceDynamic*> ANormalCharacter::GetMeshMaterialInstances()
     return MeshMaterialInstances;
 }
 
-bool ANormalCharacter::OnPlayerHit()
+bool ANormalCharacter::OnPlayerHit( class AAssassinCharacter *Assassin /*= nullptr*/ )
 {
     SetDead( true );
 
