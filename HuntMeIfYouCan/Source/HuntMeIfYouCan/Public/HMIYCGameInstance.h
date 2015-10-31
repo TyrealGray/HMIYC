@@ -14,16 +14,19 @@ class HUNTMEIFYOUCAN_API UHMIYCGameInstance : public UGameInstance
     GENERATED_BODY()
 public:
 
-    UHMIYCGameInstance(const FObjectInitializer &objectInitializer);
+    UHMIYCGameInstance( const FObjectInitializer &objectInitializer );
 
-    UFUNCTION(BlueprintCallable, category = "OpenUI")
-    void openMainMenu();
+    UFUNCTION( BlueprintCallable, category = "OpenUI" )
+    void OpenMainMenu();
 
-    UFUNCTION(BlueprintCallable, category = "OpenUI")
-    void openServerList();
+    UFUNCTION( BlueprintCallable, category = "OpenUI" )
+    void OpenServerList();
 
-    UFUNCTION(BlueprintCallable, category = "OpenUI")
-    void openPauseMenu();
+    UFUNCTION( BlueprintCallable, category = "OpenUI" )
+    void OpenPauseMenu();
+
+    UFUNCTION( BlueprintImplementableEvent, category = "GameEvent" )
+    void WinGameBy( const class AController *& Player );
 
 private:
     UPROPERTY()
@@ -33,5 +36,5 @@ private:
     UPROPERTY()
     UUserWidget* PauseMenu;
 
-    class UUserWidget* CreateUIWidget(const FString& Path);
+    class UUserWidget* CreateUIWidget( const FString& Path );
 };

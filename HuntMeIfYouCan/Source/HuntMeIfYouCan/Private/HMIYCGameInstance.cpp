@@ -13,7 +13,7 @@ UHMIYCGameInstance::UHMIYCGameInstance( const FObjectInitializer &objectInitiali
 
 }
 
-void UHMIYCGameInstance::openMainMenu()
+void UHMIYCGameInstance::OpenMainMenu()
 {
     if ( !IsValid( MainMenu ) )
     {
@@ -28,7 +28,7 @@ void UHMIYCGameInstance::openMainMenu()
     MainMenu->SetVisibility( ESlateVisibility::Visible );
 }
 
-void UHMIYCGameInstance::openServerList()
+void UHMIYCGameInstance::OpenServerList()
 {
     if ( !IsValid( ServerList ) )
     {
@@ -42,7 +42,7 @@ void UHMIYCGameInstance::openServerList()
     ServerList->SetVisibility( ESlateVisibility::Visible );
 }
 
-void UHMIYCGameInstance::openPauseMenu()
+void UHMIYCGameInstance::OpenPauseMenu()
 {
     if ( !IsValid( PauseMenu ) )
     {

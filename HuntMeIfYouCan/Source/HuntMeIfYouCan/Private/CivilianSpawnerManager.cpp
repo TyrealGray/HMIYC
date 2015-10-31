@@ -42,7 +42,7 @@ void CivilianSpawnerManager::CivilianRespawn()
 
     if ( !Spawner->IsInit() )
     {
-        Spawner->Init();
+        Spawner->BeginInit();
     }
 
     Spawner->SpawnCivilian();

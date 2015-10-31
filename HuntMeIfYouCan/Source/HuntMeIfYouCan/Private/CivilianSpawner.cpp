@@ -4,7 +4,6 @@
 #include "CivilianSpawner.h"
 #include "NormalCharacter.h"
 
-const int32 NUMBER_OF_CIVILIAN_TYPE = 1;
 // Sets default values
 ACivilianSpawner::ACivilianSpawner()
 {
@@ -31,10 +30,10 @@ void ACivilianSpawner::BeginPlay()
 {
     Super::BeginPlay();
 
-    Init();
+    BeginInit();
 }
 
-void ACivilianSpawner::Init()
+void ACivilianSpawner::BeginInit()
 {
     if ( IsInit() )
     {

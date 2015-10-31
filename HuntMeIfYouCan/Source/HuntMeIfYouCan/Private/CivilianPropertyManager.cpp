@@ -3,7 +3,7 @@
 #include "HuntMeIfYouCan.h"
 #include "CivilianPropertyManager.h"
 
-const int32 NUMBER_OF_CIVILIANS_TYPE = 2;
+const int32 NUMBER_OF_CIVILIANS_TYPE = 4;
 
 CivilianPropertyManager* CivilianPropertyManager::Instance = nullptr;
 

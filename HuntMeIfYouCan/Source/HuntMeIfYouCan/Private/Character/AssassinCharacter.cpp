@@ -5,6 +5,7 @@
 #include "UnrealNetwork.h"
 #include "SpawnerFunctionLibrary.h"
 #include "../HMIYCPlayerState.h"
+#include "../HMIYCGameInstance.h"
 
 AAssassinCharacter::AAssassinCharacter():
     bIsStab( false ),
@@ -433,6 +434,10 @@ void AAssassinCharacter::ScoredAPoint()
     }
 
     PlayerState->Score = PlayerState->Score + 1;
+
+    //const AController* Player = Controller;
+
+    //Cast<UHMIYCGameInstance>( Controller->GetGameInstance() )->WinGameBy( Player );
 
 }
 
