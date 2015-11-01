@@ -5,7 +5,7 @@
 
 ![screenshot](http://tyrealgray.github.io/HMIYC/images/HMIYC.jpg)
 
-**Hope I can finish this game before 2016 :)**
+**Hope I can finish this game before 2017 :)**
 
 ###To begin
 Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
