@@ -433,11 +433,16 @@ void AAssassinCharacter::ScoredAPoint()
         return;
     }
 
-    PlayerState->Score = PlayerState->Score + 1;
+    PlayerState->Score += 1;
 
-    //const AController* Player = Controller;
+	if (15 > PlayerState->Score)
+	{
+		return;
+	}
 
-    //Cast<UHMIYCGameInstance>( Controller->GetGameInstance() )->WinGameBy( Player );
+	const AController* Player = Controller;
+
+	Cast<UHMIYCGameInstance>(Controller->GetGameInstance())->WinGameBy(Player);
 
 }
 
