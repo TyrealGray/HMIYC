@@ -50,6 +50,8 @@ public:
 
     virtual void UseConcealedItem();
 
+    virtual void UseConcealedItemConfirmed();
+
     virtual void UseTargetItem();
 
     virtual void UseUnique();
@@ -67,15 +69,12 @@ public:
 
     virtual void GoIntoStatus( EStatusEnum NewStatus );
 
-    void SetStabBegin();
-
-    void SetStabOver();
-
     void GoCrawling();
 
     void GoMasquerade();
 
-    void ScoredAPoint();
+    UFUNCTION( NetMulticast, Reliable )
+    void BeScoring( float Score );
 
     UTexture2D *GetMeshTexture( int32 ID );
 
@@ -140,6 +139,11 @@ private:
     void ServerUseConcealedItem();
     virtual void ServerUseConcealedItem_Implementation();
     virtual bool ServerUseConcealedItem_Validate();
+
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerUseConcealedItemConfirmed();
+    virtual void ServerUseConcealedItemConfirmed_Implementation();
+    virtual bool ServerUseConcealedItemConfirmed_Validate();
 
     UFUNCTION( Server, Reliable, WithValidation )
     void ServerUseTargetItem();

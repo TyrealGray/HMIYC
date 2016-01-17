@@ -54,8 +54,6 @@ void ANormalCharacter::BeginPlay()
 
     InitMaterial();
 
-    //InitRandomMeshTextures();
-
     RandomMeshTexture();
 }
 

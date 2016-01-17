@@ -31,11 +31,13 @@ void AAssassinCharacter::InitDagger()
 
     SpawnParameter.Owner = this;
 
-    ConcealedItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == DaggerActor ) ? AActor::StaticClass() : DaggerActor, SpawnParameter );
+    ConcealedItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == DaggerActor ) ? AActor::StaticClass() : DaggerActor,
+                         SpawnParameter );
 
     ConcealedItemActor->SetActorHiddenInGame( true );
 
-    ConcealedItemActor->AttachRootComponentTo( GetMesh(), FName( "ConcealedItem" ), EAttachLocation::SnapToTarget, false );
+    ConcealedItemActor->AttachRootComponentTo( GetMesh(), FName( "ConcealedItem" ),
+            EAttachLocation::SnapToTarget, false );
 }
 
 
@@ -45,7 +47,8 @@ void AAssassinCharacter::InitBow()
 
     SpawnParameter.Owner = this;
 
-    TargetItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == BowActor ) ? AActor::StaticClass() : BowActor, SpawnParameter );
+    TargetItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == BowActor ) ? AActor::StaticClass() : BowActor,
+                      SpawnParameter );
 
     TargetItemActor->SetActorHiddenInGame( true );
 
@@ -118,6 +121,7 @@ void AAssassinCharacter::UseSkillConfirmed()
     switch ( CurrentHuntSkill )
     {
     case EHuntSkillEnum::HSE_ConcealedItem:
+        UseConcealedItemConfirmed();
         break;
     case EHuntSkillEnum::HSE_TargetItem:
         UseTargetItemConfirmed();
@@ -136,7 +140,8 @@ void AAssassinCharacter::UseConcealedItem()
         ServerUseConcealedItem();
     }
 
-    SetStabBegin();
+    SetStab( true );
+    ConcealedItemActor->SetActorHiddenInGame( false );
 
     SetActorRotation( FRotator( 0.0f, Controller->GetControlRotation().Yaw, 0.0f ) );
 
@@ -145,7 +150,8 @@ void AAssassinCharacter::UseConcealedItem()
     FHitResult Result;
 
     GetWorld()->LineTraceSingleByChannel( Result, GetActorLocation(),
-                                          GetActorLocation() + GetViewRotation().RotateVector( FVector( 100.0f, 0.0f, 0.0f ) ), ECC_Pawn, TraceParams );
+                                          GetActorLocation() + GetViewRotation().RotateVector( FVector( 100.0f, 0.0f, 0.0f ) ),
+                                          ECC_Pawn, TraceParams );
 
     AActor* Actor = Result.GetActor();
 
@@ -159,7 +165,6 @@ void AAssassinCharacter::UseConcealedItem()
         GoIntoStatus( EStatusEnum::SE_Expose );
     }
 
-    GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Yellow, TEXT( "Score is " + FString::FromInt( Controller->PlayerState->Score ) ) );
 }
 
 void AAssassinCharacter::ServerUseConcealedItem_Implementation()
@@ -168,6 +173,27 @@ void AAssassinCharacter::ServerUseConcealedItem_Implementation()
 }
 
 bool AAssassinCharacter::ServerUseConcealedItem_Validate()
+{
+    return ( Role >= ROLE_Authority );
+}
+
+void AAssassinCharacter::UseConcealedItemConfirmed()
+{
+    if ( Role < ROLE_Authority )
+    {
+        ServerUseConcealedItemConfirmed();
+    }
+
+    SetStab( false );
+    ConcealedItemActor->SetActorHiddenInGame( true );
+}
+
+void AAssassinCharacter::ServerUseConcealedItemConfirmed_Implementation()
+{
+    UseConcealedItemConfirmed();
+}
+
+bool AAssassinCharacter::ServerUseConcealedItemConfirmed_Validate()
 {
     return ( Role >= ROLE_Authority );
 }
@@ -205,22 +231,6 @@ void AAssassinCharacter::GoIntoStatus( EStatusEnum NewStatus )
     }
 
     SetCurrentStatus( NewStatus );
-}
-
-void AAssassinCharacter::SetStabBegin()
-{
-    SetStab( true );
-
-    GetWorldTimerManager().ClearTimer( StabTimer );
-    GetWorldTimerManager().SetTimer( StabTimer, this, &AAssassinCharacter::SetStabOver, 0.3f, false );
-
-    ConcealedItemActor->SetActorHiddenInGame( false );
-}
-
-void AAssassinCharacter::SetStabOver()
-{
-    SetStab( false );
-    ConcealedItemActor->SetActorHiddenInGame( true );
 }
 
 void AAssassinCharacter::SetStab( bool IsStab )
@@ -369,7 +379,7 @@ bool AAssassinCharacter::OnPlayerHit( class AAssassinCharacter *Assassin /*= nul
 
     if ( nullptr != Assassin )
     {
-        Assassin->ScoredAPoint();
+        Assassin->BeScoring( Assassin->PlayerState->Score + 1 );
     }
 
     ANormalCharacter::OnPlayerHit();
@@ -423,27 +433,16 @@ void AAssassinCharacter::GoMasquerade()
     SetCurrentStatus( EStatusEnum::SE_Masquerade );
 }
 
-void AAssassinCharacter::ScoredAPoint()
+void AAssassinCharacter::BeScoring_Implementation( float Score )
 {
+    PlayerState->Score = Score;
 
-    AHMIYCPlayerState *PlayerState = Cast<AHMIYCPlayerState>( Controller->PlayerState );
-    if ( nullptr == PlayerState )
+    if ( 5 > PlayerState->Score )
     {
-        GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Yellow, TEXT( "PlayerState is not AHMIYCPlayerState" ) );
         return;
     }
 
-    PlayerState->Score += 1;
-
-	if (15 > PlayerState->Score)
-	{
-		return;
-	}
-
-	const AController* Player = Controller;
-
-	Cast<UHMIYCGameInstance>(Controller->GetGameInstance())->WinGameBy(Player);
-
+    Cast<UHMIYCGameInstance>( GetGameInstance() )->GameWinnerShowed();
 }
 
 void AAssassinCharacter::SetIsHoldBow( bool IsHoldBow )
@@ -510,7 +509,8 @@ void AAssassinCharacter::ServerBeDying_Implementation( AController* PlayerContro
 
     OldPawn->Destroy();
 
-    AActor* NewCharacter = GetWorld()->SpawnActor( USpawnerFunctionLibrary::GetRandomAssassinCharacterClass(), &RandomLoaction, &RandomRotation, SpawnParameter );
+    AActor* NewCharacter = GetWorld()->SpawnActor( USpawnerFunctionLibrary::GetRandomAssassinCharacterClass(),
+                           &RandomLoaction, &RandomRotation, SpawnParameter );
 
     PlayerController->Possess( Cast<APawn>( NewCharacter ) );
 }

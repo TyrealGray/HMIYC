@@ -28,6 +28,9 @@ public:
     UFUNCTION( BlueprintImplementableEvent, category = "GameEvent" )
     void WinGameBy( const class AController *& Player );
 
+    UFUNCTION( BlueprintImplementableEvent, category = "GameEvent" )
+    void GameWinnerShowed();
+
 private:
     UPROPERTY()
     UUserWidget* MainMenu;
