@@ -10,6 +10,14 @@
 ###To begin
 Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
 
+First playable alpha version download [alpha0.16.1.20](http://pan.baidu.com/s/1dEwbyyl)
+
+`WASD` **walk**
+
+`left mouse` **kill**
+
+`Please note that this game is still in early development`
+
 ###LICENSE
 GPLv2
 
