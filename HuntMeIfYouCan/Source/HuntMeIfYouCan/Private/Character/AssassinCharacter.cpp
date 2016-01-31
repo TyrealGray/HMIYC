@@ -477,6 +477,11 @@ void AAssassinCharacter::UseTargetItemConfirmed()
         ServerUseTargetItemConfirmed();
     }
 
+	if (!bIsHoldBow)
+	{
+		return;
+	}
+
     SetIsHoldBow( false );
     TargetItemActor->SetActorHiddenInGame( true );
 }
