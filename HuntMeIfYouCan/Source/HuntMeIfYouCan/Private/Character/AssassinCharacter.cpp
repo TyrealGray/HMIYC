@@ -131,6 +131,8 @@ void AAssassinCharacter::UseSkillConfirmed()
     default:
         break;
     }
+
+    ItemHide();
 }
 
 void AAssassinCharacter::UseConcealedItem()
@@ -183,9 +185,6 @@ void AAssassinCharacter::UseConcealedItemConfirmed()
     {
         ServerUseConcealedItemConfirmed();
     }
-
-    SetStab( false );
-    ConcealedItemActor->SetActorHiddenInGame( true );
 }
 
 void AAssassinCharacter::ServerUseConcealedItemConfirmed_Implementation()
@@ -243,6 +242,31 @@ void AAssassinCharacter::SetStab( bool IsStab )
     {
         ServerSetStab( IsStab );
     }
+}
+
+void AAssassinCharacter::ItemHide()
+{
+
+    if ( Role < ROLE_Authority )
+    {
+        ServerItemHide();
+    }
+
+    SetStab( false );
+    ConcealedItemActor->SetActorHiddenInGame( true );
+
+    SetIsHoldBow( false );
+    TargetItemActor->SetActorHiddenInGame( true );
+}
+
+void AAssassinCharacter::ServerItemHide_Implementation()
+{
+    ItemHide();
+}
+
+bool AAssassinCharacter::ServerItemHide_Validate()
+{
+    return ( Role >= ROLE_Authority );
 }
 
 void AAssassinCharacter::ServerSetStab_Implementation( bool IsStab )
@@ -477,13 +501,11 @@ void AAssassinCharacter::UseTargetItemConfirmed()
         ServerUseTargetItemConfirmed();
     }
 
-	if (!bIsHoldBow)
-	{
-		return;
-	}
+    if ( !bIsHoldBow )
+    {
+        return;
+    }
 
-    SetIsHoldBow( false );
-    TargetItemActor->SetActorHiddenInGame( true );
 }
 
 void AAssassinCharacter::ServerUseTargetItemConfirmed_Implementation()

@@ -169,6 +169,13 @@ private:
 
     void SetStab( bool IsStab );
 
+    void ItemHide();
+
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerItemHide();
+    virtual void ServerItemHide_Implementation();
+    virtual bool ServerItemHide_Validate();
+
     UFUNCTION( Server, Reliable, WithValidation )
     void ServerSetStab( bool IsStab );
     virtual void ServerSetStab_Implementation( bool IsStab );
