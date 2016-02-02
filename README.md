@@ -10,7 +10,7 @@
 ###To begin
 Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
 
-First playable alpha version download [alpha0.16.1.20](http://pan.baidu.com/s/1dEwbyyl)
+First playable alpha version download **[alpha0.16.1.20](http://pan.baidu.com/s/1dEwbyyl)**
 
 `WASD` **walk**
 
