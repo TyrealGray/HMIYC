@@ -73,6 +73,8 @@ public:
 
     void GoMasquerade();
 
+    virtual bool OnPlayerHit( class AAssassinCharacter *Assassin = nullptr ) override;
+
     UFUNCTION( NetMulticast, Reliable )
     void BeScoring( float Score );
 
@@ -124,8 +126,6 @@ private:
     FTimerHandle CrawlingTimer;
 
     FTimerHandle DyingTimer;
-
-    virtual bool OnPlayerHit( class AAssassinCharacter *Assassin = nullptr ) override;
 
     void UseSkill();
 
