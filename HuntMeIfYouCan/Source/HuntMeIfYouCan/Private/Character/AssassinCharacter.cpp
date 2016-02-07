@@ -112,6 +112,8 @@ void AAssassinCharacter::UseSkill()
 
 void AAssassinCharacter::UseSkillConfirmed()
 {
+    ItemHide();
+
     if ( EStatusEnum::SE_Dead == CurrentStatus || EStatusEnum::SE_Expose == CurrentStatus )
     {
         GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Red, "Your status can't do it right now" );
@@ -131,8 +133,6 @@ void AAssassinCharacter::UseSkillConfirmed()
     default:
         break;
     }
-
-    ItemHide();
 }
 
 void AAssassinCharacter::UseConcealedItem()
