@@ -8,7 +8,7 @@
 **Hope I can finish this game before 2017 :)**
 
 ###To begin
-Download ue4.10.2 and Visual Studio 2015
+Download ue4.10.4 and Visual Studio 2015
 
 Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
 
