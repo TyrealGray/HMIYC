@@ -58,18 +58,16 @@ void AArrowProjectile::SetArrowOwner( class AAssassinCharacter *Assassin )
 void AArrowProjectile::OnHit( AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit )
 {
     // Only add impulse and destroy projectile if we hit a physics
-    if ( ( OtherActor == NULL ) || ( OtherActor == this ) || ( OtherComp == NULL ) )
+    if ( ( OtherActor != NULL ) && ( OtherActor != this ) && ( OtherComp != NULL ) )
     {
-        return;
+        AAssassinCharacter *Assassin = Cast<AAssassinCharacter>( OtherActor );
+
+        if ( NULL != Assassin )
+        {
+            Assassin->OnPlayerHit( ArrowOwner );
+        }
+
+        Destroy();
     }
-
-    AAssassinCharacter *Assassin = Cast<AAssassinCharacter>( OtherActor );
-
-    if ( NULL != Assassin )
-    {
-        Assassin->OnPlayerHit( ArrowOwner );
-    }
-
-    Destroy();
 }
 
