@@ -12,6 +12,7 @@ AAssassinCharacter::AAssassinCharacter():
     bIsHoldBow( false ),
     CurrentStatus( EStatusEnum::SE_Masquerade )
 {
+    BowOffset = FVector( 100.0f, 30.0f, 10.0f );
 }
 
 void AAssassinCharacter::BeginPlay()
@@ -146,6 +147,11 @@ void AAssassinCharacter::UseConcealedItem()
     ConcealedItemActor->SetActorHiddenInGame( false );
 
     SetActorRotation( FRotator( 0.0f, Controller->GetControlRotation().Yaw, 0.0f ) );
+
+    if ( NULL != FireConcealedItemSound )
+    {
+        UGameplayStatics::PlaySoundAtLocation( this, FireConcealedItemSound, GetActorLocation() );
+    }
 
     FCollisionQueryParams TraceParams = FCollisionQueryParams( FName( TEXT( "Trace" ) ), false, this );
 
@@ -501,11 +507,25 @@ void AAssassinCharacter::UseTargetItemConfirmed()
         ServerUseTargetItemConfirmed();
     }
 
-    if ( !bIsHoldBow )
+    if ( NULL != FireTargetItemSound )
     {
-        return;
+        UGameplayStatics::PlaySoundAtLocation( this, FireTargetItemSound, GetActorLocation() );
     }
 
+    if ( ArrowProjectileClass != NULL )
+    {
+        const FRotator SpawnRotation = GetControlRotation();
+        // MuzzleOffset is in camera space, so transform it to world space before offsetting from the character location to find the final muzzle position
+        const FVector SpawnLocation = GetActorLocation() + SpawnRotation.RotateVector( BowOffset );
+
+        UWorld* const World = GetWorld();
+        if ( World != NULL )
+        {
+            // spawn the projectile at the muzzle
+            auto arrow = World->SpawnActor<AArrowProjectile>( ArrowProjectileClass, SpawnLocation, SpawnRotation );
+            arrow->SetArrowOwner( this );
+        }
+    }
 }
 
 void AAssassinCharacter::ServerUseTargetItemConfirmed_Implementation()

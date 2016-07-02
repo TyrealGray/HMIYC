@@ -3,6 +3,7 @@
 #pragma once
 
 #include "NormalCharacter.h"
+#include "../Projectile/ArrowProjectile.h"
 #include "AssassinCharacter.generated.h"
 
 UENUM( BlueprintType )	//"BlueprintType" is essential to include
@@ -120,6 +121,11 @@ private:
 
     UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = Gameplay, meta = ( AllowPrivateAccess = "true" ) )
     class USoundBase * FireTargetItemSound;
+
+    UPROPERTY( EditDefaultsOnly, Category = Projectile, meta = ( AllowPrivateAccess = "true" ) )
+    TSubclassOf<class AArrowProjectile> ArrowProjectileClass;
+
+    FVector BowOffset;
 
     AActor *ConcealedItemActor;
 
