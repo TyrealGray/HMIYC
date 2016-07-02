@@ -115,6 +115,12 @@ private:
     UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = ItemActor, meta = ( AllowPrivateAccess = "true" ) )
     TSubclassOf<AActor> BowActor;
 
+    UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = Gameplay, meta = ( AllowPrivateAccess = "true" ) )
+    class USoundBase * FireConcealedItemSound;
+
+    UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = Gameplay, meta = ( AllowPrivateAccess = "true" ) )
+    class USoundBase * FireTargetItemSound;
+
     AActor *ConcealedItemActor;
 
     AActor* TargetItemActor;

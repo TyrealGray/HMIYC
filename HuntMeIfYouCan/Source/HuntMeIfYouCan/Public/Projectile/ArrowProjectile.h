@@ -25,9 +25,6 @@ public:
     UFUNCTION()
     void OnHit( AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit );
 
-    UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = Gameplay )
-    class USoundBase * FireSound;
-
 private:
     UPROPERTY( VisibleDefaultsOnly, Category = Projectile )
     class USphereComponent * CollisionComp;
