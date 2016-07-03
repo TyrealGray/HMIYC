@@ -1,8 +1,9 @@
 // GPLv2
 
 #include "HuntMeIfYouCan.h"
-#include "ArrowProjectile.h"
 
+#include "ArrowProjectile.h"
+#include "UnrealNetwork.h"
 #include "AssassinCharacter.h"
 
 
@@ -50,20 +51,42 @@ void AArrowProjectile::Tick( float DeltaTime )
 
 }
 
+void AArrowProjectile::GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const
+{
+    Super::GetLifetimeReplicatedProps( OutLifetimeProps );
+
+    DOREPLIFETIME( AArrowProjectile, ArrowOwner );
+}
+
 void AArrowProjectile::SetArrowOwner( class AAssassinCharacter *Assassin )
 {
+    if ( Role < ROLE_Authority )
+    {
+        ServerSetArrowOwner( Assassin );
+    }
+
     ArrowOwner = Assassin;
+}
+
+void AArrowProjectile::ServerSetArrowOwner_Implementation( class AAssassinCharacter *Assassin )
+{
+    SetArrowOwner( Assassin );
+}
+
+bool AArrowProjectile::ServerSetArrowOwner_Validate( class AAssassinCharacter *Assassin )
+{
+    return ( Role >= ROLE_Authority );
 }
 
 void AArrowProjectile::OnHit( AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit )
 {
     if ( ( OtherActor != NULL ) && ( OtherActor != this ) && ( OtherComp != NULL ) )
     {
-        AAssassinCharacter *Assassin = Cast<AAssassinCharacter>( OtherActor );
+        auto Civilian = Cast<ANormalCharacter>( OtherActor );
 
-        if ( NULL != Assassin )
+        if ( NULL != Civilian && !Civilian->OnPlayerHit( ArrowOwner ) )
         {
-            Assassin->OnPlayerHit( ArrowOwner );
+            ArrowOwner->GoIntoStatus( EStatusEnum::SE_Expose );
         }
 
         Destroy();

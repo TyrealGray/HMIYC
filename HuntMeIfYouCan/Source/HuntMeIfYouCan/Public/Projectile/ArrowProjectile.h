@@ -20,7 +20,14 @@ public:
     // Called every frame
     virtual void Tick( float DeltaSeconds ) override;
 
+    virtual void GetLifetimeReplicatedProps( TArray< FLifetimeProperty > & OutLifetimeProps ) const;
+
     void SetArrowOwner( class AAssassinCharacter *Assassin );
+
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerSetArrowOwner( class AAssassinCharacter *Assassin );
+    virtual void ServerSetArrowOwner_Implementation( class AAssassinCharacter *Assassin );
+    virtual bool ServerSetArrowOwner_Validate( class AAssassinCharacter *Assassin );
 
     UFUNCTION()
     void OnHit( AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit );
@@ -33,6 +40,6 @@ private:
     UPROPERTY( VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = ( AllowPrivateAccess = "true" ) )
     class UProjectileMovementComponent * ProjectileMovement;
 
-    class AAssassinCharacter *ArrowOwner;
-
+    UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Gameplay, meta = ( AllowPrivateAccess = "true" ) )
+    class AAssassinCharacter * ArrowOwner;
 };

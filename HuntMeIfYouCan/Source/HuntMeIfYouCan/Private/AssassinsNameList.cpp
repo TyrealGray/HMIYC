@@ -7,7 +7,7 @@ AssassinsNameList* AssassinsNameList::Instance = nullptr;
 
 AssassinsNameList::AssassinsNameList()
 {
-    //AssassinsNameArray.Add( "BP_Archer" );
+    AssassinsNameArray.Add( "BP_Archer" );
     AssassinsNameArray.Add( "BP_BankRobber" );
 }
 
