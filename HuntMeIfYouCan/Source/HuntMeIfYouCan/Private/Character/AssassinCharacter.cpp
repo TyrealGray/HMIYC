@@ -12,7 +12,7 @@ AAssassinCharacter::AAssassinCharacter():
     bIsHoldBow( false ),
     CurrentStatus( EStatusEnum::SE_Masquerade )
 {
-    BowOffset = FVector( 100.0f, 30.0f, 10.0f );
+    BowOffset = FVector( 100.0f, 0.0f, 10.0f );
 }
 
 void AAssassinCharacter::BeginPlay()
