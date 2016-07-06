@@ -139,6 +139,9 @@ private:
 
     FTimerHandle DyingTimer;
 
+    // still not sure : does timer need to be replicated?
+    FTimerHandle TargetItemColdDownTimer;
+
     void UseSkill();
 
     void UseSkillConfirmed();
@@ -180,6 +183,10 @@ private:
     void GoDead();
 
     void SetStab( bool IsStab );
+
+    void TargetItemColdDown();
+
+    void TargetItemReady();
 
     void ItemHide();
 

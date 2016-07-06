@@ -251,6 +251,16 @@ void AAssassinCharacter::SetStab( bool IsStab )
     }
 }
 
+void AAssassinCharacter::TargetItemColdDown()
+{
+
+}
+
+void AAssassinCharacter::TargetItemReady()
+{
+
+}
+
 void AAssassinCharacter::ItemHide()
 {
 
