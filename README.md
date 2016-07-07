@@ -23,4 +23,4 @@ First playable alpha version download **[alpha0.16.1.20](http://pan.baidu.com/s/
 ###LICENSE
 GPLv2
 
-`For some reasons.Content of character were only being packaged in release version.`
+`For some reasons.Content of character is only packaged in release version.`
