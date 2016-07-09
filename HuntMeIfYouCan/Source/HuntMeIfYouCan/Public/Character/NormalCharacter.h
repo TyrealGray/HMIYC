@@ -86,6 +86,9 @@ private:
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = MeshTexture, meta = ( AllowPrivateAccess = "true" ) )
     int32 TexturesGroupID;
 
+    UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = Gameplay, meta = ( AllowPrivateAccess = "true" ) )
+    class USoundBase * DeadSound;
+
     TArray<UMaterialInstanceDynamic*> MeshMaterialInstances;
 
     TArray<TArray<UTexture2D*>> MeshTextureGroup;

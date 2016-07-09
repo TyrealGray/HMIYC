@@ -155,6 +155,11 @@ bool ANormalCharacter::OnPlayerHit( class AAssassinCharacter *Assassin /*= nullp
 {
     SetDead( true );
 
+    if ( NULL != DeadSound )
+    {
+        UGameplayStatics::PlaySoundAtLocation( this, DeadSound, GetActorLocation() );
+    }
+
     GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Green, GetName() + " OnPlayerHit!" );
 
     return false;
