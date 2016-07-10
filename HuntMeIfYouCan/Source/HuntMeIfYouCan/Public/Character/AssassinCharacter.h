@@ -125,6 +125,8 @@ private:
     UPROPERTY( EditDefaultsOnly, Category = Projectile, meta = ( AllowPrivateAccess = "true" ) )
     TSubclassOf<class AArrowProjectile> ArrowProjectileClass;
 
+    bool bIsTargetItemColdDown;
+
     FVector BowOffset;
 
     AActor *ConcealedItemActor;

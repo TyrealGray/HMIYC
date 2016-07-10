@@ -10,7 +10,8 @@
 AAssassinCharacter::AAssassinCharacter():
     bIsStab( false ),
     bIsHoldBow( false ),
-    CurrentStatus( EStatusEnum::SE_Masquerade )
+    CurrentStatus( EStatusEnum::SE_Masquerade ),
+    bIsTargetItemColdDown( false )
 {
     BowOffset = FVector( 100.0f, 0.0f, 10.0f );
 }
@@ -211,6 +212,12 @@ void AAssassinCharacter::UseTargetItem()
         ServerUseTargetItem();
     }
 
+    if ( bIsTargetItemColdDown )
+    {
+        GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Red, "Your TargetItem ColdDown right now" );
+        return;
+    }
+
     SetIsHoldBow( true );
 
     TargetItemActor->SetActorHiddenInGame( false );
@@ -253,12 +260,12 @@ void AAssassinCharacter::SetStab( bool IsStab )
 
 void AAssassinCharacter::TargetItemColdDown()
 {
-
+    bIsTargetItemColdDown = true;
 }
 
 void AAssassinCharacter::TargetItemReady()
 {
-
+    bIsTargetItemColdDown = false;
 }
 
 void AAssassinCharacter::ItemHide()
@@ -518,7 +525,7 @@ void AAssassinCharacter::UseTargetItemConfirmed()
         ServerUseTargetItemConfirmed();
     }
 
-    if ( !bIsHoldBow )
+    if ( !bIsHoldBow || bIsTargetItemColdDown )
     {
         return;
     }
@@ -542,6 +549,11 @@ void AAssassinCharacter::UseTargetItemConfirmed()
             arrow->SetArrowOwner( this );
         }
     }
+
+    TargetItemColdDown();
+
+    GetWorldTimerManager().ClearTimer( TargetItemColdDownTimer );
+    GetWorldTimerManager().SetTimer( TargetItemColdDownTimer, this, &AAssassinCharacter::TargetItemReady, 5.0f, false );
 }
 
 void AAssassinCharacter::ServerUseTargetItemConfirmed_Implementation()
