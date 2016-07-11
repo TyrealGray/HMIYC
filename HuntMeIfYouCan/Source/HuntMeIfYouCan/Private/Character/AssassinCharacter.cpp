@@ -535,6 +535,8 @@ void AAssassinCharacter::UseTargetItemConfirmed()
         UGameplayStatics::PlaySoundAtLocation( this, FireTargetItemSound, GetActorLocation() );
     }
 
+    SetActorRotation( FRotator( 0.0f, Controller->GetControlRotation().Yaw, 0.0f ) );
+
     if ( ArrowProjectileClass != NULL )
     {
         const FRotator SpawnRotation = GetControlRotation();
