@@ -111,10 +111,10 @@ private:
     UTexture2D * BodyMeshTexture;
 
     UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = ItemActor, meta = ( AllowPrivateAccess = "true" ) )
-    TSubclassOf<AActor> DaggerActor;
+    TSubclassOf<AActor> DaggerActorClass;
 
     UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = ItemActor, meta = ( AllowPrivateAccess = "true" ) )
-    TSubclassOf<AActor> BowActor;
+    TSubclassOf<AActor> BowActorClass;
 
     UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = Gameplay, meta = ( AllowPrivateAccess = "true" ) )
     class USoundBase * FireConcealedItemSound;
@@ -143,6 +143,8 @@ private:
 
     // still not sure : does timer need to be replicated?
     FTimerHandle TargetItemColdDownTimer;
+
+    class UAudioComponent* ExposeBGM;
 
     void UseSkill();
 

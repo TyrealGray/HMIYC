@@ -173,6 +173,7 @@ void AAssassinCharacter::UseConcealedItem()
     if ( !Cast<ANormalCharacter>( Actor )->OnPlayerHit( this ) )
     {
         GoIntoStatus( EStatusEnum::SE_Expose );
+
     }
 
 }
