@@ -11,7 +11,8 @@ AAssassinCharacter::AAssassinCharacter():
     bIsStab( false ),
     bIsHoldBow( false ),
     CurrentStatus( EStatusEnum::SE_Masquerade ),
-    bIsTargetItemColdDown( false )
+    bIsTargetItemColdDown( false ),
+    ExposeBGM( nullptr )
 {
     BowOffset = FVector( 100.0f, 0.0f, 10.0f );
 }
@@ -33,7 +34,7 @@ void AAssassinCharacter::InitDagger()
 
     SpawnParameter.Owner = this;
 
-    ConcealedItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == DaggerActor ) ? AActor::StaticClass() : DaggerActor,
+    ConcealedItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == DaggerActorClass ) ? AActor::StaticClass() : DaggerActorClass,
                          SpawnParameter );
 
     ConcealedItemActor->SetActorHiddenInGame( true );
@@ -49,7 +50,7 @@ void AAssassinCharacter::InitBow()
 
     SpawnParameter.Owner = this;
 
-    TargetItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == BowActor ) ? AActor::StaticClass() : BowActor,
+    TargetItemActor = GetWorld()->SpawnActor<AActor>( ( nullptr == BowActorClass ) ? AActor::StaticClass() : BowActorClass,
                       SpawnParameter );
 
     TargetItemActor->SetActorHiddenInGame( true );
@@ -173,6 +174,14 @@ void AAssassinCharacter::UseConcealedItem()
     if ( !Cast<ANormalCharacter>( Actor )->OnPlayerHit( this ) )
     {
         GoIntoStatus( EStatusEnum::SE_Expose );
+
+        //( NULL == ExposeBGM ) ? ExposeBGM = UGameplayStatics::SpawnSound2D( this, nullptr ) : ;
+        if ( nullptr != ExposeBGM )
+        {
+            ExposeBGM->Stop();
+        }
+
+        UGameplayStatics::SpawnSound2D( this, LoadObject<USoundWave>( nullptr, TEXT( "/Game/Audio/BGM/Escape_from_East_Berlin_clip.Escape_from_East_Berlin_clip" ) ) );
 
     }
 
