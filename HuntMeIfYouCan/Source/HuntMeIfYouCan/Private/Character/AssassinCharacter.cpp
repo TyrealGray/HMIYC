@@ -175,13 +175,12 @@ void AAssassinCharacter::UseConcealedItem()
     {
         GoIntoStatus( EStatusEnum::SE_Expose );
 
-        //( NULL == ExposeBGM ) ? ExposeBGM = UGameplayStatics::SpawnSound2D( this, nullptr ) : ;
         if ( nullptr != ExposeBGM )
         {
             ExposeBGM->Stop();
         }
 
-        UGameplayStatics::SpawnSound2D( this, LoadObject<USoundWave>( nullptr, TEXT( "/Game/Audio/BGM/Escape_from_East_Berlin_clip.Escape_from_East_Berlin_clip" ) ) );
+        ExposeBGM = UGameplayStatics::SpawnSound2D( this, LoadObject<USoundWave>( nullptr, TEXT( "/Game/Audio/BGM/Escape_from_East_Berlin_clip.Escape_from_East_Berlin_clip" ) ) );
 
     }
 
