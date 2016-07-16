@@ -12,7 +12,7 @@ AAssassinCharacter::AAssassinCharacter():
     bIsHoldBow( false ),
     CurrentStatus( EStatusEnum::SE_Masquerade ),
     bIsTargetItemColdDown( false ),
-    ExposeBGM( nullptr )
+    ExposeBGMAudio( nullptr )
 {
     BowOffset = FVector( 100.0f, 0.0f, 10.0f );
 }
@@ -175,12 +175,12 @@ void AAssassinCharacter::UseConcealedItem()
     {
         GoIntoStatus( EStatusEnum::SE_Expose );
 
-        if ( nullptr != ExposeBGM )
+        if ( nullptr != ExposeBGMAudio )
         {
-            ExposeBGM->Stop();
+            ExposeBGMAudio->Stop();
         }
 
-        ExposeBGM = UGameplayStatics::SpawnSound2D( this, LoadObject<USoundWave>( nullptr, TEXT( "/Game/Audio/BGM/Escape_from_East_Berlin_clip.Escape_from_East_Berlin_clip" ) ) );
+        ExposeBGMAudio = UGameplayStatics::SpawnSound2D( this, LoadObject<USoundWave>( nullptr, TEXT( "/Game/Audio/BGM/Escape_from_East_Berlin_clip.Escape_from_East_Berlin_clip" ) ) );
 
     }
 

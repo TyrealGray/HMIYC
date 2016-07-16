@@ -144,7 +144,7 @@ private:
     // still not sure : does timer need to be replicated?
     FTimerHandle TargetItemColdDownTimer;
 
-    class UAudioComponent* ExposeBGM;
+    class UAudioComponent* ExposeBGMAudio;
 
     void UseSkill();
 
