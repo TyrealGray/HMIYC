@@ -94,7 +94,8 @@ void AAssassinCharacter::GetLifetimeReplicatedProps( TArray< FLifetimeProperty >
 
 void AAssassinCharacter::UseSkill()
 {
-    if ( EStatusEnum::SE_Dead == CurrentStatus || EStatusEnum::SE_Expose == CurrentStatus )
+    if ( EStatusEnum::SE_Dead == CurrentStatus || EStatusEnum::SE_Expose == CurrentStatus ||
+            EStatusEnum::SE_Crawling == CurrentStatus )
     {
         GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Red, "Your status can't do it right now" );
         return;
