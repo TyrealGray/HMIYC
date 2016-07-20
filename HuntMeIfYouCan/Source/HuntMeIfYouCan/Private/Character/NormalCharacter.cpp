@@ -2,7 +2,7 @@
 
 #include "HuntMeIfYouCan.h"
 #include "NormalCharacter.h"
-#include "../CivilianPropertyManager.h"
+#include "CivilianPropertyManager.h"
 #include "UnrealNetwork.h"
 
 // Sets default values

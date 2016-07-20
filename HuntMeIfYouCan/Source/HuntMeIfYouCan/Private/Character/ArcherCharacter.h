@@ -17,4 +17,8 @@ public:
     AArcherCharacter();
 
     virtual void BeginPlay();
+
+private:
+    UPROPERTY()
+    class UAssassinWidget* MainMenu;
 };

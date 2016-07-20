@@ -4,8 +4,8 @@
 #include "AssassinCharacter.h"
 #include "UnrealNetwork.h"
 #include "SpawnerFunctionLibrary.h"
-#include "../HMIYCPlayerState.h"
-#include "../HMIYCGameInstance.h"
+#include "HMIYCPlayerState.h"
+#include "HMIYCGameInstance.h"
 
 AAssassinCharacter::AAssassinCharacter():
     bIsStab( false ),

@@ -2,6 +2,7 @@
 
 #include "HuntMeIfYouCan.h"
 #include "ArcherCharacter.h"
+#include "AssassinWidget.h"
 
 AArcherCharacter::AArcherCharacter()
 {
