@@ -18,7 +18,12 @@ public:
 
     virtual void BeginPlay();
 
+    virtual void OpenUI();
+
+    virtual class UAssassinWidget* GetUI();
+
 private:
+
     UPROPERTY()
-    class UAssassinWidget* MainMenu;
+    class UAssassinWidget * CharacterMenu;
 };

@@ -16,4 +16,8 @@ public:
     ABankRobberCharacter();
 
     virtual void BeginPlay();
+
+    virtual void OpenUI();
+
+    virtual class UAssassinWidget* GetUI();
 };

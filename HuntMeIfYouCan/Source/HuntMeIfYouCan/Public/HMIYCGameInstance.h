@@ -31,13 +31,14 @@ public:
     UFUNCTION( BlueprintImplementableEvent, category = "GameEvent" )
     void GameWinnerShowed();
 
+    class UUserWidget* CreateUIWidget( const FString& Path );
+
 private:
+
     UPROPERTY()
     UUserWidget* MainMenu;
     UPROPERTY()
     UUserWidget* ServerList;
     UPROPERTY()
     UUserWidget* PauseMenu;
-
-    class UUserWidget* CreateUIWidget( const FString& Path );
 };

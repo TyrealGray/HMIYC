@@ -81,6 +81,16 @@ public:
 
     UTexture2D *GetMeshTexture( int32 ID );
 
+    UFUNCTION( BlueprintCallable, category = "OpenUI" )
+    void OpenCharacterUI();
+
+    virtual void OpenUI();
+
+    UFUNCTION( BlueprintCallable, category = "UI" )
+    class UAssassinWidget *  GetCharacterUI();
+
+    virtual class UAssassinWidget* GetUI();
+
 private:
 
     UPROPERTY( Replicated, VisibleAnywhere, BlueprintReadOnly, Category = Action, meta = ( AllowPrivateAccess = "true" ) )
@@ -156,26 +166,6 @@ private:
 
     virtual void JumpDeliver();
 
-    UFUNCTION( Server, Reliable, WithValidation )
-    void ServerUseConcealedItem();
-    virtual void ServerUseConcealedItem_Implementation();
-    virtual bool ServerUseConcealedItem_Validate();
-
-    UFUNCTION( Server, Reliable, WithValidation )
-    void ServerUseConcealedItemConfirmed();
-    virtual void ServerUseConcealedItemConfirmed_Implementation();
-    virtual bool ServerUseConcealedItemConfirmed_Validate();
-
-    UFUNCTION( Server, Reliable, WithValidation )
-    void ServerUseTargetItem();
-    virtual void ServerUseTargetItem_Implementation();
-    virtual bool ServerUseTargetItem_Validate();
-
-    UFUNCTION( Server, Reliable, WithValidation )
-    void ServerUseTargetItemConfirmed();
-    virtual void ServerUseTargetItemConfirmed_Implementation();
-    virtual bool ServerUseTargetItemConfirmed_Validate();
-
     virtual void InitDagger();
 
     virtual void InitBow();
@@ -195,6 +185,26 @@ private:
     void TargetItemReady();
 
     void ItemHide();
+
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerUseConcealedItem();
+    virtual void ServerUseConcealedItem_Implementation();
+    virtual bool ServerUseConcealedItem_Validate();
+
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerUseConcealedItemConfirmed();
+    virtual void ServerUseConcealedItemConfirmed_Implementation();
+    virtual bool ServerUseConcealedItemConfirmed_Validate();
+
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerUseTargetItem();
+    virtual void ServerUseTargetItem_Implementation();
+    virtual bool ServerUseTargetItem_Validate();
+
+    UFUNCTION( Server, Reliable, WithValidation )
+    void ServerUseTargetItemConfirmed();
+    virtual void ServerUseTargetItemConfirmed_Implementation();
+    virtual bool ServerUseTargetItemConfirmed_Validate();
 
     UFUNCTION( Server, Reliable, WithValidation )
     void ServerItemHide();
