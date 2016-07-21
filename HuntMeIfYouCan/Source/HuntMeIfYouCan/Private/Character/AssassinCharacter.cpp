@@ -485,24 +485,9 @@ UTexture2D * AAssassinCharacter::GetMeshTexture( int32 ID )
     return Texture;
 }
 
-void AAssassinCharacter::OpenCharacterUI()
+FString AAssassinCharacter::GetUIPath()
 {
-    OpenUI();
-}
-
-void AAssassinCharacter::OpenUI()
-{
-
-}
-
-class UAssassinWidget * AAssassinCharacter::GetCharacterUI()
-{
-    return GetUI();
-}
-
-class UAssassinWidget* AAssassinCharacter::GetUI()
-{
-    return nullptr;
+    return "";
 }
 
 void AAssassinCharacter::GoMasquerade()

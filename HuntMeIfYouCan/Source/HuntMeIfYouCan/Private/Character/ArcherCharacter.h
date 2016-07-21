@@ -18,12 +18,8 @@ public:
 
     virtual void BeginPlay();
 
-    virtual void OpenUI();
-
-    virtual class UAssassinWidget* GetUI();
+    virtual FString GetUIPath();
 
 private:
 
-    UPROPERTY()
-    class UAssassinWidget * CharacterMenu;
 };

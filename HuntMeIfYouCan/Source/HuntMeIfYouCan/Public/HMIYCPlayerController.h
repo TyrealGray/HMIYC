@@ -18,10 +18,18 @@ public:
 
     virtual void SetupInputComponent() override;
 
+    virtual void BeginPlay() override;
+
     UFUNCTION( BlueprintCallable, category = "StartGame" )
     void StartGameNow();
 
+    UFUNCTION( BlueprintCallable, category = "GameUI" )
+    void SetCharacterUI( const FString& path );
+
 private:
+
+    UPROPERTY()
+    class UAssassinWidget * CharacterMenu;
 
     void OnMoveForward( float Value );
     void OnMoveRight( float Value );

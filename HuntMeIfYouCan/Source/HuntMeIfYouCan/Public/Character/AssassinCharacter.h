@@ -3,7 +3,7 @@
 #pragma once
 
 #include "NormalCharacter.h"
-#include "../Projectile/ArrowProjectile.h"
+#include "Projectile/ArrowProjectile.h"
 #include "AssassinCharacter.generated.h"
 
 UENUM( BlueprintType )	//"BlueprintType" is essential to include
@@ -81,15 +81,7 @@ public:
 
     UTexture2D *GetMeshTexture( int32 ID );
 
-    UFUNCTION( BlueprintCallable, category = "OpenUI" )
-    void OpenCharacterUI();
-
-    virtual void OpenUI();
-
-    UFUNCTION( BlueprintCallable, category = "UI" )
-    class UAssassinWidget *  GetCharacterUI();
-
-    virtual class UAssassinWidget* GetUI();
+    virtual FString GetUIPath();
 
 private:
 

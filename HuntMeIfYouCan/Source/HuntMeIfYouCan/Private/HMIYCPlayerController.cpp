@@ -4,12 +4,13 @@
 #include "HMIYCPlayerController.h"
 #include "NormalCharacter.h"
 #include "UnrealNetwork.h"
-
+#include "AssassinWidget.h"
+#include "AssassinCharacter.h"
 
 AHMIYCPlayerController::AHMIYCPlayerController( const FObjectInitializer& objectInitializer ):
-    Super( objectInitializer )
+    Super( objectInitializer ),
+    CharacterMenu( nullptr )
 {
-
 }
 
 void AHMIYCPlayerController::SetupInputComponent()
@@ -21,6 +22,22 @@ void AHMIYCPlayerController::SetupInputComponent()
 
     InputComponent->BindAxis( "Turn", this, &AHMIYCPlayerController::OnTurn );
     InputComponent->BindAxis( "LookUp", this, &AHMIYCPlayerController::OnLookUp );
+}
+
+void AHMIYCPlayerController::BeginPlay()
+{
+    Super::BeginPlay();
+
+    GEngine->AddOnScreenDebugMessage( -1, 4.5f, FColor::Green, "AHMIYCPlayerController BeginPlay" );
+
+    AAssassinCharacter* pAssassinCharacter = Cast<AAssassinCharacter>( GetPawn() );
+
+    if ( !IsValid( pAssassinCharacter ) )
+    {
+        return;
+    }
+
+    SetCharacterUI( pAssassinCharacter->GetUIPath() );
 }
 
 void AHMIYCPlayerController::OnMoveForward( float Value )
@@ -74,4 +91,29 @@ void AHMIYCPlayerController::OnLookUp( float Value )
 void AHMIYCPlayerController::StartGameNow()
 {
     GetWorld()->ServerTravel( FString( "/Game/Maps/WestTown?game=/Game/Blueprints/BP_HMIYCGameMode.BP_HMIYCGameMode_C?listen" ) );
+}
+
+void AHMIYCPlayerController::SetCharacterUI( const FString& Path )
+{
+    if ( Path.IsEmpty() )
+    {
+        return;
+    }
+
+    if ( nullptr != CharacterMenu )
+    {
+        CharacterMenu->SetVisibility( ESlateVisibility::Hidden );
+        CharacterMenu->RemoveFromViewport();
+        CharacterMenu->Destruct();
+    }
+
+    UClass* WidgetClass = StaticLoadClass( UAssassinWidget::StaticClass(), nullptr, *Path );
+
+    UAssassinWidget* Widget = CreateWidget<UAssassinWidget>( GetWorld(), WidgetClass );
+
+    Widget->AddToViewport( 9 );
+
+    Widget->SetVisibility( ESlateVisibility::Visible );
+
+    CharacterMenu = Widget;
 }

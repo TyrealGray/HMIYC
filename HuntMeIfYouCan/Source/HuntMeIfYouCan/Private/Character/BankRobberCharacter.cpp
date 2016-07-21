@@ -2,7 +2,6 @@
 
 #include "HuntMeIfYouCan.h"
 #include "BankRobberCharacter.h"
-#include "AssassinWidget.h"
 
 ABankRobberCharacter::ABankRobberCharacter()
 {
@@ -15,12 +14,7 @@ void ABankRobberCharacter::BeginPlay()
     GEngine->AddOnScreenDebugMessage( -1, 4.5f, FColor::Green, "BankRobber spawn" );
 }
 
-void ABankRobberCharacter::OpenUI()
+FString ABankRobberCharacter::GetUIPath()
 {
-
-}
-
-class UAssassinWidget* ABankRobberCharacter::GetUI()
-{
-    return nullptr;
+    return "";
 }
