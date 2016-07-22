@@ -66,6 +66,8 @@ public:
 
     void PlayExposedBGM();
 
+    void StopExposedBGM();
+
     void BeCrawling();
 
     void BeDying();

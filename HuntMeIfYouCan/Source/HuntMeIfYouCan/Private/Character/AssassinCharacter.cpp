@@ -395,12 +395,17 @@ void AAssassinCharacter::Exposed()
 
 void AAssassinCharacter::PlayExposedBGM()
 {
+    StopExposedBGM();
+
+    ExposeBGMAudio = UGameplayStatics::SpawnSound2D( this, ExposeBGM );
+}
+
+void AAssassinCharacter::StopExposedBGM()
+{
     if ( nullptr != ExposeBGMAudio )
     {
         ExposeBGMAudio->Stop();
     }
-
-    ExposeBGMAudio = UGameplayStatics::SpawnSound2D( this, ExposeBGM );
 }
 
 void AAssassinCharacter::BeExpose_Implementation()
@@ -621,10 +626,7 @@ bool AAssassinCharacter::ServerBeDying_Validate( AController* PlayerController )
 
 void AAssassinCharacter::GoDead()
 {
-    if ( nullptr != ExposeBGMAudio )
-    {
-        ExposeBGMAudio->Stop();
-    }
+    StopExposedBGM();
 
     ServerBeDying( Controller );
 }
