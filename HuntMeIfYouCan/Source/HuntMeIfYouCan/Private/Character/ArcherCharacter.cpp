@@ -17,5 +17,5 @@ void AArcherCharacter::BeginPlay()
 
 FString AArcherCharacter::GetUIPath()
 {
-    return FString( "/Game/Blueprints/Widgets/Characters/ArcherUI.ArcherUI_C" );
+    return FString( "/Game/Blueprints/Widgets/Characters/BP_ArcherUI.BP_ArcherUI_C" );
 }

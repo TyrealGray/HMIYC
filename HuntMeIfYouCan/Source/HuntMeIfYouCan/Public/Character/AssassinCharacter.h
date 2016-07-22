@@ -64,6 +64,8 @@ public:
 
     virtual void Exposed();
 
+    void PlayExposedBGM();
+
     void BeCrawling();
 
     void BeDying();

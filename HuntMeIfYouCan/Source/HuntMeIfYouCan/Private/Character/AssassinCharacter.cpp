@@ -178,14 +178,6 @@ void AAssassinCharacter::UseConcealedItem()
     if ( !Cast<ANormalCharacter>( Actor )->OnPlayerHit( this ) )
     {
         GoIntoStatus( EStatusEnum::SE_Expose );
-
-        if ( nullptr != ExposeBGMAudio )
-        {
-            ExposeBGMAudio->Stop();
-        }
-
-        ExposeBGMAudio = UGameplayStatics::SpawnSound2D( this, ExposeBGM );
-
     }
 
 }
@@ -246,6 +238,7 @@ void AAssassinCharacter::GoIntoStatus( EStatusEnum NewStatus )
     {
     case  EStatusEnum::SE_Expose:
         BeExpose();
+        PlayExposedBGM();
         break;
     case EStatusEnum::SE_Crawling:
         BeCrawling();
@@ -400,6 +393,16 @@ void AAssassinCharacter::Exposed()
     GetWorldTimerManager().SetTimer( ExposeTimer, this, &AAssassinCharacter::GoCrawling, 30.0f, false );
 }
 
+void AAssassinCharacter::PlayExposedBGM()
+{
+    if ( nullptr != ExposeBGMAudio )
+    {
+        ExposeBGMAudio->Stop();
+    }
+
+    ExposeBGMAudio = UGameplayStatics::SpawnSound2D( this, ExposeBGM );
+}
+
 void AAssassinCharacter::BeExpose_Implementation()
 {
     Exposed();
@@ -503,6 +506,7 @@ void AAssassinCharacter::BeScoring_Implementation( float Score )
 {
     PlayerState->Score = Score;
 
+    //TODO need interface in game to set this number
     if ( 5 > PlayerState->Score )
     {
         return;

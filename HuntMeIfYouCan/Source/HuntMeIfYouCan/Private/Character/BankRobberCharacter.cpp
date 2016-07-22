@@ -16,5 +16,5 @@ void ABankRobberCharacter::BeginPlay()
 
 FString ABankRobberCharacter::GetUIPath()
 {
-    return "";
+    return "/Game/Blueprints/Widgets/Characters/BP_BankRobberUI.BP_BankRobberUI_C";
 }
