@@ -621,5 +621,10 @@ bool AAssassinCharacter::ServerBeDying_Validate( AController* PlayerController )
 
 void AAssassinCharacter::GoDead()
 {
+    if ( nullptr != ExposeBGMAudio )
+    {
+        ExposeBGMAudio->Stop();
+    }
+
     ServerBeDying( Controller );
 }
