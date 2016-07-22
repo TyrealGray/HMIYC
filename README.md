@@ -1,5 +1,7 @@
 ##HMIYC
 
+[![Software License](https://img.shields.io/badge/license-GPLv2-brightgreen.svg)](LICENSE)
+
 >* **Hunt Me If You Can is an UnrealEngine4 Battle Lan Game**
 >* **It's a total 3d engraved version of[[AssassinWar](https://github.com/TyrealGray/AssassinWar)]**
 
@@ -19,8 +21,5 @@ First playable alpha version download **[alpha0.16.1.20](http://pan.baidu.com/s/
 `left mouse` **kill**
 
 `Please note that this game is still in early development`
-
-###LICENSE
-GPLv2
 
 `For some reasons.Content of character is only packaged in release version.`
