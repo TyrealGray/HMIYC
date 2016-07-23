@@ -40,6 +40,8 @@ void AHMIYCPlayerController::BeginPlay()
         return;
     }
 
+    InitCommonUI();
+
     SetCharacterUI( pAssassinCharacter->GetUIPath() );
 }
 
@@ -91,6 +93,19 @@ void AHMIYCPlayerController::OnLookUp( float Value )
     pPawm->AddControllerPitchInput( Value );
 }
 
+class UAssassinWidget* AHMIYCPlayerController::GetAssassinWidget( const FString& Path, int32 ZOrder )
+{
+    UClass* WidgetClass = StaticLoadClass( UAssassinWidget::StaticClass(), nullptr, *Path );
+
+    UAssassinWidget* Widget = CreateWidget<UAssassinWidget>( GetWorld(), WidgetClass );
+
+    Widget->AddToViewport( ZOrder );
+
+    Widget->SetVisibility( ESlateVisibility::Visible );
+
+    return Widget;
+}
+
 void AHMIYCPlayerController::StartGameNow()
 {
     GetWorld()->ServerTravel( FString( "/Game/Maps/WestTown?game=/Game/Blueprints/BP_HMIYCGameMode.BP_HMIYCGameMode_C?listen" ) );
@@ -110,13 +125,12 @@ void AHMIYCPlayerController::SetCharacterUI( const FString& Path )
         CharacterMenu->Destruct();
     }
 
-    UClass* WidgetClass = StaticLoadClass( UAssassinWidget::StaticClass(), nullptr, *Path );
+    CharacterMenu = GetAssassinWidget( Path, CharacterUIOrder );
+}
 
-    UAssassinWidget* Widget = CreateWidget<UAssassinWidget>( GetWorld(), WidgetClass );
+void AHMIYCPlayerController::InitCommonUI()
+{
+    FString CommonUIPath = "/Game/Blueprints/Widgets/Characters/BP_CommonUI.BP_CommonUI_C";
 
-    Widget->AddToViewport( CharacterUIOrder );
-
-    Widget->SetVisibility( ESlateVisibility::Visible );
-
-    CharacterMenu = Widget;
+    CommonCharacterMenu = GetAssassinWidget( CommonUIPath, CommonUIOrder );
 }

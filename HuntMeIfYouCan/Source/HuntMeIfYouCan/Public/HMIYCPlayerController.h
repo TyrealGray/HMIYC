@@ -24,7 +24,9 @@ public:
     void StartGameNow();
 
     UFUNCTION( BlueprintCallable, category = "GameUI" )
-    void SetCharacterUI( const FString& path );
+    void SetCharacterUI( const FString& Path );
+
+    void InitCommonUI();
 
 private:
 
@@ -39,5 +41,7 @@ private:
 
     void OnTurn( float Value );
     void OnLookUp( float Value );
+
+    class UAssassinWidget* GetAssassinWidget( const FString& Path, int32 ZOrder );
 
 };
