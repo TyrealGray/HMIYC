@@ -5,9 +5,9 @@
 >* **Hunt Me If You Can is an UnrealEngine4 Battle Lan Game**
 >* **It's a total 3d engraved version of[[AssassinWar](https://github.com/TyrealGray/AssassinWar)]**
 
-![screenshot](http://tyrealgray.github.io/HMIYC/images/HMIYC.jpg)
+![screenshot](https://github.com/TyrealGray/HMIYC/blob/master/HMIYC.jpg)
 
-**Hope I can finish this game before 2017 :)**
+**Thank you UE4, I made it!**
 
 ###To begin
 Download ue4.10.4 and Visual Studio 2015
@@ -18,8 +18,11 @@ First playable alpha version download **[alpha0.16.1.20](http://pan.baidu.com/s/
 
 `WASD` **walk**
 
-`left mouse` **kill**
+`left mouse` **use skill**
 
-`Please note that this game is still in early development`
+`1 or 2` **switch skill**
 
+`get 5 kills` **you win**
+
+----
 `For some reasons.Content of character is only packaged in release version.`
