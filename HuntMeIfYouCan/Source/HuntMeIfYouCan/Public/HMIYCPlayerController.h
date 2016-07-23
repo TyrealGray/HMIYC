@@ -31,6 +31,9 @@ private:
     UPROPERTY()
     class UAssassinWidget * CharacterMenu;
 
+    UPROPERTY()
+    class UAssassinWidget * CommonCharacterMenu;
+
     void OnMoveForward( float Value );
     void OnMoveRight( float Value );
 

@@ -7,6 +7,9 @@
 #include "AssassinWidget.h"
 #include "AssassinCharacter.h"
 
+int32 CharacterUIOrder = 9;
+int32 CommonUIOrder = 8;
+
 AHMIYCPlayerController::AHMIYCPlayerController( const FObjectInitializer& objectInitializer ):
     Super( objectInitializer ),
     CharacterMenu( nullptr )
@@ -111,7 +114,7 @@ void AHMIYCPlayerController::SetCharacterUI( const FString& Path )
 
     UAssassinWidget* Widget = CreateWidget<UAssassinWidget>( GetWorld(), WidgetClass );
 
-    Widget->AddToViewport( 9 );
+    Widget->AddToViewport( CharacterUIOrder );
 
     Widget->SetVisibility( ESlateVisibility::Visible );
 
