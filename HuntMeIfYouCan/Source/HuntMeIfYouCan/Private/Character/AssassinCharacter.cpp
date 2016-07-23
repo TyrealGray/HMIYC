@@ -6,6 +6,7 @@
 #include "SpawnerFunctionLibrary.h"
 #include "HMIYCPlayerState.h"
 #include "HMIYCGameInstance.h"
+#include "HMIYCPlayerController.h"
 
 AAssassinCharacter::AAssassinCharacter():
     bIsStab( false ),
@@ -97,7 +98,7 @@ void AAssassinCharacter::UseSkill()
     if ( EStatusEnum::SE_Dead == CurrentStatus || EStatusEnum::SE_Expose == CurrentStatus ||
             EStatusEnum::SE_Crawling == CurrentStatus )
     {
-        GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Red, "Your status can't do it right now" );
+        ShowCantUseSkillText();
         return;
     }
 
@@ -122,7 +123,6 @@ void AAssassinCharacter::UseSkillConfirmed()
     if ( EStatusEnum::SE_Dead == CurrentStatus || EStatusEnum::SE_Expose == CurrentStatus )
     {
         ItemHide();
-        GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Red, "Your status can't do it right now" );
         return;
     }
 
@@ -219,7 +219,6 @@ void AAssassinCharacter::UseTargetItem()
 
     if ( bIsTargetItemColdDown )
     {
-        GEngine->AddOnScreenDebugMessage( -1, 3.0f, FColor::Red, "Your TargetItem ColdDown right now" );
         return;
     }
 
@@ -239,6 +238,7 @@ void AAssassinCharacter::GoIntoStatus( EStatusEnum NewStatus )
     case  EStatusEnum::SE_Expose:
         BeExpose();
         PlayExposedBGM();
+        ShowExposedBG();
         break;
     case EStatusEnum::SE_Crawling:
         BeCrawling();
@@ -267,6 +267,15 @@ void AAssassinCharacter::SetStab( bool IsStab )
 void AAssassinCharacter::TargetItemColdDown()
 {
     bIsTargetItemColdDown = true;
+
+    AHMIYCPlayerController* PC = Cast<AHMIYCPlayerController>( Controller );
+
+    if ( NULL == PC )
+    {
+        return;
+    }
+
+    PC->ShowTargetItemColdDown();
 }
 
 void AAssassinCharacter::TargetItemReady()
@@ -287,6 +296,18 @@ void AAssassinCharacter::ItemHide()
 
     SetIsHoldBow( false );
     TargetItemActor->SetActorHiddenInGame( true );
+}
+
+void AAssassinCharacter::ShowCantUseSkillText()
+{
+    AHMIYCPlayerController* PC = Cast<AHMIYCPlayerController>( Controller );
+
+    if ( NULL == PC )
+    {
+        return;
+    }
+
+    PC->ShowCantUseSkillText();
 }
 
 void AAssassinCharacter::ServerItemHide_Implementation()
@@ -393,6 +414,18 @@ void AAssassinCharacter::Exposed()
     GetWorldTimerManager().SetTimer( ExposeTimer, this, &AAssassinCharacter::GoCrawling, 30.0f, false );
 }
 
+void AAssassinCharacter::ShowExposedBG()
+{
+    AHMIYCPlayerController* PC = Cast<AHMIYCPlayerController>( Controller );
+
+    if ( NULL == PC )
+    {
+        return;
+    }
+
+    PC->ShowExposeUIBG();
+}
+
 void AAssassinCharacter::PlayExposedBGM()
 {
     StopExposedBGM();
@@ -422,7 +455,7 @@ void AAssassinCharacter::BeDying()
 void AAssassinCharacter::BeCrawling()
 {
     GetWorldTimerManager().ClearTimer( CrawlingTimer );
-    GetWorldTimerManager().SetTimer( CrawlingTimer, this, &AAssassinCharacter::GoMasquerade, 5.0f, false );
+    GetWorldTimerManager().SetTimer( CrawlingTimer, this, &AAssassinCharacter::GoMasquerade, 20.0f, false );
 
     GEngine->AddOnScreenDebugMessage( -1, 3.0, FColor::Yellow, TEXT( "BeCrawling" ) );
 }

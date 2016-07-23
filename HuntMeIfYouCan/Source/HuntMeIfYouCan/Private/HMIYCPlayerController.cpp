@@ -7,8 +7,8 @@
 #include "AssassinWidget.h"
 #include "AssassinCharacter.h"
 
-int32 CharacterUIOrder = 9;
-int32 CommonUIOrder = 8;
+int32 CharacterUIOrder = 8;
+int32 CommonUIOrder = 9;
 
 AHMIYCPlayerController::AHMIYCPlayerController( const FObjectInitializer& objectInitializer ):
     Super( objectInitializer ),
@@ -133,4 +133,31 @@ void AHMIYCPlayerController::InitCommonUI()
     FString CommonUIPath = "/Game/Blueprints/Widgets/Characters/BP_CommonUI.BP_CommonUI_C";
 
     CommonCharacterMenu = GetAssassinWidget( CommonUIPath, CommonUIOrder );
+}
+
+void AHMIYCPlayerController::ShowExposeUIBG()
+{
+    if ( !IsValid( CommonCharacterMenu ) )
+    {
+        return;
+    }
+    CommonCharacterMenu->ExposedBackgroundShowed();
+}
+
+void AHMIYCPlayerController::ShowCantUseSkillText()
+{
+    if ( !IsValid( CommonCharacterMenu ) )
+    {
+        return;
+    }
+    CommonCharacterMenu->CantUseSkillTextShowed();
+}
+
+void AHMIYCPlayerController::ShowTargetItemColdDown()
+{
+    if ( !IsValid( CommonCharacterMenu ) )
+    {
+        return;
+    }
+    CommonCharacterMenu->TargetItemColdDown();
 }

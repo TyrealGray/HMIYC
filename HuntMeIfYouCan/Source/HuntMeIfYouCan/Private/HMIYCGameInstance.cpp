@@ -60,7 +60,5 @@ class UUserWidget* UHMIYCGameInstance::CreateUIWidget( const FString& Path )
 
     Widget->AddToViewport( UI_ZORDER );
 
-    Widget->SetVisibility( ESlateVisibility::Hidden );
-
     return Widget;
 }

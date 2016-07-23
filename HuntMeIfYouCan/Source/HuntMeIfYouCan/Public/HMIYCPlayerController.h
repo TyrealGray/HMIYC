@@ -28,6 +28,12 @@ public:
 
     void InitCommonUI();
 
+    void ShowExposeUIBG();
+
+    void ShowCantUseSkillText();
+
+    void ShowTargetItemColdDown();
+
 private:
 
     UPROPERTY()

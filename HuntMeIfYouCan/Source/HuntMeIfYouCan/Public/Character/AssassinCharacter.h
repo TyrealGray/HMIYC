@@ -64,10 +64,6 @@ public:
 
     virtual void Exposed();
 
-    void PlayExposedBGM();
-
-    void StopExposedBGM();
-
     void BeCrawling();
 
     void BeDying();
@@ -181,6 +177,14 @@ private:
     void TargetItemReady();
 
     void ItemHide();
+
+    void ShowCantUseSkillText();
+
+    void ShowExposedBG();
+
+    void PlayExposedBGM();
+
+    void StopExposedBGM();
 
     UFUNCTION( Server, Reliable, WithValidation )
     void ServerUseConcealedItem();

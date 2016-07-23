@@ -14,7 +14,7 @@ public class HuntMeIfYouCan : ModuleRules
 
         PublicIncludePaths.AddRange(new string[] { "HuntMeIfYouCan/Public", "HuntMeIfYouCan/Public/Character", "HuntMeIfYouCan/Public/Projectile" });
 
-        PrivateIncludePaths.AddRange(new string[] { "HuntMeIfYouCan/Private", "HuntMeIfYouCan/Private/Character", "HuntMeIfYouCan/Private/Projectile" });
+        PrivateIncludePaths.AddRange(new string[] {  "HuntMeIfYouCan/Private", "HuntMeIfYouCan/Private/Character", "HuntMeIfYouCan/Private/Projectile" });
 
 		// Uncomment if you are using Slate UI
 		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
