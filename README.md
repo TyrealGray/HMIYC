@@ -14,8 +14,7 @@ Download ue4.10.4 and Visual Studio 2015
 
 Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
 
-First playable alpha version download **[alpha0.16.1.20](http://pan.baidu.com/s/1dEwbyyl)**
-
+###How To Play
 `WASD` **walk**
 
 `left mouse` **use skill**
@@ -25,4 +24,6 @@ First playable alpha version download **[alpha0.16.1.20](http://pan.baidu.com/s/
 `get 5 kills` **you win**
 
 ----
+###Download Click **[Here](https://github.com/TyrealGray/HMIYC/releases/tag/HMIYC_v1.16.07.24)**
+
 `For some reasons.Content of character is only packaged in release version.`
