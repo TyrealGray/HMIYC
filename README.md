@@ -24,6 +24,6 @@ Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
 `get 5 kills` **you win**
 
 ----
-###Download Click **[Here](https://github.com/TyrealGray/HMIYC/releases/tag/HMIYC_v1.16.07.24)**
+###Download **[Windows-32bit](https://github.com/TyrealGray/HMIYC/releases/tag/HMIYC_v1.16.07.24)**
 
 `For some reasons.Content of character is only packaged in release version.`
