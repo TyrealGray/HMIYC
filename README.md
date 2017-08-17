@@ -28,4 +28,4 @@ Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
 
 `For some reasons.Content of character is only packaged in release version.`
 
-### It's been a year now, here is a new game I have been working on [LegendOfMountainSea](https://github.com/SkyHarp/LegendOfMountainSea)
+### Here is a new game I have been working on [LegendOfMountainSea](https://github.com/SkyHarp/LegendOfMountainSea)
