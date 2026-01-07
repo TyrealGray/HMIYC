@@ -26,6 +26,4 @@ Open `HuntMeIfYouCan.uproject` and refresh Visual Studio Project
 ----
 ### Download **[Windows-32bit](https://github.com/TyrealGray/HMIYC/releases/tag/HMIYC_v1.16.07.24)**
 
-`For some reasons.Content of character is only packaged in release version.`
-
-### Here is a new game engine I'm currectly working on [Qin.js](https://qinjs.org)
+`Content of character is only packaged in release version.`
